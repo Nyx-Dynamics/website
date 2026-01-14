@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nyx Dynamics | AI Readiness in Healthcare</title>
+  <meta name="description" content="Healthcare AI consulting focused on ethical implementation, equity-driven strategies, and clinical validation. AI Readiness Assessment, Algorithm Validation, and Strategic Advisory.">
+  <meta property="og:title" content="Nyx Dynamics | Guiding AI to Shape a Better Future">
+  <meta property="og:description" content="Healthcare algorithm auditing and AI readiness consulting">
+  <meta property="og:type" content="website">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'nyx-black': '#0a0a0f',
+            'nyx-charcoal': '#111827',
+            'nyx-cyan': '#00D4FF',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-serif { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="bg-[#0a0a0f] text-gray-300">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+    const { RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } = Recharts;
+
+    const frameworkData = [
+      { dimension: 'Data', score: 75, fullMark: 100 },
+      { dimension: 'Validity', score: 60, fullMark: 100 },
+      { dimension: 'Explain', score: 45, fullMark: 100 },
+      { dimension: 'Interpret', score: 70, fullMark: 100 },
+      { dimension: 'Equity', score: 55, fullMark: 100 },
+      { dimension: 'Ready', score: 50, fullMark: 100 },
+    ];
+
+    const newsItems = [
+      { date: 'Jan 2025', title: 'MIT Sloan AI in Healthcare Certification', desc: 'Nyx Dynamics founder completes MIT Sloan Executive Education program on AI implementation in clinical settings.', featured: true },
+      { date: 'Dec 2024', title: 'Healthcare AI Readiness Framework Published', desc: 'Our six-question framework for evaluating clinical AI readiness now available for healthcare organizations.', featured: true },
+      { date: 'Nov 2024', title: 'Nyx Dynamics Joins AI Safety Discussions', desc: 'Contributing to national conversations on responsible healthcare AI deployment and equity considerations.', featured: false },
+      { date: 'Oct 2024', title: 'HIV Prevention Algorithm Validation Study', desc: 'Completed equity audit of PrEP eligibility algorithms, identifying disparities in underserved populations.', featured: false },
+    ];
+
+    const services = [
+      {
+        title: 'Healthcare Algorithm Audit',
+        desc: 'A comprehensive assessment of risks associated with a specific clinical AI use case. We audit diagnostic AI, clinical decision support, risk prediction, and resource allocation algorithms.',
+        bullets: ['Uses our AI Readiness Framework', 'Identifies fairness, equity, and clinical validity issues', 'Delivers recommendations for measuring and mitigating risks', 'Outputs: Healthcare Algorithm Audit Report']
+      },
+      {
+        title: 'Equity Testing & Validation',
+        desc: 'Analysis to measure bias and disparities in healthcare algorithmic systems, using data from live deployments or synthetic patient populations.',
+        bullets: ['Proprietary validation across demographic subgroups', 'Tests for disparate impact across race, ethnicity, gender, age', 'HIPAA-compliant analysis frameworks', 'Outputs: Equity Audit Report; FAIRness Assessment']
+      },
+      {
+        title: 'AI Governance & Risk Management',
+        desc: 'We help build core infrastructure to help healthcare organizations use AI responsibly.',
+        bullets: ['Organization-level approach to measuring AI risks', 'Review governance policies, processes, and structures', 'Assistance with AI vendor procurement', 'Outputs: Risk management documentation']
+      },
+      {
+        title: 'Clinical AI Monitoring',
+        desc: 'Running a deployed clinical AI is like piloting a plane: to fly safely, you need critical information in real time. We help build monitoring systems.',
+        bullets: ['Identify metrics addressing key clinical and equity risks', 'Calibrate thresholds and develop mitigation protocols', 'Integrate with existing clinical analytics platforms']
+      },
+      {
+        title: 'HTI-1 & Regulatory Compliance',
+        desc: "Support for ONC's HTI-1 Final Rule and emerging healthcare AI regulations requiring transparency and fairness testing.",
+        bullets: ['Develop use-case-specific metrics for ensuring fairness', 'Conduct external validation research', 'Prepare and review compliance reports']
+      },
+      {
+        title: 'Education & Training',
+        desc: 'We teach healthcare teams how to think critically about AI systems, identify blind spots, and understand clinical algorithm auditing.',
+        bullets: ['Workshops for clinical and technical teams', 'Bespoke training for quality and compliance departments', 'Medical data annotation and clinical reasoning validation']
+      }
+    ];
+
+    function App() {
+      const scrollTo = (id) => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      return (
+        <div className="min-h-screen">
+          {/* Navigation */}
+          <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-gray-800">
+            <div className="max-w-6xl mx-auto px-4">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    <span className="text-[#0a0a0f] font-bold text-lg">N</span>
+                  </div>
+                  <span className="font-serif text-white text-xl tracking-tight">NYX DYNAMICS</span>
+                </div>
+                <div className="hidden md:flex items-center gap-6 text-sm">
+                  {['About', 'Services', 'Framework', 'News', 'Contact'].map(item => (
+                    <button 
+                      key={item}
+                      onClick={() => scrollTo(item.toLowerCase())}
+                      className="text-gray-400 hover:text-cyan-400 transition-colors"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          {/* Hero */}
+          <section id="about" className="pt-32 pb-20 px-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,212,255,0.1)_0%,transparent_50%)]" />
+            <div className="max-w-6xl mx-auto relative">
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
+                Healthcare AI Auditing &<br />Risk Consulting
+              </h1>
+              <p className="text-xl md:text-2xl text-cyan-400 mb-8 font-medium">
+                How do you know your healthcare AI is working well for everyone?
+              </p>
+              <div className="max-w-3xl text-gray-400 text-lg leading-relaxed space-y-4">
+                <p>
+                  Nyx Dynamics' mission is to help define accountability for healthcare algorithms, and to keep patients safe from harmful consequences of AI and automated clinical systems.
+                </p>
+                <p>
+                  Whether it's a diagnostic algorithm, clinical decision support tool, risk stratification system, or predictive model, we are here to think about how it could fail, for whom, and what you can do to monitor and mitigate these risks.
+                </p>
+                <p>
+                  <strong className="text-white">99.8% of funded AI interventions fail to meet basic quality standards.</strong> We ensure yours isn't one of them.
+                </p>
+              </div>
+              <div className="mt-8 flex gap-4">
+                <button onClick={() => scrollTo('contact')} className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-semibold rounded-lg transition-all hover:shadow-lg hover:shadow-cyan-500/30">
+                  Get Started
+                </button>
+                <button onClick={() => scrollTo('framework')} className="px-6 py-3 border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 font-semibold rounded-lg transition-all">
+                  Our Framework
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* Services */}
+          <section id="services" className="py-20 px-4 bg-gradient-to-b from-gray-900/50 to-[#0a0a0f]">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-12 text-center">Services</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {services.map((service, i) => (
+                  <div key={i} className="bg-gray-900/50 border border-gray-800 rounded-xl p-8 hover:border-cyan-500/30 transition-all">
+                    <h3 className="text-xl font-semibold text-white mb-4">{service.title}</h3>
+                    <p className="text-gray-400 mb-4">{service.desc}</p>
+                    <ul className="space-y-2 text-gray-500 text-sm">
+                      {service.bullets.map((bullet, j) => (
+                        <li key={j} className="flex items-start gap-2">
+                          <span className="text-cyan-400 mt-1">•</span>
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Industries */}
+          <section className="py-20 px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 text-center">Industries & Focus Areas</h2>
+              <p className="text-gray-400 text-center max-w-3xl mx-auto mb-12">
+                We partner with health systems, digital health companies, payers, public health agencies, and research institutions.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {['Clinical Decision Support', 'Risk Stratification', 'Diagnostic AI', 'Treatment Recommendations', 'HIV Prevention & Care', 'Population Health', 'Health Equity', 'Mental Health'].map(industry => (
+                  <div key={industry} className="bg-gray-900/30 border border-gray-800 rounded-lg p-4 text-center text-sm text-gray-400 hover:border-cyan-500/30 hover:text-gray-300 transition-all">
+                    {industry}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Framework */}
+          <section id="framework" className="py-20 px-4 bg-gray-900/30">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 text-center">AI Readiness Framework</h2>
+              <p className="text-xl text-cyan-400 text-center mb-12">When is a healthcare algorithm ready for deployment?</p>
+
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <p className="text-gray-400 mb-8">
+                    Every engagement applies our <strong className="text-white">six-question framework</strong>:
+                  </p>
+                  <div className="space-y-4">
+                    {[
+                      { num: 1, title: 'Data Availability', q: 'Is sufficient high-quality data available?' },
+                      { num: 2, title: 'External Validity', q: 'Does precision create false confidence?' },
+                      { num: 3, title: 'Explainability', q: 'Can clinicians trust the parameters?' },
+                      { num: 4, title: 'Interpretability', q: 'Does transparency enable oversight?' },
+                      { num: 5, title: 'Equity', q: 'Do averages mask disparities?' },
+                      { num: 6, title: 'Readiness', q: 'Should implementation proceed?' },
+                    ].map(item => (
+                      <div key={item.num} className="flex gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 rounded bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-sm">
+                          {item.num}
+                        </div>
+                        <div>
+                          <span className="text-white font-medium">{item.title}:</span>
+                          <span className="text-gray-500 ml-2 text-sm">{item.q}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                  <h4 className="text-white font-medium mb-4 text-center">Assessment Visualization</h4>
+                  <ResponsiveContainer width="100%" height={280}>
+                    <RadarChart data={frameworkData}>
+                      <PolarGrid stroke="#374151" />
+                      <PolarAngleAxis dataKey="dimension" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
+                      <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fill: '#6B7280', fontSize: 10 }} />
+                      <Radar dataKey="score" stroke="#00D4FF" fill="#00D4FF" fillOpacity={0.3} strokeWidth={2} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                  <p className="text-gray-500 text-xs text-center mt-2">Gaps indicate areas requiring attention</p>
+                </div>
+              </div>
+
+              <div className="mt-16 max-w-3xl mx-auto">
+                <blockquote className="text-xl md:text-2xl text-gray-300 italic font-serif text-center">
+                  "An algorithm that appears to have all answers is dangerous. One that names its limitations invites trust."
+                </blockquote>
+                <p className="text-cyan-400 text-sm text-center mt-4">— The Readiness Paradox</p>
+              </div>
+            </div>
+          </section>
+
+          {/* News */}
+          <section id="news" className="py-20 px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-12 text-center">In the News</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {newsItems.map((item, i) => (
+                  <div key={i} className={`bg-gray-900/50 border rounded-xl p-6 hover:border-cyan-500/30 transition-all ${item.featured ? 'border-cyan-500/20' : 'border-gray-800'}`}>
+                    {item.featured && <span className="text-xs text-cyan-400 font-medium uppercase tracking-wide">Featured</span>}
+                    <p className="text-gray-500 text-sm mt-1">{item.date}</p>
+                    <h3 className="text-white font-medium mt-2 mb-2">{item.title}</h3>
+                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Principles */}
+          <section className="py-20 px-4 bg-gray-900/30">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-12 text-center">Principles</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold text-white mb-4">Context Matters</h3>
+                  <p className="text-gray-400 text-sm">An algorithm isn't good or bad per se – it is just a tool. Who is using it, and for which patients? We go beyond accuracy metrics to ask how it affects real people.</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold text-white mb-4">The Readiness Paradox</h3>
+                  <p className="text-gray-400 text-sm">Rigorous validation exposes uncertainty rather than eliminating it. Computationally ready ≠ clinically proven. Theoretically sound ≠ equitably implemented.</p>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-xl font-semibold text-white mb-4">Ethics Cannot Be Automated</h3>
+                  <p className="text-gray-400 text-sm">There cannot be a universal checklist – clinical context is too important. Human judgment will always be essential. We tailor to your needs.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Team */}
+          <section className="py-20 px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-12 text-center">Leadership</h2>
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-8 text-center">
+                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-500/20 to-teal-500/20 border-2 border-cyan-500/30 flex items-center justify-center">
+                    <span className="text-4xl font-serif text-cyan-400">AD</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-1">Adrian Charles Demidont, DO, FIDSA</h3>
+                  <p className="text-cyan-400 text-sm mb-4">Founder & CEO</p>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                    Board-certified infectious diseases physician with 20+ years of clinical experience. Former Principal Medical Scientist at Gilead Sciences and Chief Medical Officer at Anchor Health Initiative. MIT Sloan AI in Healthcare certification. Peer-reviewed researcher in HIV prevention and implementation science.
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-500">
+                    <span className="px-2 py-1 bg-gray-800 rounded">MIT Sloan</span>
+                    <span className="px-2 py-1 bg-gray-800 rounded">MITx Data Science</span>
+                    <span className="px-2 py-1 bg-gray-800 rounded">FIDSA</span>
+                    <span className="px-2 py-1 bg-gray-800 rounded">AAHIVS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Contact */}
+          <section id="contact" className="py-20 px-4 bg-gray-900/30">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-12 text-center">Contact</h2>
+              <div className="max-w-xl mx-auto text-center">
+                <p className="text-gray-400 mb-8">Ready to ensure your healthcare AI works equitably for all patients?</p>
+                <div className="space-y-4 text-gray-300">
+                  <p><span className="text-gray-500">Email:</span> <a href="mailto:info@nyx-dynamics.org" className="text-cyan-400 hover:text-cyan-300">info@nyx-dynamics.org</a></p>
+                  <p><span className="text-gray-500">Phone:</span> 203.247.1177</p>
+                  <p><span className="text-gray-500">Address:</span><br/>268 Post Road East, Suite 200<br/>Fairfield, CT 06824</p>
+                </div>
+                <div className="flex justify-center gap-4 mt-8">
+                  <a href="https://github.com/Nyx-Dynamics" target="_blank" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors">GitHub</a>
+                  <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors">LinkedIn</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="border-t border-gray-800 py-12 px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500" />
+                  <span className="text-gray-500 text-sm">Nyx Dynamics, LLC</span>
+                </div>
+                <p className="text-gray-600 text-sm italic">"Illuminating hidden insights within data"</p>
+              </div>
+              <p className="text-gray-700 text-xs text-center mt-8">© 2025 Nyx Dynamics, LLC. All rights reserved.</p>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
