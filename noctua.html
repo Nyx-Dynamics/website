@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noctua | Vancouver Citation Auditor — Nyx Dynamics</title>
+  <meta name="description" content="Upload your DOCX manuscript and Noctua audits Vancouver-style numbered citations for order-of-appearance, missing references, gaps, duplicates, and missing identifiers — in seconds.">
+  <meta property="og:title" content="Noctua — Vancouver citations, verified in seconds">
+  <meta property="og:description" content="Pre-submission citation integrity audit for DOCX manuscripts. Catches what reference managers miss.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cyan: #00D4FF;
+      --cyan-bright: #5CE1FF;
+      --purple: #a855f7;
+      --purple-dim: rgba(168,85,247,0.15);
+      --red: #f87171;
+      --red-dim: rgba(248,113,113,0.12);
+      --amber: #fbbf24;
+      --amber-dim: rgba(251,191,36,0.12);
+      --blue: #60a5fa;
+      --blue-dim: rgba(96,165,250,0.12);
+      --green: #4ade80;
+      --green-dim: rgba(74,222,128,0.12);
+      --black: #0a0a0f;
+      --charcoal: #111827;
+      --gray: #374151;
+      --white: #f8fafc;
+      --silver: #cbd5e1;
+      --muted: #94a3b8;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--silver);
+      line-height: 1.6;
+    }
+    .font-serif { font-family: 'Playfair Display', serif; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { color: var(--cyan-bright); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,15,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 15px rgba(168,85,247,0.3);
+    }
+    .logo-text {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: 20px; font-weight: 700;
+    }
+    .logo-sub { color: var(--muted); font-size: 11px; margin-left: 4px; }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta {
+      display: inline-block; padding: 10px 22px; border-radius: 8px;
+      background: var(--cyan); color: var(--black) !important;
+      font-weight: 600; font-size: 14px; transition: all 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--cyan-bright); color: var(--black) !important;
+      box-shadow: 0 0 20px rgba(0,212,255,0.4);
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 14px 28px; border-radius: 8px;
+      font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.2s;
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--cyan); color: var(--black); border: none;
+    }
+    .btn-primary:hover {
+      background: var(--cyan-bright); color: var(--black);
+      box-shadow: 0 0 20px rgba(0,212,255,0.4);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--cyan);
+      border: 1px solid rgba(0,212,255,0.4);
+    }
+    .btn-secondary:hover { background: rgba(0,212,255,0.1); }
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 48px; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: clamp(28px, 4vw, 40px); margin-bottom: 16px;
+    }
+    .section-header p { color: var(--muted); font-size: 16px; }
+    .bg-alt { background: rgba(17,24,39,0.5); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(168,85,247,0.08) 0%, transparent 50%),
+                  radial-gradient(ellipse at bottom left, rgba(0,212,255,0.06) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-text { max-width: 640px; }
+    .hero-tag {
+      color: var(--purple); font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: clamp(36px, 5.5vw, 56px); line-height: 1.1; margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal; color: var(--cyan);
+    }
+    .hero-lead { font-size: 18px; color: var(--silver); margin-bottom: 12px; max-width: 580px; line-height: 1.7; }
+    .hero-micro { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+    .trust-row {
+      margin-top: 40px; display: flex; flex-wrap: wrap; gap: 24px;
+      padding-top: 24px; border-top: 1px solid var(--gray);
+    }
+    .trust-item {
+      font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px;
+    }
+    .trust-dot { color: var(--cyan); font-size: 8px; }
+
+    /* Report preview */
+    .hero-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-preview { order: -1; }
+    }
+    .hero-preview { position: relative; z-index: 1; }
+    .preview-card {
+      background: rgba(17,24,39,0.7); border: 1px solid var(--gray);
+      border-radius: 16px; padding: 24px; font-size: 13px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .preview-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gray);
+    }
+    .preview-filename { color: var(--white); font-weight: 600; font-size: 14px; }
+    .preview-stats { color: var(--muted); font-size: 12px; }
+    .preview-badge {
+      padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-error { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+    .badge-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.3); }
+    .badge-info { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+    .badge-pass { background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+    .preview-finding {
+      padding: 12px; border-radius: 8px; margin-bottom: 10px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .finding-error { background: var(--red-dim); border-left: 3px solid var(--red); }
+    .finding-warn { background: var(--amber-dim); border-left: 3px solid var(--amber); }
+    .finding-pass { background: var(--green-dim); border-left: 3px solid var(--green); }
+    .finding-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .finding-text { color: var(--silver); font-size: 13px; }
+    .finding-text strong { color: var(--white); }
+    .preview-renumber {
+      margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.3);
+      border-radius: 8px; border: 1px solid var(--gray);
+    }
+    .renumber-title { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .renumber-row {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Inter', monospace; font-size: 12px; margin-bottom: 4px;
+    }
+    .renumber-old { color: var(--amber); min-width: 28px; }
+    .renumber-arrow { color: var(--muted); }
+    .renumber-new { color: var(--green); min-width: 28px; }
+    .renumber-author { color: var(--muted); }
+
+    /* Problem section */
+    .problem-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    }
+    @media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } }
+    .problem-list { list-style: none; }
+    .problem-list li {
+      padding: 10px 0 10px 24px; position: relative;
+      font-size: 15px; color: var(--silver); border-bottom: 1px solid rgba(55,65,81,0.5);
+    }
+    .problem-list li::before {
+      content: '\2716'; color: var(--red); position: absolute; left: 0; font-size: 12px; top: 13px;
+    }
+    .consequence-box {
+      background: var(--red-dim); border: 1px solid rgba(248,113,113,0.2);
+      border-radius: 12px; padding: 24px;
+    }
+    .consequence-box h4 { color: var(--red); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .consequence-box p { color: var(--silver); font-size: 14px; line-height: 1.7; }
+    .solution-line {
+      margin-top: 24px; padding: 20px 24px; background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.15); border-radius: 12px;
+      color: var(--silver); font-size: 15px;
+    }
+    .solution-line strong { color: var(--cyan); }
+
+    /* Diagnostics grid */
+    .diag-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;
+    }
+    .diag-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 12px; padding: 24px; display: flex; gap: 16px;
+      transition: all 0.3s;
+    }
+    .diag-card:hover {
+      border-color: rgba(0,212,255,0.2);
+      box-shadow: 0 0 20px rgba(0,212,255,0.05);
+    }
+    .diag-severity {
+      flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .sev-error { background: var(--red-dim); border: 1px solid rgba(248,113,113,0.3); }
+    .sev-warn { background: var(--amber-dim); border: 1px solid rgba(251,191,36,0.3); }
+    .sev-info { background: var(--blue-dim); border: 1px solid rgba(96,165,250,0.3); }
+    .diag-content h3 { color: var(--white); font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .diag-tag {
+      display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+    }
+    .tag-error { background: var(--red-dim); color: var(--red); }
+    .tag-warn { background: var(--amber-dim); color: var(--amber); }
+    .tag-info { background: var(--blue-dim); color: var(--blue); }
+    .diag-content p { color: var(--muted); font-size: 13px; }
+
+    /* CTA strip */
+    .cta-strip {
+      text-align: center; padding: 48px 0;
+      background: linear-gradient(180deg, transparent, rgba(0,212,255,0.03), transparent);
+    }
+    .cta-strip p { color: var(--muted); font-size: 14px; margin-top: 12px; }
+
+    /* How it works */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    @media (max-width: 900px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .steps-grid { grid-template-columns: 1fr; } }
+    .step {
+      text-align: center; position: relative;
+    }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 16px;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); font-weight: 700; font-size: 18px;
+    }
+    .step h3 { color: var(--white); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .step p { color: var(--muted); font-size: 13px; }
+    .callout-box {
+      margin-top: 48px; background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 12px; padding: 28px 32px;
+    }
+    .callout-box h4 { color: var(--white); font-size: 16px; margin-bottom: 12px; }
+    .callout-list { list-style: none; }
+    .callout-list li {
+      font-size: 14px; color: var(--silver); padding: 6px 0 6px 20px;
+      position: relative;
+    }
+    .callout-list li::before { content: '\2713'; color: var(--green); position: absolute; left: 0; }
+
+    /* Compatibility */
+    .compat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;
+      margin-bottom: 24px;
+    }
+    .compat-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 10px; padding: 20px; text-align: center;
+    }
+    .compat-example {
+      font-family: 'Inter', monospace; font-size: 22px; color: var(--white);
+      margin-bottom: 8px; font-weight: 600;
+    }
+    .compat-card h4 { color: var(--silver); font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .compat-card p { color: var(--muted); font-size: 12px; }
+    .compat-note {
+      text-align: center; color: var(--muted); font-size: 13px;
+      padding: 12px 20px; background: rgba(17,24,39,0.3); border: 1px solid var(--gray);
+      border-radius: 8px; display: inline-block;
+    }
+
+    /* Positioning */
+    .position-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 12px; overflow: hidden;
+    }
+    @media (max-width: 600px) { .position-grid { grid-template-columns: 1fr; } }
+    .position-cell {
+      padding: 20px 24px; font-size: 14px;
+    }
+    .position-is { background: rgba(0,212,255,0.06); }
+    .position-isnt { background: rgba(55,65,81,0.3); }
+    .position-cell h4 {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 12px; font-weight: 700;
+    }
+    .position-is h4 { color: var(--cyan); }
+    .position-isnt h4 { color: var(--muted); }
+    .position-cell ul { list-style: none; }
+    .position-cell li {
+      padding: 6px 0 6px 18px; position: relative; color: var(--silver); font-size: 13px;
+    }
+    .position-is li::before { content: '\2713'; color: var(--cyan); position: absolute; left: 0; }
+    .position-isnt li::before { content: '\2014'; color: var(--muted); position: absolute; left: 0; font-size: 10px; }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+      max-width: 700px; margin: 0 auto;
+    }
+    .price-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 16px; padding: 32px; position: relative;
+    }
+    .price-card.featured {
+      border-color: rgba(0,212,255,0.3);
+      box-shadow: 0 0 30px rgba(0,212,255,0.08);
+    }
+    .price-popular {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--cyan); color: var(--black); font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; padding: 4px 16px; border-radius: 20px;
+    }
+    .price-card h3 { color: var(--white); font-size: 22px; margin-bottom: 4px; }
+    .price-amount { font-size: 36px; font-weight: 700; color: var(--white); margin: 16px 0 4px; }
+    .price-amount span { font-size: 16px; font-weight: 400; color: var(--muted); }
+    .price-alt { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+    .price-features { list-style: none; margin-bottom: 24px; }
+    .price-features li {
+      font-size: 14px; color: var(--silver); padding: 8px 0 8px 20px;
+      position: relative; border-bottom: 1px solid rgba(55,65,81,0.3);
+    }
+    .price-features li::before { content: '\2713'; color: var(--cyan); position: absolute; left: 0; }
+    .price-features li.disabled { color: var(--muted); text-decoration: line-through; }
+    .price-features li.disabled::before { content: ''; }
+    .price-who { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 16px; }
+    .price-btn {
+      display: block; width: 100%; padding: 14px; border-radius: 8px;
+      font-weight: 600; font-size: 14px; text-align: center; transition: all 0.2s;
+    }
+    .price-btn-primary { background: var(--cyan); color: var(--black); }
+    .price-btn-primary:hover { background: var(--cyan-bright); color: var(--black); box-shadow: 0 0 20px rgba(0,212,255,0.4); }
+    .price-btn-outline { background: transparent; color: var(--cyan); border: 1px solid rgba(0,212,255,0.4); }
+    .price-btn-outline:hover { background: rgba(0,212,255,0.1); }
+
+    /* Privacy */
+    .privacy-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+    }
+    .privacy-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 10px; padding: 20px; text-align: center;
+    }
+    .privacy-icon { font-size: 28px; margin-bottom: 8px; }
+    .privacy-card h4 { color: var(--white); font-size: 14px; margin-bottom: 6px; }
+    .privacy-card p { color: var(--muted); font-size: 13px; }
+
+    /* FAQ */
+    .faq-list { max-width: 740px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--gray); padding: 20px 0;
+    }
+    .faq-q {
+      color: var(--white); font-size: 16px; font-weight: 600; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-q::after { content: '+'; color: var(--cyan); font-size: 20px; font-weight: 400; }
+    .faq-item.open .faq-q::after { content: '\2212'; }
+    .faq-a {
+      color: var(--muted); font-size: 14px; line-height: 1.7;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-top: 12px; }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center; padding: 80px 0;
+      background: radial-gradient(ellipse at center, rgba(0,212,255,0.06) 0%, transparent 60%);
+    }
+    .bottom-cta h2 {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: clamp(28px, 4vw, 40px); margin-bottom: 16px;
+    }
+    .bottom-cta p { color: var(--muted); font-size: 16px; margin-bottom: 32px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--gray); padding: 48px 0;
+    }
+    .footer-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-brand span { color: var(--muted); font-size: 14px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--muted); font-size: 13px; }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-copy { color: #374151; font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="noctua.html" class="logo" style="text-decoration: none;">
+        <div class="logo-icon">&#x1F989;</div>
+        <span class="logo-text">Noctua</span>
+        <span class="logo-sub">by Nyx Dynamics</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#product">Product</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#privacy">Security</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://noctua-production.up.railway.app/login">Sign in</a></li>
+        <li><a href="https://noctua-production.up.railway.app/" class="nav-cta">Run a free audit</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-text">
+          <p class="hero-tag">Pre-submission citation audit</p>
+          <h1 class="font-serif">Vancouver citations, <em>verified in seconds.</em></h1>
+          <p class="hero-lead">Upload your .docx and Noctua audits your numbered (Vancouver) citations for order-of-appearance, missing/uncited references, gaps, duplicates, and missing DOI/PMID &mdash; then generates a clear, actionable report.</p>
+          <p class="hero-micro">No signup required for your first audit.</p>
+          <div class="btn-group">
+            <a href="https://noctua-production.up.railway.app/" class="btn btn-primary">Run a free audit</a>
+            <a href="#demo" class="btn btn-secondary">View demo report</a>
+          </div>
+          <div class="trust-row">
+            <span class="trust-item"><span class="trust-dot">&#9679;</span> Works with [1], (1), superscripts, and Lancet bare numbers</span>
+            <span class="trust-item"><span class="trust-dot">&#9679;</span> Typical audit: seconds, not minutes</span>
+            <span class="trust-item"><span class="trust-dot">&#9679;</span> DOCX manuscripts only</span>
+          </div>
+        </div>
+
+        <!-- Report preview -->
+        <div class="hero-preview" id="demo">
+          <div class="preview-card">
+            <div class="preview-header">
+              <div>
+                <div class="preview-filename">manuscript_v3_final.docx</div>
+                <div class="preview-stats">30 references &middot; 16 unique citations &middot; 49 instances</div>
+              </div>
+              <span class="preview-badge badge-error">Issues found</span>
+            </div>
+            <div class="preview-finding finding-error">
+              <span class="finding-icon">&#x2716;</span>
+              <div class="finding-text"><strong>Missing References</strong> &mdash; [12] cited in text but has no reference entry</div>
+            </div>
+            <div class="preview-finding finding-warn">
+              <span class="finding-icon">&#x26A0;</span>
+              <div class="finding-text"><strong>Citation Order</strong> &mdash; First-mention sequence broken (4 need renumbering)</div>
+            </div>
+            <div class="preview-renumber">
+              <div class="renumber-title">Renumber map</div>
+              <div class="renumber-row"><span class="renumber-old">[5]</span><span class="renumber-arrow">&rarr;</span><span class="renumber-new">[3]</span><span class="renumber-author">Sullivan PS (2020)</span></div>
+              <div class="renumber-row"><span class="renumber-old">[8]</span><span class="renumber-arrow">&rarr;</span><span class="renumber-new">[5]</span><span class="renumber-author">Mayer KH (2020)</span></div>
+              <div class="renumber-row"><span class="renumber-old">[3]</span><span class="renumber-arrow">&rarr;</span><span class="renumber-new">[7]</span><span class="renumber-author">Grant RM (2010)</span></div>
+            </div>
+            <div class="preview-finding finding-pass" style="margin-top: 10px;">
+              <span class="finding-icon">&#x2714;</span>
+              <div class="finding-text"><strong>No numbering gaps</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem section -->
+  <section class="bg-alt" id="product">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Reference managers don't QA the final manuscript.</h2>
+        <p>Zotero, Mendeley, and EndNote organize your library and insert citations. They don't check what's actually in the document you're about to submit.</p>
+      </div>
+      <div class="problem-grid">
+        <div>
+          <ul class="problem-list">
+            <li>Citations that point to references that don't exist</li>
+            <li>References in the list that are never cited in text</li>
+            <li>Out-of-order numbering after revisions (Vancouver order-of-first-mention)</li>
+            <li>Numbering gaps &mdash; 1, 2, 4&hellip;</li>
+            <li>Duplicate entries under different numbers</li>
+            <li>Missing DOI, PMID, or URL metadata</li>
+          </ul>
+        </div>
+        <div>
+          <div class="consequence-box">
+            <h4>The consequence</h4>
+            <p>These errors trigger desk rejections, reviewer friction, and last-minute renumber scrambles right before submission. They're the kind of issue that delays publication by weeks.</p>
+          </div>
+          <div class="solution-line">
+            <strong>Noctua</strong> runs a structural audit on the manuscript you're actually submitting &mdash; not the library you intended to cite.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 Diagnostics -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">What Noctua audits</h2>
+        <p>Six structural checks for Vancouver / numbered citations</p>
+      </div>
+      <div class="diag-grid">
+        <div class="diag-card">
+          <div class="diag-severity sev-error">&#x2716;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-error">Error</span>
+            <h3>Missing References</h3>
+            <p>Citations [N] in text with no corresponding reference entry in the list</p>
+          </div>
+        </div>
+        <div class="diag-card">
+          <div class="diag-severity sev-warn">&#x2195;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-warn">Warning</span>
+            <h3>Citation Order</h3>
+            <p>Out-of-sequence numbering with a full renumber map showing old &rarr; new</p>
+          </div>
+        </div>
+        <div class="diag-card">
+          <div class="diag-severity sev-warn">&#x1F4D6;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-warn">Warning</span>
+            <h3>Uncited References</h3>
+            <p>References listed but never cited anywhere in the body text</p>
+          </div>
+        </div>
+        <div class="diag-card">
+          <div class="diag-severity sev-warn">&#x26A0;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-warn">Warning</span>
+            <h3>Numbering Gaps</h3>
+            <p>Missing numbers in the reference sequence (e.g., 1, 2, 4)</p>
+          </div>
+        </div>
+        <div class="diag-card">
+          <div class="diag-severity sev-warn">&#x1F503;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-warn">Warning</span>
+            <h3>Potential Duplicates</h3>
+            <p>Same author + year appearing under different reference numbers</p>
+          </div>
+        </div>
+        <div class="diag-card">
+          <div class="diag-severity sev-info">&#x1F517;</div>
+          <div class="diag-content">
+            <span class="diag-tag tag-info">Info</span>
+            <h3>Missing Identifiers</h3>
+            <p>References without DOI, PMID, or URL &mdash; required by most journals</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA strip -->
+  <div class="cta-strip">
+    <a href="https://noctua-production.up.railway.app/" class="btn btn-primary">Run a free audit</a>
+    <p>See your report instantly &mdash; no signup required</p>
+  </div>
+
+  <!-- How it works -->
+  <section class="bg-alt" id="how">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">From upload to actionable report</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Upload</h3>
+          <p>Drag and drop your .docx manuscript (10 MB max)</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Audit</h3>
+          <p>Instant analysis &mdash; six structural checks in seconds</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Report</h3>
+          <p>Color-coded findings, severity badges, and a renumber map</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Track</h3>
+          <p>Persistent audit history so you can re-audit after revisions</p>
+        </div>
+      </div>
+      <div class="callout-box">
+        <h4>What you get in every report</h4>
+        <ul class="callout-list">
+          <li>A list of issues with exact citation numbers and reference details</li>
+          <li>A renumber map showing what needs to change and why</li>
+          <li>A clear pass/fail state for order-of-appearance integrity</li>
+          <li>Severity-tagged findings: errors, warnings, and informational notes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citation compatibility -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Handles the citation styles journals actually use</h2>
+        <p>Most tools only support one format. Noctua detects and parses all four automatically.</p>
+      </div>
+      <div class="compat-grid">
+        <div class="compat-card">
+          <div class="compat-example">[1], [1, 3&ndash;5]</div>
+          <h4>Bracketed</h4>
+          <p>Standard Vancouver format</p>
+        </div>
+        <div class="compat-card">
+          <div class="compat-example">(1), (1, 3&ndash;5)</div>
+          <h4>Parenthetical</h4>
+          <p>Common in CDC / public health</p>
+        </div>
+        <div class="compat-card">
+          <div class="compat-example" style="font-size: 18px;">text<sup>1,3-5</sup></div>
+          <h4>Superscript</h4>
+          <p>Word formatting + Unicode</p>
+        </div>
+        <div class="compat-card">
+          <div class="compat-example" style="font-size: 16px;">text. 1,2 Next</div>
+          <h4>Bare number</h4>
+          <p>Lancet-style inline numbers</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <span class="compat-note">Numbered citations (Vancouver-style) only. Author-date styles (APA, Harvard) are not supported.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Noctua is / isn't -->
+  <section class="bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Built for one job. Does it well.</h2>
+      </div>
+      <div class="position-grid" style="max-width: 740px; margin: 0 auto;">
+        <div class="position-cell position-is">
+          <h4>Noctua is</h4>
+          <ul>
+            <li>A structural citation linter</li>
+            <li>A pre-submission compliance check</li>
+            <li>Vancouver / numbered-first</li>
+            <li>A diagnostic tool (find problems)</li>
+          </ul>
+        </div>
+        <div class="position-cell position-isnt">
+          <h4>Noctua is not</h4>
+          <ul>
+            <li>A reference manager (use Zotero, Mendeley, EndNote)</li>
+            <li>A grammar checker (use Grammarly)</li>
+            <li>An author-date checker (see ReciteWorks for APA)</li>
+            <li>A style editor or converter (see Thrix)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social proof -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Built for biomedical manuscripts</h2>
+        <p>Designed to catch order-of-appearance failures after heavy revision cycles, coauthor merges, and section restructuring.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 700px; margin: 0 auto;">
+        <div style="background: rgba(17,24,39,0.5); border: 1px solid var(--gray); border-radius: 10px; padding: 20px; text-align: center;">
+          <div style="font-size: 32px; font-weight: 700; color: var(--cyan); margin-bottom: 4px;">6</div>
+          <div style="color: var(--muted); font-size: 13px;">Structural checks per audit</div>
+        </div>
+        <div style="background: rgba(17,24,39,0.5); border: 1px solid var(--gray); border-radius: 10px; padding: 20px; text-align: center;">
+          <div style="font-size: 32px; font-weight: 700; color: var(--cyan); margin-bottom: 4px;">4</div>
+          <div style="color: var(--muted); font-size: 13px;">Citation formats detected</div>
+        </div>
+        <div style="background: rgba(17,24,39,0.5); border: 1px solid var(--gray); border-radius: 10px; padding: 20px; text-align: center;">
+          <div style="font-size: 32px; font-weight: 700; color: var(--cyan); margin-bottom: 4px;">&lt;10s</div>
+          <div style="color: var(--muted); font-size: 13px;">Typical audit time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="bg-alt" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Simple pricing</h2>
+        <p>Start free. Upgrade when you need more.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Free</h3>
+          <div class="price-amount">$0<span>/mo</span></div>
+          <div class="price-alt">&nbsp;</div>
+          <ul class="price-features">
+            <li>3 audits per month</li>
+            <li>Full diagnostic report</li>
+            <li>All 6 structural checks</li>
+            <li class="disabled">Persistent audit history</li>
+          </ul>
+          <a href="https://noctua-production.up.railway.app/signup" class="price-btn price-btn-outline">Sign up free</a>
+          <p class="price-who">For occasional submissions and students</p>
+        </div>
+        <div class="price-card featured">
+          <span class="price-popular">Popular</span>
+          <h3>Researcher</h3>
+          <div class="price-amount">$5<span>/mo</span></div>
+          <div class="price-alt">or $48/year (save 20%)</div>
+          <ul class="price-features">
+            <li>Unlimited audits</li>
+            <li>Full diagnostic report</li>
+            <li>All 6 structural checks</li>
+            <li>Persistent audit history</li>
+          </ul>
+          <a href="https://noctua-production.up.railway.app/signup" class="price-btn price-btn-primary">Start free, upgrade anytime</a>
+          <p class="price-who">For medical writers, editors, and frequent revisers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section id="privacy">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Privacy-first by design</h2>
+        <p>Your manuscripts are yours. Here's exactly what happens with your data.</p>
+      </div>
+      <div class="privacy-grid" style="max-width: 800px; margin: 0 auto;">
+        <div class="privacy-card">
+          <div class="privacy-icon">&#x1F512;</div>
+          <h4>Encrypted in transit</h4>
+          <p>All uploads over HTTPS/TLS. Your manuscript never travels in the clear.</p>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">&#x1F5D1;</div>
+          <h4>Temporary processing</h4>
+          <p>Uploaded files are deleted after audit completion. Only the structured report is retained.</p>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">&#x1F6AB;</div>
+          <h4>No AI training</h4>
+          <p>Your text is never used to train models. Noctua uses deterministic parsing, not machine learning.</p>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">&#x2702;</div>
+          <h4>You control deletion</h4>
+          <p>Delete your audit history at any time. Your account, your data, your call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-alt" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Frequently asked questions</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">What exactly does Noctua do?</div>
+          <div class="faq-a">It audits your DOCX manuscript's numbered (Vancouver) citations and reference list for structural integrity: missing/uncited references, out-of-order numbering, gaps, duplicates, and missing identifiers. You get an instant diagnostic report with exact citation numbers and a renumber map.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is Noctua a reference manager like Zotero or EndNote?</div>
+          <div class="faq-a">No. Reference managers organize libraries and insert citations. Noctua checks the final manuscript for citation integrity after revisions and restructuring &mdash; the step those tools don't cover.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What file types do you support?</div>
+          <div class="faq-a">.docx manuscripts only. This is the format most journals accept for submission. PDF and LaTeX support is not currently available.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Which citation styles does it support?</div>
+          <div class="faq-a">Numbered Vancouver-style systems, including bracketed [1], parenthetical (1), Word superscript, and Lancet-style bare numbers. Author-date styles (APA, Harvard, Chicago) are not supported.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Does Noctua automatically renumber my manuscript?</div>
+          <div class="faq-a">Not yet. Noctua provides an actionable renumber map and exact diagnostics so you can correct quickly. The map shows every old &rarr; new number with the corresponding author and year. Auto-renumbering is on the roadmap.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How accurate is the duplicate detection?</div>
+          <div class="faq-a">It flags potential duplicates using author + year pattern matching. You review and confirm &mdash; Noctua doesn't delete anything automatically.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Will this catch every possible reference formatting issue?</div>
+          <div class="faq-a">Noctua focuses on structural integrity &mdash; the errors that break Vancouver compliance. It doesn't check punctuation, italics, or journal-specific style variations. It catches the errors that cause desk rejections.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is my manuscript private? Do you store it?</div>
+          <div class="faq-a">Your uploaded file is deleted after the audit completes. Only the structured report (citation numbers, findings, reference metadata) is stored. Your text is never used for AI training &mdash; Noctua uses deterministic parsing, not machine learning.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Can I use it before the manuscript is &ldquo;final&rdquo;?</div>
+          <div class="faq-a">Yes. Noctua is designed for any stage. Run it after every major revision to catch citation drift early. Frequent re-audits are the point.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Who is this for?</div>
+          <div class="faq-a">Biomedical researchers, medical writers and editors, health sciences trainees, and journal teams that deal with numbered (Vancouver/ICMJE) citations.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Why is this important for Vancouver style specifically?</div>
+          <div class="faq-a">Vancouver requires sequential numbering in the order references first appear in the text. This breaks easily during revisions, paragraph moves, and coauthor merges &mdash; and it's tedious to verify manually across a long manuscript.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What's included in the free plan?</div>
+          <div class="faq-a">3 audits per month and the full diagnostic report (all 6 checks, renumber map, severity badges). You can evaluate the full product value before paying. One anonymous audit is available without signing up.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="container">
+      <h2 class="font-serif">Ready to submit with confidence?</h2>
+      <p>Upload your manuscript and get an actionable citation audit in seconds.</p>
+      <div class="btn-group" style="justify-content: center;">
+        <a href="https://noctua-production.up.railway.app/" class="btn btn-primary">Run a free audit</a>
+        <a href="#demo" class="btn btn-secondary">View demo report</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span style="font-size: 22px;">&#x1F989;</span>
+          <span>Noctua by <a href="index.html" style="color: var(--muted);">Nyx Dynamics, LLC</a></span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Nyx Dynamics</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://noctua-production.up.railway.app/login">Sign in</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 Nyx Dynamics, LLC. All rights reserved. MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const wasOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        // Toggle current
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
