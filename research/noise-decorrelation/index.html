@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noise Decorrelation in HIV | Nyx Dynamics Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg-deep: #060a12;
+  --bg-card: #0d1525;
+  --bg-card2: #111d32;
+  --cyan: #00d4ff;
+  --cyan-dim: #007a94;
+  --gold: #f59e0b;
+  --red: #ef4444;
+  --green: #10b981;
+  --indigo: #818cf8;
+  --white: #f0f4f8;
+  --silver: #94a3b8;
+  --muted: #475569;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-deep);
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--white);
+  background: var(--bg-deep);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── Grain overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Scroll-driven fade-in ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6,10,18,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 2rem;
+}
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+.nav-logo-mark { width: 32px; height: 32px; background: var(--cyan); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
+.nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+@media (max-width: 700px) { .nav-links { display: none; } }
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(0,212,255,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 30%, rgba(129,140,248,0.04) 0%, transparent 50%);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(2%, -1%) rotate(1deg); }
+}
+
+.hero-content {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.3s forwards;
+}
+
+.hero h1 {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.5s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cyan);
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--silver);
+  max-width: 600px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+.hero-meta {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.9s forwards;
+}
+
+.hero-meta a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--cyan-dim);
+  text-decoration: none;
+  border: 1px solid var(--cyan-dim);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.hero-meta a:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px rgba(0,212,255,0.15);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll indicator ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.4s forwards;
+}
+.scroll-hint span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ── Section wrapper ── */
+.section {
+  padding: 6rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.section h2 {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.section p {
+  font-weight: 300;
+  color: var(--silver);
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+  max-width: 700px;
+}
+
+/* ── Stat grid ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin: 2.5rem 0;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.stat-card.cyan::before { background: var(--cyan); }
+.stat-card.red::before { background: var(--red); }
+.stat-card.gold::before { background: var(--gold); }
+.stat-card.green::before { background: var(--green); }
+.stat-card.indigo::before { background: var(--indigo); }
+
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.stat-card.cyan .stat-value { color: var(--cyan); }
+.stat-card.red .stat-value { color: var(--red); }
+.stat-card.gold .stat-value { color: var(--gold); }
+.stat-card.green .stat-value { color: var(--green); }
+.stat-card.indigo .stat-value { color: var(--indigo); }
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--silver);
+  font-weight: 400;
+}
+.stat-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ── Animated counter ── */
+.counter {
+  display: inline-block;
+}
+
+/* ── Narrative flow: paradox → mechanism → evidence ── */
+.paradox-box {
+  background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
+  border-left: 3px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+.paradox-box h3 {
+  font-family: 'Crimson Pro', serif;
+  color: var(--red);
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.mechanism-box {
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(0,212,255,0.01));
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+.mechanism-box h3 {
+  font-family: 'Crimson Pro', serif;
+  color: var(--cyan);
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Key equation ── */
+.equation-display {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid rgba(0,212,255,0.1);
+}
+.equation-display .eq {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.equation-display .eq-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── Phase comparison ── */
+.phase-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+@media (max-width: 600px) {
+  .phase-compare { grid-template-columns: 1fr; }
+}
+
+.phase-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+}
+.phase-card.acute { border-top: 3px solid var(--red); }
+.phase-card.chronic { border-top: 3px solid var(--cyan); }
+
+.phase-card h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.phase-card.acute h4 { color: var(--red); }
+.phase-card.chronic h4 { color: var(--cyan); }
+
+.phase-card .big-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+.phase-card.acute .big-num { color: var(--red); }
+.phase-card.chronic .big-num { color: var(--cyan); }
+
+.phase-card .unit {
+  font-size: 1rem;
+  color: var(--silver);
+  font-weight: 300;
+}
+.phase-card .detail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+.arrow-between {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ── Timeline / flow ── */
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 2rem 0;
+  position: relative;
+}
+.flow-steps::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--red), var(--cyan), var(--green));
+}
+.flow-step {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1rem 0;
+}
+.flow-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--bg-deep);
+  position: relative;
+  z-index: 1;
+}
+.flow-step:nth-child(1) .flow-dot { background: var(--red); }
+.flow-step:nth-child(2) .flow-dot { background: var(--gold); }
+.flow-step:nth-child(3) .flow-dot { background: var(--cyan); }
+.flow-step:nth-child(4) .flow-dot { background: var(--green); }
+
+.flow-text h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.flow-text p {
+  font-size: 0.9rem;
+  color: var(--silver);
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+/* ── Robustness checklist ── */
+.check-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+.check-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.6rem 0;
+  font-weight: 300;
+  color: var(--silver);
+  font-size: 0.95rem;
+}
+.check-list li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* ── Divider ── */
+.divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--cyan), transparent);
+  margin: 4rem auto;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-name {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.footer-affil {
+  font-size: 0.9rem;
+  color: var(--silver);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--cyan-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--cyan); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="nav-logo-mark">N</div><div class="nav-logo-text">Nyx Dynamics</div></a>
+    <ul class="nav-links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/noctua">Noctua</a></li>
+      <li><a href="/research" class="active">Research</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Interactive Research Summary</div>
+    <h1>Why Does the Brain Survive <em>Acute HIV?</em></h1>
+    <p class="hero-sub">
+      A computational framework resolving a 35-year clinical paradox through noise correlation dynamics in neuronal microtubules.
+    </p>
+    <div class="hero-meta">
+      <a href="https://www.biorxiv.org/content/10.64898/2026.02.10.703895v2" target="_blank">bioRxiv Preprint</a>
+      <a href="https://github.com/Nyx-Dynamics/noise_decorrelation_hiv" target="_blank">GitHub Repository</a>
+      <a href="/research">← All Research</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ THE PARADOX ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">01 — The Paradox</div>
+    <h2>The Assault Without the Damage</h2>
+    <p>During acute HIV infection, the brain endures a neurotoxic storm. Standard models predict neuronal loss. But it doesn't happen.</p>
+  </div>
+
+  <div class="paradox-box reveal">
+    <h3>What happens during acute HIV</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      Massive neuroinflammation. Elevated glutamate excitotoxicity. Mitochondrial stress. Oxidative damage. Every marker says the brain should suffer — yet NAA, the gold-standard neuronal health metabolite, remains largely preserved. No quantitative model existed to explain why.
+    </p>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card red">
+      <div class="stat-value">~220</div>
+      <div class="stat-label">Patients across 4 MRS studies</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-value">13</div>
+      <div class="stat-label">Group-level observations</div>
+    </div>
+    <div class="stat-card indigo">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Prior mechanistic models</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ THE MECHANISM ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">02 — The Mechanism</div>
+    <h2>Noise Decorrelation as a Firebreak</h2>
+    <p>We propose that shorter noise correlation during acute infection paradoxically protects neurons — like a firebreak limiting the spread of a wildfire.</p>
+  </div>
+
+  <div class="mechanism-box reveal">
+    <h3>The core idea</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      In neuronal microtubules, quantum-scale noise correlations determine how far damage signals propagate. During acute HIV, inflammation disrupts these correlations — shortening the correlation length ξ. Counterintuitively, this reduced coherence limits the coordinated spread of damage, preserving overall neuronal function.
+    </p>
+  </div>
+
+  <div class="equation-display reveal">
+    <div class="eq">Π<sub>ξ</sub> ∝ ξ<sup style="font-size:1.2rem">β<sub>ξ</sub></sup></div>
+    <div class="eq-label">Protection factor scales as a power law of correlation length</div>
+  </div>
+
+  <div class="flow-steps reveal">
+    <div class="flow-step">
+      <div class="flow-dot">1</div>
+      <div class="flow-text">
+        <h4>HIV triggers acute inflammation</h4>
+        <p>Neuroinflammatory cascade disrupts microtubule dynamics</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-dot">2</div>
+      <div class="flow-text">
+        <h4>Noise correlation length shortens</h4>
+        <p>ξ drops from 0.79 nm (chronic) to 0.42 nm (acute) — an 86% recovery gap</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-dot">3</div>
+      <div class="flow-text">
+        <h4>Damage propagation is limited</h4>
+        <p>Shorter ξ means damage signals can't coordinate across microtubule networks</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-dot">4</div>
+      <div class="flow-text">
+        <h4>NAA is preserved</h4>
+        <p>Neuronal integrity maintained despite the inflammatory assault</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ PHASE COMPARISON ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">03 — Key Results</div>
+    <h2>Phase-Specific Coherence Lengths</h2>
+    <p>Hierarchical Bayesian inference reveals dramatically different noise correlation lengths across HIV phases.</p>
+  </div>
+
+  <div class="phase-compare reveal">
+    <div class="phase-card acute">
+      <h4>Acute Phase</h4>
+      <div class="big-num counter" data-target="0.425" data-decimals="3">0</div>
+      <div class="unit">nm</div>
+      <div class="detail">95% HDI [0.30, 0.54]</div>
+    </div>
+    <div class="phase-card chronic">
+      <h4>Chronic Phase</h4>
+      <div class="big-num counter" data-target="0.790" data-decimals="3">0</div>
+      <div class="unit">nm</div>
+      <div class="detail">95% HDI [0.66, 0.91]</div>
+    </div>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card gold">
+      <div class="stat-value">β = <span class="counter" data-target="2.33" data-decimals="2">0</span></div>
+      <div class="stat-label">Protection scaling exponent</div>
+      <div class="stat-sub">Superlinear: small ξ losses → large vulnerability</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-value">P > <span class="counter" data-target="0.999" data-decimals="3">0</span></div>
+      <div class="stat-label">Posterior prob. acute &lt; chronic</div>
+      <div class="stat-sub">Cohen's d = 5.63</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-value"><span class="counter" data-target="57" data-decimals="0">0</span>%</div>
+      <div class="stat-label">Below linear expectation</div>
+      <div class="stat-sub">Acute protection deficit vs. β = 1</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ ROBUSTNESS ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">04 — Robustness</div>
+    <h2>Validated Across Every Dimension</h2>
+    <p>The findings hold under rigorous sensitivity testing, multiple model specifications, and cross-cohort replication.</p>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card cyan">
+      <div class="stat-value">R² = <span class="counter" data-target="0.89" data-decimals="2">0</span></div>
+      <div class="stat-label">Model fit across all cohorts</div>
+      <div class="stat-sub">89% of observed NAA variance explained</div>
+    </div>
+    <div class="stat-card indigo">
+      <div class="stat-value">&gt;<span class="counter" data-target="98" data-decimals="0">0</span>%</div>
+      <div class="stat-label">Bayesian detection power</div>
+      <div class="stat-sub">n = 143 patients (current study)</div>
+    </div>
+  </div>
+
+  <ul class="check-list reveal">
+    <li>Three independent model versions (v3.6 primary, v4.0 enzyme, v2 individual) all confirm superlinear protection</li>
+    <li>Three cross-cohort replications show consistent acute protection pattern</li>
+    <li>Prior sensitivity analysis: conclusions hold from weak to strong priors</li>
+    <li>All R-hat values = 1.00, effective sample sizes well above thresholds</li>
+    <li>Prospective study needs only n = 60 for 80% power</li>
+  </ul>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ IMPLICATIONS ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">05 — Significance</div>
+    <h2>From Paradox to Prediction</h2>
+    <p>This framework transforms a 35-year clinical observation into testable, falsifiable predictions — connecting quantum-scale microtubule dynamics to macroscopic neurological outcomes.</p>
+  </div>
+
+  <div class="mechanism-box reveal">
+    <h3>What this enables</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      Targeted MRS studies can now directly test the noise decorrelation hypothesis. The model generates specific quantitative predictions for what should be observed in acute vs. chronic cohorts. If confirmed, it bridges condensed matter physics and clinical neuroscience through a single measurable parameter.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ INFOGRAPHIC ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">Visual Summary</div>
+    <h2>The Full Picture</h2>
+    <p>An infographic overview of the noise decorrelation mechanism, from the acute protective shield through the chronic transition to vulnerability.</p>
+  </div>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
+    <img src="../images/infographic_noise_decorrelation.jpg" alt="Solving the HIV Paradox: How Neural Noise Protects the Brain — Infographic" style="width: 100%; display: block;">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+    <div style="width:24px;height:24px;background:var(--cyan);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
+    <span style="font-weight:600;font-size:0.85rem;letter-spacing:0.08em;">Nyx Dynamics, LLC</span>
+  </div>
+  <p style="font-family:'Crimson Pro',serif;font-style:italic;color:var(--silver);font-size:0.85rem;margin-bottom:0.5rem;">"Illuminating hidden insights within data"</p>
+  <div class="footer-links">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:info@nyxdynamics.org">Contact</a>
+  </div>
+  <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger counters inside this element
+      e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Animated counters ──
+function startCounter(el) {
+  el.classList.add('counted');
+  const target = parseFloat(el.dataset.target);
+  const decimals = parseInt(el.dataset.decimals) || 0;
+  const duration = 1200;
+  const start = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = target * eased;
+    el.textContent = current.toFixed(decimals);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// Also trigger counters in phase-compare cards (they're not inside .reveal sometimes)
+const phaseObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter);
+    }
