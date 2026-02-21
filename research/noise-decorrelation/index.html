@@ -495,6 +495,63 @@ body::before {
   margin: 4rem auto;
 }
 
+/* ── Shared media cards ── */
+.media-card {
+  margin: 2rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  background: var(--bg-card);
+}
+.media-card img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* ── Mind map CTA ── */
+.mindmap-cta {
+  display: block;
+  padding: 1.75rem 2rem;
+  text-decoration: none;
+  color: var(--white);
+  background: linear-gradient(135deg, rgba(129,140,248,0.13), rgba(0,212,255,0.08));
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(129,140,248,0.22);
+}
+.mindmap-cta:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,212,255,0.45);
+  box-shadow: 0 10px 25px rgba(0,212,255,0.12);
+}
+.mindmap-cta:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+.mindmap-cta-kicker {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.5rem;
+}
+.mindmap-cta-title {
+  display: block;
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1.45rem, 2.3vw, 1.8rem);
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+}
+.mindmap-cta-copy {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--silver);
+  font-weight: 300;
+}
+
 /* ── Footer ── */
 .footer {
   text-align: center;
@@ -551,7 +608,7 @@ body::before {
     <div class="hero-label">Interactive Research Summary</div>
     <h1>Why Does the Brain Survive <em>Acute HIV?</em></h1>
     <p class="hero-sub">
-      A computational framework resolving a 35-year clinical paradox through noise correlation dynamics in neuronal microtubules.
+      A computational framework proposing a mechanistic explanation for a 35-year clinical paradox through noise correlation dynamics in neuronal microtubules.
     </p>
     <div class="hero-meta">
       <a href="https://www.biorxiv.org/content/10.64898/2026.02.10.703895v2" target="_blank">bioRxiv Preprint</a>
@@ -751,8 +808,25 @@ body::before {
     <h2>The Full Picture</h2>
     <p>An infographic overview of the noise decorrelation mechanism, from the acute protective shield through the chronic transition to vulnerability.</p>
   </div>
-  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
-    <img src="../images/infographic_noise_decorrelation.jpg" alt="Solving the HIV Paradox: How Neural Noise Protects the Brain — Infographic" style="width: 100%; display: block;">
+  <div class="reveal media-card">
+    <img src="/research/images/infographic_noise_decorrelation.jpg" alt="Toward solving the HIV Paradox: How Neural Noise Protects the Brain - Infographic" loading="lazy" decoding="async">
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- ═══ MIND MAP ═══ -->
+<section class="section" id="mindmap">
+  <div class="reveal">
+    <div class="section-label">06 — Mind Map</div>
+    <h2>Explore the Interactive Map</h2>
+    <p>An interactive view of the complete mechanism, from acute neuroprotection through the chronic transition to vulnerability.</p>
+  </div>
+  <div class="reveal media-card">
+    <a class="mindmap-cta" href="/research/noise-decorrelation/mindmap.html" aria-label="Open the interactive mind map for noise decorrelation in HIV">
+      <span class="mindmap-cta-kicker">Interactive View</span>
+      <span class="mindmap-cta-title">Open Mind Map</span>
+      <span class="mindmap-cta-copy">Trace each stage and key result across the full framework.</span>
+    </a>
   </div>
 </section>
 

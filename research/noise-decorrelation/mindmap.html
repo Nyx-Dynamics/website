@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noise Decorrelation Mind Map | Nyx Dynamics Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600&display=swap');
+
+:root {
+  --bg: #060a12;
+  --card: #0d1525;
+  --text: #f0f4f8;
+  --muted: #94a3b8;
+  --cyan: #00d4ff;
+  --indigo: #818cf8;
+  --border: rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: radial-gradient(circle at 15% 10%, rgba(0,212,255,0.09), transparent 45%),
+              radial-gradient(circle at 80% 20%, rgba(129,140,248,0.08), transparent 40%),
+              var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+main {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  font-family: 'JetBrains Mono', monospace;
+  text-decoration: none;
+  color: var(--cyan);
+  border: 1px solid rgba(0,212,255,0.4);
+  border-radius: 6px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.75rem;
+}
+
+h1 {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 0.65rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+
+.hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--cyan);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.map {
+  display: grid;
+  gap: 0.85rem;
+}
+
+details {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: '+';
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+  margin-right: 0.55rem;
+}
+
+details[open] > summary::before {
+  content: '-';
+}
+
+.node-content {
+  color: var(--muted);
+  padding: 0.55rem 0.2rem 0.2rem 1.5rem;
+  font-weight: 300;
+}
+
+.node-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.submap {
+  margin-top: 0.6rem;
+  margin-left: 1rem;
+  border-left: 2px solid rgba(0,212,255,0.3);
+  padding-left: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+</style>
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <a class="back-link" href="/research/noise-decorrelation/">Back to Research Summary</a>
+    </div>
+
+    <h1>Noise Decorrelation Mind Map</h1>
+    <p class="subtitle">A clickable structural map of the mechanism and evidence. Expand each branch to follow the logic from paradox to predictive framework.</p>
+    <p class="hint">Expand/collapse nodes</p>
+
+    <section class="map" aria-label="Interactive mind map">
+      <details open>
+        <summary>Core Question: Why does acute HIV not cause expected neuronal loss?</summary>
+        <div class="node-content">
+          The paradox is that acute neuroinflammatory burden is high, but <strong>NAA remains relatively preserved</strong>.
+        </div>
+        <div class="submap">
+          <details>
+            <summary>Paradox Evidence</summary>
+            <div class="node-content">Findings aggregated across multiple MRS cohorts indicate mismatch between expected and observed damage.</div>
+          </details>
+          <details>
+            <summary>Mechanism Hypothesis</summary>
+            <div class="node-content">
+              Shorter correlation length <strong>xi</strong> in acute phase reduces coordinated spread of damage signals.
+            </div>
+          </details>
+          <details>
+            <summary>Model Relation</summary>
+            <div class="node-content">Protection factor scales as a power law of coherence length: superlinear sensitivity to xi loss.</div>
+          </details>
+          <details>
+            <summary>Phase Comparison</summary>
+            <div class="node-content">Posterior inference supports acute xi &lt; chronic xi with very high probability.</div>
+          </details>
+          <details>
+            <summary>Robustness and Replication</summary>
+            <div class="node-content">Sensitivity checks, model variants, and cross-cohort analyses support the same direction of effect.</div>
+          </details>
+          <details>
+            <summary>Clinical Implication</summary>
+            <div class="node-content">Framework generates testable predictions for acute and chronic MRS signatures in prospective studies.</div>
+          </details>
+        </div>
+      </details>
+    </section>
+  </main>
+</body>
+</html>
