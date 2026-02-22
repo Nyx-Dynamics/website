@@ -237,308 +237,102 @@ body::before {
   max-width: 700px;
 }
 
-/* ── Stat grid ── */
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin: 2.5rem 0;
-}
-
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 8px;
-  padding: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-.stat-card.amber::before { background: var(--amber); }
-.stat-card.red::before { background: var(--red); }
-.stat-card.cyan::before { background: var(--cyan); }
-.stat-card.green::before { background: var(--green); }
-.stat-card.indigo::before { background: var(--indigo); }
-.stat-card.violet::before { background: var(--violet); }
-
-.stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.stat-card.amber .stat-value { color: var(--amber); }
-.stat-card.red .stat-value { color: var(--red); }
-.stat-card.cyan .stat-value { color: var(--cyan); }
-.stat-card.green .stat-value { color: var(--green); }
-.stat-card.indigo .stat-value { color: var(--indigo); }
-.stat-card.violet .stat-value { color: var(--violet); }
-
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--silver);
-  font-weight: 400;
-}
-.stat-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.5rem;
-}
-
-/* ── Callout boxes ── */
-.problem-box {
-  background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
-  border-left: 3px solid var(--red);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-}
-.problem-box h3 {
-  font-family: 'Crimson Pro', serif;
-  color: var(--red);
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-}
-
-.insight-box {
-  background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.01));
-  border-left: 3px solid var(--amber);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-}
-.insight-box h3 {
-  font-family: 'Crimson Pro', serif;
-  color: var(--amber);
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-}
-
-.shadow-box {
-  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(167,139,250,0.02));
-  border-left: 3px solid var(--violet);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-}
-.shadow-box h3 {
-  font-family: 'Crimson Pro', serif;
-  color: var(--violet);
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-}
-
-/* ── Equation ── */
-.equation-display {
-  text-align: center;
-  padding: 2rem;
-  margin: 2rem 0;
-  background: var(--bg-card);
-  border-radius: 8px;
-  border: 1px solid rgba(245,158,11,0.1);
-}
-.equation-display .eq {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.8rem;
-  font-style: italic;
-  color: var(--white);
-  letter-spacing: 0.05em;
-}
-.equation-display .eq-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-/* ── Timeline: the clock is ticking ── */
-.countdown-track {
-  position: relative;
-  margin: 3rem 0;
-  padding: 0 0 0 4rem;
-}
-
-.countdown-track::before {
-  content: '';
-  position: absolute;
-  left: 18px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(to bottom, var(--green), var(--amber), var(--red), var(--red-dim));
-}
-
-.time-block {
-  position: relative;
-  padding: 1.25rem 0;
-}
-
-.time-marker {
-  position: absolute;
-  left: -4rem;
-  top: 1.25rem;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 600;
-  z-index: 1;
-}
-
-.time-block:nth-child(1) .time-marker { background: var(--green); color: var(--bg-deep); }
-.time-block:nth-child(2) .time-marker { background: var(--amber); color: var(--bg-deep); }
-.time-block:nth-child(3) .time-marker { background: var(--red); color: var(--white); }
-.time-block:nth-child(4) .time-marker { background: var(--red-dim); color: var(--white); }
-
-.time-content {
-  background: var(--bg-card);
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(255,255,255,0.04);
-}
-
-.time-content h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.35rem;
-}
-.time-block:nth-child(1) .time-content h4 { color: var(--green); }
-.time-block:nth-child(2) .time-content h4 { color: var(--amber); }
-.time-block:nth-child(3) .time-content h4 { color: var(--red); }
-.time-block:nth-child(4) .time-content h4 { color: var(--red-dim); }
-
-.time-content p {
-  font-size: 0.9rem;
-  color: var(--silver);
-  font-weight: 300;
-  margin-bottom: 0;
-}
-
-.time-content .efficacy {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-/* ── Efficacy bar ── */
-.efficacy-bar-wrap {
-  margin: 2.5rem 0;
-}
-.efficacy-bar-label {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-.efficacy-bar {
-  height: 12px;
-  border-radius: 6px;
-  background: var(--bg-card);
-  overflow: hidden;
-  position: relative;
-}
-.efficacy-fill {
-  height: 100%;
-  border-radius: 6px;
-  background: linear-gradient(to right, var(--green), var(--amber), var(--red));
-  width: 0%;
-  transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.efficacy-fill.animated { width: 100%; }
-
-.efficacy-markers {
-  position: relative;
-  height: 30px;
-  margin-top: 0.25rem;
-}
-.eff-mark {
-  position: absolute;
-  top: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  transform: translateX(-50%);
-}
-.eff-mark::before {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 8px;
-  background: var(--muted);
-  margin: 0 auto 3px;
-}
-
-/* ── Generalizations ── */
-.generalize-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 2rem 0;
-}
-.generalize-card {
-  background: var(--bg-card);
-  border-radius: 8px;
-  padding: 1.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
-  text-align: center;
-}
-.generalize-card .icon {
-  font-size: 1.8rem;
-  margin-bottom: 0.75rem;
-}
-.generalize-card h4 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-}
-.generalize-card p {
-  font-size: 0.8rem;
-  color: var(--muted);
-  font-weight: 300;
-  margin: 0;
-}
-
-/* ── Check list ── */
-.check-list {
-  list-style: none;
-  margin: 1.5rem 0;
-}
-.check-list li {
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-  padding: 0.6rem 0;
-  font-weight: 300;
-  color: var(--silver);
-  font-size: 0.95rem;
-}
-.check-list li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
 /* ── Divider ── */
 .divider {
   width: 60px;
   height: 2px;
   background: linear-gradient(to right, var(--amber), transparent);
   margin: 4rem auto;
+}
+
+/* ── Visual Deck ── */
+.deck-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.slide-section {
+  margin-bottom: 6rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.slide-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.slide-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(245,158,11,0.3), transparent);
+}
+
+.slide-frame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  background: #f5f5f5;
+}
+.slide-frame:hover {
+  box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 30px rgba(245,158,11,0.06);
+  transform: translateY(-2px);
+}
+.slide-frame img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+.slide-caption {
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--silver);
+  line-height: 1.6;
+  max-width: 750px;
+}
+.slide-caption strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.slide-caption em {
+  color: var(--amber);
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* ── Progress bar ── */
+.deck-progress {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99;
+  background: rgba(255,255,255,0.03);
+}
+.deck-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--green), var(--amber), var(--red));
+  transition: width 0.2s ease;
 }
 
 /* ── Footer ── */
@@ -573,8 +367,6 @@ body::before {
   transition: color 0.3s;
 }
 .footer-links a:hover { color: var(--amber); }
-
-.counter { display: inline-block; }
 </style>
 </head>
 <body>
@@ -593,18 +385,23 @@ body::before {
   </div>
 </nav>
 
+<!-- Progress bar -->
+<div class="deck-progress">
+  <div class="deck-progress-fill" id="progressFill"></div>
+</div>
+
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-label">Interactive Research Summary</div>
-    <h1>Every Hour Counts. <em>The Math Proves It.</em></h1>
+    <h1>The 24-Hour Injection <em>PEP Reality</em></h1>
     <p class="hero-sub">
-      A formal mathematical framework proving that HIV prevention windows are finite under irreversible infection establishment — and that the 72-hour rule is a dramatic oversimplification.
+      A visual walkthrough of finite prevention windows under irreversible infection establishment &mdash; why the 72-hour PEP guideline collapses to 12&ndash;24 hours for injection exposure, and what it means for PWID.
     </p>
     <div class="hero-meta">
       <a href="https://doi.org/10.20944/preprints202601.1090.v1" target="_blank">Preprint</a>
       <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" target="_blank">GitHub Repository</a>
-      <a href="/research">← All Research</a>
+      <a href="/research">&larr; All Research</a>
     </div>
   </div>
   <div class="scroll-hint">
@@ -613,224 +410,140 @@ body::before {
   </div>
 </section>
 
-<!-- ═══ THE PROBLEM ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">01 — The Problem</div>
-    <h2>A Guideline Without a Derivation</h2>
-    <p>Post-exposure prophylaxis (PEP) can prevent HIV infection after exposure — but only if started within a narrow window. The clinical guideline says 72 hours. Where does that number come from?</p>
+<!-- ═══ VISUAL DECK ═══ -->
+<div class="deck-container">
+
+  <!-- Slide 1: Title -->
+  <div class="slide-section" data-slide="1">
+    <div class="slide-number">Slide 01 &mdash; The Central Claim</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_1.png" alt="Finite Prevention Windows: Why the 72-Hour Rule Fails for Injection Exposure" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The 72-hour PEP window is an artifact of mucosal transmission.</strong> For parenteral (injection) exposure, accelerated viral establishment compresses the effective window to <em>~24 hours</em>. The standard guideline does not apply.
+    </div>
   </div>
 
-  <div class="problem-box reveal">
-    <h3>The uncomfortable truth</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      There is no formal mathematical derivation of the 72-hour threshold. The biological reality isn't a binary cutoff — it's a continuous probability curve shaped by stochastic viral dynamics, reservoir seeding kinetics, and an irreversibility threshold where prevention becomes impossible. Clinicians need better than a heuristic.
-    </p>
+  <!-- Slide 2: Current Paradigm -->
+  <div class="slide-section" data-slide="2">
+    <div class="slide-number">Slide 02 &mdash; The Current Paradigm</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_2.png" alt="PEP functions as a safety net for mucosal exposure" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>CDC guidelines permit PEP initiation up to 72 hours post-exposure.</strong> This window is implicitly treated as universal, but it was derived from mucosal transmission dynamics where epithelial barriers create a &ldquo;lag phase&rdquo; before systemic infection.
+    </div>
   </div>
 
-  <div class="stat-grid reveal">
-    <div class="stat-card amber">
-      <div class="stat-value">72h</div>
-      <div class="stat-label">Clinical guideline threshold</div>
-      <div class="stat-sub">No formal derivation exists</div>
+  <!-- Slide 3: Absorbing State -->
+  <div class="slide-section" data-slide="3">
+    <div class="slide-number">Slide 03 &mdash; The Absorbing State</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_3.png" alt="Infection is a race toward the Absorbing State" loading="lazy" decoding="async">
     </div>
-    <div class="stat-card red">
-      <div class="stat-value">28d</div>
-      <div class="stat-label">PEP treatment course</div>
-      <div class="stat-sub">Daily antiretroviral regimen</div>
-    </div>
-    <div class="stat-card violet">
-      <div class="stat-value">Binary</div>
-      <div class="stat-label">Current decision framework</div>
-      <div class="stat-sub">"Within 72h" or "too late"</div>
+    <div class="slide-caption">
+      <strong>Infection progresses through three states: Susceptible, Seeded, and Integrated.</strong> Once proviral integration occurs (Z=2), the process is irreversible. PEP efficacy decays to zero. The critical formula: <em>E<sub>PEP</sub>(t) &le; 1 &minus; P<sub>int</sub>(t)</em>.
     </div>
   </div>
-</section>
+
+  <!-- Slide 4: Route Comparison -->
+  <div class="slide-section" data-slide="4">
+    <div class="slide-number">Slide 04 &mdash; Stochastic Dominance</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_4.png" alt="Injection delivers a massive head start" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Parenteral exposure bypasses all physical barriers.</strong> Mucosal exposure delivers a low inoculum (<em>V<sub>0</sub> &approx; 1</em>) that must cross epithelial barriers. Injection delivers a high inoculum (<em>V<sub>0</sub> &approx; 1000</em>) directly to the bloodstream, forcing rapid integration.
+    </div>
+  </div>
+
+  <!-- Slide 5: Efficacy Curves -->
+  <div class="slide-section" data-slide="5">
+    <div class="slide-number">Slide 05 &mdash; The Compression Zone</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_5.png" alt="High inoculum compresses the prevention window by 300%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The prevention window compresses by ~3x for injection exposure.</strong> The mucosal window (blue, solid) persists to <em>t<sub>crit</sub> &approx; 72h</em>. The parenteral window (red, dashed) collapses to <em>t<sub>crit</sub> &approx; 22h</em>. Between 24&ndash;72 hours is the &ldquo;Compression Zone&rdquo; where mucosal PEP works but parenteral PEP has already failed.
+    </div>
+  </div>
+
+  <!-- Slide 6: NHP Validation -->
+  <div class="slide-section" data-slide="6">
+    <div class="slide-number">Slide 06 &mdash; Experimental Validation</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_6.png" alt="Experimental data confirms the window closes at 24 hours for injection" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Non-human primate data confirms the model predictions.</strong> Tsai et al. (IV challenge) and Otten et al. (vaginal challenge) show the predicted divergence. The 72-hour rule is an artifact of mucosal transmission dynamics &mdash; it does not apply to direct bloodstream inoculation.
+    </div>
+  </div>
+
+  <!-- Slide 7: Critical Time -->
+  <div class="slide-section" data-slide="7">
+    <div class="slide-number">Slide 07 &mdash; The Critical Time</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_7.png" alt="The Critical Time for injection is 12-24 hours" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>By 24 hours post-injection, PEP efficacy falls below 50%.</strong> The probability of irreversible integration is already dominating the system. The critical intervention window for parenteral exposure is <em>12&ndash;24 hours</em>, not 72.
+    </div>
+  </div>
+
+  <!-- Slide 8: Structural Barriers -->
+  <div class="slide-section" data-slide="8">
+    <div class="slide-number">Slide 08 &mdash; Structural Barriers</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_8.png" alt="Structural barriers delay care well beyond the biological limit" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The median PWID access delay is ~72 hours &mdash; three times the biological limit.</strong> Withdrawal, policing, housing instability, and geographic isolation create structural barriers that push healthcare access well beyond the effective parenteral window.
+    </div>
+  </div>
+
+  <!-- Slide 9: Failure Mode -->
+  <div class="slide-section" data-slide="9">
+    <div class="slide-number">Slide 09 &mdash; The Failure Mode</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_9.png" alt="The Failure Mode: A Structural-Biological Mismatch" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Fewer than 5% of PWID access PEP within the effective window.</strong> The overlap between the access delay distribution and the efficacy curve yields a population-level bound: <em>E<sub>PEP</sub> &le; 8.7%</em>. This is a structural-biological mismatch, not a pharmacological failure.
+    </div>
+  </div>
+
+  <!-- Slide 10: The Pivot -->
+  <div class="slide-section" data-slide="10">
+    <div class="slide-number">Slide 10 &mdash; The Pivot to PrEP</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_10.png" alt="When the window is too small, we must close it before exposure" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>When the window is too small, the only option is to close it <em>before</em> exposure.</strong> Pre-exposure prophylaxis (PrEP) removes the time variable entirely. Long-acting injectable options like lenacapavir provide immediate, continuous protection without requiring post-exposure access.
+    </div>
+  </div>
+
+  <!-- Slide 11: Summary -->
+  <div class="slide-section" data-slide="11">
+    <div class="slide-number">Slide 11 &mdash; Summary &amp; Implications</div>
+    <div class="slide-frame">
+      <img src="/research/images/pt_slide_11.png" alt="Summary and Implications: The Biology, The Mismatch, The Pivot" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>We cannot slow down the virus. We must stay ahead of it.</strong> Integration is irreversible and compresses the injection window to ~24h. Structural barriers delay PWID access to ~72h, resulting in &lt;10% efficacy. PrEP must become the primary prevention strategy for PWID.
+    </div>
+  </div>
+
+</div>
 
 <div class="divider"></div>
-
-<!-- ═══ THE THEOREM ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">02 — The Prevention Theorem</div>
-    <h2>Finite Windows Are a Mathematical Certainty</h2>
-    <p>We prove that under irreversible infection establishment, all prevention windows are mathematically finite. The efficacy curve is continuous and nonlinear — every hour matters, but some hours matter far more than others.</p>
-  </div>
-
-  <div class="equation-display reveal">
-    <div class="eq">S(t) = P(prevention succeeds | delay = t)</div>
-    <div class="eq-label">Survival function: PEP efficacy as a continuous function of delay</div>
-  </div>
-
-  <div class="insight-box reveal">
-    <h3>The key insight</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      PEP efficacy doesn't fall off a cliff at 72 hours. It decays continuously, governed by the race between antiretroviral suppression and irreversible reservoir seeding. The 72-hour guideline isn't wrong — but it hides the urgency of the first 24 hours and the residual (but diminishing) benefit beyond 72.
-    </p>
-  </div>
-
-  <div class="efficacy-bar-wrap reveal">
-    <div class="efficacy-bar-label">
-      <span>EXPOSURE</span>
-      <span>IRREVERSIBILITY</span>
-    </div>
-    <div class="efficacy-bar">
-      <div class="efficacy-fill" id="effBar"></div>
-    </div>
-    <div class="efficacy-markers">
-      <div class="eff-mark" style="left:0%; color: var(--green);">0h</div>
-      <div class="eff-mark" style="left:16%; color: var(--green);">12h</div>
-      <div class="eff-mark" style="left:33%; color: var(--amber);">24h</div>
-      <div class="eff-mark" style="left:50%; color: var(--amber);">36h</div>
-      <div class="eff-mark" style="left:67%; color: var(--red);">48h</div>
-      <div class="eff-mark" style="left:83%; color: var(--red);">60h</div>
-      <div class="eff-mark" style="left:100%; color: var(--red-dim);">72h+</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ THE CLOCK ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">03 — The Race Against Irreversibility</div>
-    <h2>What Happens as the Clock Ticks</h2>
-    <p>The framework maps the biological timeline from exposure to the point of no return.</p>
-  </div>
-
-  <div class="countdown-track reveal">
-    <div class="time-block">
-      <div class="time-marker">0–6h</div>
-      <div class="time-content">
-        <h4>Maximum Prevention Window</h4>
-        <p>Virus is replicating locally at the exposure site. Reservoir seeding has not begun. PEP can fully suppress before systemic spread.</p>
-        <div class="efficacy" style="color: var(--green);">Efficacy: highest — every hour at this stage is critical</div>
-      </div>
-    </div>
-    <div class="time-block">
-      <div class="time-marker">6–24h</div>
-      <div class="time-content">
-        <h4>Stochastic Transition</h4>
-        <p>Virus begins migrating to regional lymph nodes. Early reservoir seeding events are probabilistic — each passing hour shifts the odds.</p>
-        <div class="efficacy" style="color: var(--amber);">Efficacy: rapidly declining — nonlinear decay region</div>
-      </div>
-    </div>
-    <div class="time-block">
-      <div class="time-marker">24–72h</div>
-      <div class="time-content">
-        <h4>The Shadow Zone</h4>
-        <p>PEP still suppresses viral replication — the patient appears protected. But for a growing fraction of individuals, the reservoir has already been seeded. Failure is locked in before anyone knows.</p>
-        <div class="efficacy" style="color: var(--red);">Efficacy: diminishing — increasing probability of hidden failure</div>
-      </div>
-    </div>
-    <div class="time-block">
-      <div class="time-marker">&gt;72h</div>
-      <div class="time-content">
-        <h4>Beyond the Guideline</h4>
-        <p>Reservoir establishment is increasingly likely to be irreversible. PEP may still have marginal benefit for some individuals, but the probability of success approaches zero.</p>
-        <div class="efficacy" style="color: var(--red-dim);">Efficacy: near-zero — irreversibility dominates</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ THE SHADOW ZONE ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">04 — The Shadow Zone</div>
-    <h2>When Treatment Looks Like It's Working — But Isn't</h2>
-    <p>Perhaps the most clinically important finding: the framework identifies a period where PEP suppresses measurable viremia while the latent reservoir has already been seeded.</p>
-  </div>
-
-  <div class="shadow-box reveal">
-    <h3>Why this matters clinically</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      A patient in the shadow zone will show undetectable viral load on PEP. Their clinician sees success. But the integrated proviral DNA in resting CD4+ T cells is already there — invisible to standard monitoring. When PEP ends after 28 days, the reservoir reactivates. The infection was inevitable from the moment the reservoir was seeded, regardless of how perfectly the patient adhered to treatment.
-    </p>
-  </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card violet">
-      <div class="stat-value">Invisible</div>
-      <div class="stat-label">Reservoir seeding to standard tests</div>
-      <div class="stat-sub">Viral load appears suppressed throughout</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-value">Locked in</div>
-      <div class="stat-label">Outcome determined before PEP ends</div>
-      <div class="stat-sub">28 days of treatment cannot undo seeding</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ CONTRIBUTIONS ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">05 — Contributions</div>
-    <h2>What This Framework Provides</h2>
-  </div>
-
-  <ul class="check-list reveal">
-    <li>Formal proof that prevention windows are finite under irreversible establishment — the Prevention Theorem</li>
-    <li>Closed-form survival function replacing the binary 72-hour heuristic with a continuous probability curve</li>
-    <li>Quantification of the shadow zone where treatment appears effective but failure is predetermined</li>
-    <li>Sensitivity analysis identifying which biological parameters most strongly control window duration</li>
-    <li>Mathematical foundation for time-dependent clinical decision support tools</li>
-  </ul>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ GENERALIZATION ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">06 — Beyond HIV</div>
-    <h2>Universal Principles of Finite Prevention</h2>
-    <p>Any disease process with an irreversibility threshold has a finite prevention window. The mathematics are the same.</p>
-  </div>
-
-  <div class="generalize-grid reveal">
-    <div class="generalize-card">
-      <div class="icon">🧬</div>
-      <h4>HIV PEP</h4>
-      <p>Reservoir seeding irreversibility</p>
-    </div>
-    <div class="generalize-card">
-      <div class="icon">🔬</div>
-      <h4>Cancer Metastasis</h4>
-      <p>Distant colonization threshold</p>
-    </div>
-    <div class="generalize-card">
-      <div class="icon">🧪</div>
-      <h4>Prion Diseases</h4>
-      <p>Misfolded protein cascade point</p>
-    </div>
-    <div class="generalize-card">
-      <div class="icon">💊</div>
-      <h4>AMR Establishment</h4>
-      <p>Resistance gene fixation threshold</p>
-    </div>
-  </div>
-
-  <div class="insight-box reveal">
-    <h3>The unifying principle</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      Wherever biology transitions from reversible to irreversible, prevention has a mathematically finite window governed by the same stochastic dynamics formalized here. The framework is a template, not just an HIV result.
-    </p>
-  </div>
-</section>
 
 <!-- ═══ INFOGRAPHIC ═══ -->
 <section class="section">
   <div class="reveal">
     <div class="section-label">Visual Summary</div>
-    <h2>The Prevention Clock</h2>
-    <p>An infographic mapping the biological windows for mucosal vs. parenteral exposure — and the structural access crisis that closes PEP as a strategy for people who inject drugs.</p>
+    <h2>The HIV Prevention Clock</h2>
+    <p>Why route matters for PEP efficacy &mdash; mapping biological windows for mucosal vs. parenteral exposure and the structural access crisis for PWID.</p>
   </div>
   <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
     <img src="/research/images/infographic_prevention_theorem.jpg" alt="The HIV Prevention Clock: Why Route Matters for PEP Efficacy — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
@@ -842,7 +555,7 @@ body::before {
 <!-- ═══ MIND MAP ═══ -->
 <section class="section" id="mindmap">
   <div class="reveal">
-    <div class="section-label">07 — Mind Map</div>
+    <div class="section-label">Mind Map</div>
     <h2>HIV PEP Timing &amp; Prevention Windows</h2>
     <p>An overview of the framework's four interconnected domains: mathematical foundations, route-dependent windows, structural access barriers, and prevention architecture.</p>
   </div>
@@ -868,39 +581,31 @@ body::before {
   <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── Scroll reveal ──
+<script>
+// ── Scroll reveal for slides and other elements ──
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
-      e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.slide-section, .reveal').forEach(el => observer.observe(el));
 
-// ── Animated counters ──
-function startCounter(el) {
-  el.classList.add('counted');
-  const target = parseFloat(el.dataset.target);
-  const decimals = parseInt(el.dataset.decimals) || 0;
-  const duration = 1200;
-  const start = performance.now();
-  function tick(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = (target * eased).toFixed(decimals);
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+// ── Progress bar ──
+const progressFill = document.getElementById('progressFill');
+const slides = document.querySelectorAll('.slide-section');
+
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressFill.style.width = progress + '%';
 }
 
-// ── Efficacy bar animation ──
-const barObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      document.getElementById('effBar').classList.add('animated');
-    }
-  });
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>
