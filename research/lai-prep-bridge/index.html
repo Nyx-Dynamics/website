@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAI-PrEP Bridge Tool | Nyx Dynamics Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg-deep: #080610;
+  --bg-card: #12101f;
+  --bg-card2: #1a1730;
+  --emerald: #10b981;
+  --emerald-dim: #059669;
+  --teal: #14b8a6;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --cyan: #06b6d4;
+  --indigo: #818cf8;
+  --gold: #eab308;
+  --white: #f0f4f8;
+  --silver: #94a3b8;
+  --muted: #475569;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-deep);
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--white);
+  background: var(--bg-deep);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,6,16,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 2rem;
+}
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+.nav-logo-mark { width: 32px; height: 32px; background: #00d4ff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
+.nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: #00d4ff; }
+@media (max-width: 700px) { .nav-links { display: none; } }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at 60% 40%, rgba(16,185,129,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 30% 70%, rgba(5,150,105,0.04) 0%, transparent 50%);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(-2%, 1%) rotate(-1deg); }
+}
+
+.hero-content {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--emerald);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.3s forwards;
+}
+
+.hero h1 {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.5s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--emerald);
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--silver);
+  max-width: 620px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+.hero-meta {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.9s forwards;
+}
+
+.hero-meta a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--emerald-dim);
+  text-decoration: none;
+  border: 1px solid var(--emerald-dim);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.hero-meta a:hover {
+  color: var(--emerald);
+  border-color: var(--emerald);
+  box-shadow: 0 0 15px rgba(16,185,129,0.15);
+}
+.hero-meta a.primary {
+  background: var(--emerald-dim);
+  color: var(--white);
+  border-color: var(--emerald-dim);
+}
+.hero-meta a.primary:hover {
+  background: var(--emerald);
+  border-color: var(--emerald);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.4s forwards;
+}
+.scroll-hint span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--emerald), transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ── Section ── */
+.section {
+  padding: 6rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--emerald);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.section h2 {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.section p {
+  font-weight: 300;
+  color: var(--silver);
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+  max-width: 700px;
+}
+
+/* ── Divider ── */
+.divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--emerald), transparent);
+  margin: 4rem auto;
+}
+
+/* ── Visual Deck ── */
+.deck-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.slide-section {
+  margin-bottom: 6rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.slide-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--emerald);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.slide-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(16,185,129,0.3), transparent);
+}
+
+.slide-frame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  background: #f5f5f5;
+}
+.slide-frame:hover {
+  box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 30px rgba(16,185,129,0.06);
+  transform: translateY(-2px);
+}
+.slide-frame img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+.slide-caption {
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--silver);
+  line-height: 1.6;
+  max-width: 750px;
+}
+.slide-caption strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.slide-caption em {
+  color: var(--emerald);
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* ── Progress bar ── */
+.deck-progress {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99;
+  background: rgba(255,255,255,0.03);
+}
+.deck-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--emerald-dim), var(--emerald), var(--teal));
+  transition: width 0.2s ease;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--emerald-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--emerald); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="nav-logo-mark">N</div><div class="nav-logo-text">Nyx Dynamics</div></a>
+    <ul class="nav-links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/noctua">Noctua</a></li>
+      <li><a href="/research" class="active">Research</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Progress bar -->
+<div class="deck-progress">
+  <div class="deck-progress-fill" id="progressFill"></div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Interactive Research Summary &middot; Accepted &middot; Viruses (MDPI)</div>
+    <h1>Bridging the Gap in <em>Global LAI-PrEP</em> Implementation</h1>
+    <p class="hero-sub">
+      A clinical decision support algorithm validated at UNAIDS target scale (21.2 million individuals) that increases LAI-PrEP bridge period success rates by 81.6%, with potential to prevent ~100,000 HIV infections annually.
+    </p>
+    <div class="hero-meta">
+      <a href="https://doi.org/10.3390/v18020237" class="primary" target="_blank">Published Article</a>
+      <a href="https://github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub" target="_blank">GitHub Repository</a>
+      <a href="/research">&larr; All Research</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ VISUAL DECK ═══ -->
+<div class="deck-container">
+
+  <!-- Slide 1: Title -->
+  <div class="slide-section" data-slide="1">
+    <div class="slide-number">Slide 01 &mdash; Overview</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_1.png" alt="Computational Validation of a Clinical Decision Support Algorithm for LAI-PrEP Bridge Period Navigation" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A clinical decision support algorithm for LAI-PrEP bridge period navigation.</strong> Validated at the full UNAIDS global PrEP target scale of 21.2 million individuals. Published in Viruses (MDPI), 2026. Open-source at <em>github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub</em>.
+    </div>
+  </div>
+
+  <!-- Slide 2: Key Numbers -->
+  <div class="slide-section" data-slide="2">
+    <div class="slide-number">Slide 02 &mdash; Key Results</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_2.png" alt="21.2 Million patients, 81.6% relative improvement, ~100,000 infections prevented, ±0.018 pp precision" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Four headline numbers define the tool's impact.</strong> <em>21.2M</em> patients validated at full UNAIDS scale. <em>81.6%</em> relative improvement in bridge period success (23.96% to 43.50%). <em>~100,000</em> infections prevented annually at full implementation. <em>&plusmn;0.018 pp</em> statistical precision at policy-grade accuracy.
+    </div>
+  </div>
+
+  <!-- Slide 3: Implementation Paradox -->
+  <div class="slide-section" data-slide="3">
+    <div class="slide-number">Slide 03 &mdash; The Implementation Paradox</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_3.png" alt="The Implementation Paradox: Oral PrEP vs LAI-PrEP Cascade comparison" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>LAI-PrEP solves the adherence problem but introduces a new upstream vulnerability.</strong> Oral PrEP barriers occur <em>after</em> initiation (daily pill burden). LAI-PrEP barriers occur <em>before</em> injection (navigation &amp; logistics). The 2&ndash;8 week bridge period loses 47.1% of patients to scheduling, insurance authorization, and HIV testing requirements.
+    </div>
+  </div>
+
+  <!-- Slide 4: Architecture -->
+  <div class="slide-section" data-slide="4">
+    <div class="slide-number">Slide 04 &mdash; Clinical Decision Support Architecture</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_4.png" alt="Clinical Decision Support Architecture: 5-step pipeline" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A five-stage pipeline from patient presentation to outcome prediction.</strong> Patient demographics and PrEP status feed into risk stratification (4 tiers), barrier assessment (13 structural barriers), intervention recommendation (21 evidence-based interventions), and outcome prediction. Processing time: <em>&lt;30 seconds</em> &mdash; enabling point-of-care decision support.
+    </div>
+  </div>
+
+  <!-- Slide 5: Technical Architecture -->
+  <div class="slide-section" data-slide="5">
+    <div class="slide-number">Slide 05 &mdash; Policy-Grade Technical Architecture</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_5.png" alt="Policy-Grade Technical Architecture: streaming, reproducible, validated, configuration-driven" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Built for real-world deployment.</strong> Python-based streaming engine processes <em>83,800 patients/second</em>. Full JSON export for auditability. 100% pass rate on 18/18 edge-case unit tests. Configuration-driven logic separates clinical parameters from algorithmic logic for rapid adaptation.
+    </div>
+  </div>
+
+  <!-- Slide 6: Progressive Validation -->
+  <div class="slide-section" data-slide="6">
+    <div class="slide-number">Slide 06 &mdash; Progressive Validation</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_6.png" alt="Progressive Validation Methodology: 144x precision improvement from 1K to 21.2M" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Validation scaled progressively from 1K to 21.2M patients.</strong> Margin of error decreased from <em>&plusmn;2.600 pp</em> to <em>&plusmn;0.018 pp</em> &mdash; a 144&times; precision improvement &mdash; while processing speed remained stable at ~80,000 patients/second. Results enter the policy-grade precision zone at 10M+ scale.
+    </div>
+  </div>
+
+  <!-- Slide 7: Global Impact -->
+  <div class="slide-section" data-slide="7">
+    <div class="slide-number">Slide 07 &mdash; Global Impact at UNAIDS Scale</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_7.png" alt="Global Impact: baseline 23.96% to 43.50% with interventions" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Bridge period success rates nearly double globally.</strong> Baseline success of <em>23.96%</em> rises to <em>43.50%</em> with algorithm-guided interventions &mdash; a +19.54 percentage point absolute gain. This translates to 4.1 million additional successful transitions and ~100,000 infections prevented annually.
+    </div>
+  </div>
+
+  <!-- Slide 8: Structural Barriers -->
+  <div class="slide-section" data-slide="8">
+    <div class="slide-number">Slide 08 &mdash; Structural Barriers</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_8.png" alt="Addressing Structural Barriers: dose-response relationship of inequality" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Each additional structural barrier reduces success by <em>-7.74 pp</em>.</strong> A clear dose-response relationship: patients with 0 barriers achieve ~45% success, while those with 5+ barriers fall below the 15% clinical threshold. 85.7% of the global patient population faces at least one structural barrier.
+    </div>
+  </div>
+
+  <!-- Slide 9: Equity Engine -->
+  <div class="slide-section" data-slide="9">
+    <div class="slide-number">Slide 09 &mdash; The Equity Engine</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_9.png" alt="The Equity Engine: Closing the Gap across populations" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The most marginalized populations see the greatest gains.</strong> PWID: <em>+265%</em> relative improvement (10.4% to 37.8%). Adolescents (16&ndash;24y): <em>+147%</em> (16.3% to 40.3%). Systematic implementation support narrows health equity gaps rather than widening them.
+    </div>
+  </div>
+
+  <!-- Slide 10: Regional Equity -->
+  <div class="slide-section" data-slide="10">
+    <div class="slide-number">Slide 10 &mdash; Regional Health Equity</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_10.png" alt="Regional Health Equity Analysis: Sub-Saharan Africa sees largest gains" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Sub-Saharan Africa &mdash; 62% of the global patient burden &mdash; sees a <em>+91.2%</em> relative gain.</strong> Regions with the highest HIV burden demonstrate the highest marginal return on investment from bridge period navigation. The tool preferentially benefits the populations that need it most.
+    </div>
+  </div>
+
+  <!-- Slide 11: Pacific Northwest -->
+  <div class="slide-section" data-slide="11">
+    <div class="slide-number">Slide 11 &mdash; Site-Specific Adaptation</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_11.png" alt="Pacific Northwest Case Study: methamphetamine co-use and network density" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Configuration-driven logic enables site-specific adaptation.</strong> Pacific Northwest case study: 35% methamphetamine co-use prevalence alters network mixing dynamics and injection frequency. Network conditions already exceed the critical outbreak threshold (0.35) &mdash; stochastic avoidance failure means luck will inevitably run out.
+    </div>
+  </div>
+
+  <!-- Slide 12: Outbreak Forecasting -->
+  <div class="slide-section" data-slide="12">
+    <div class="slide-number">Slide 12 &mdash; Outbreak Forecasting</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_12.png" alt="Outbreak Forecasting and Prevention Levers" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>50% outbreak probability by 2027; ~95% by 2035.</strong> The top three policy levers: methamphetamine effect on network density, incarceration rate, and SSP coverage. Policy must target these specific structural drivers to bend the curve.
+    </div>
+  </div>
+
+  <!-- Slide 13: ROI -->
+  <div class="slide-section" data-slide="13">
+    <div class="slide-number">Slide 13 &mdash; Return on Investment</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_13.png" alt="The ROI of Prevention: 4.1M transitions, 100K infections prevented, $40B saved" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A <em>10.5:1</em> five-year return on investment.</strong> 4.1 million additional successful transitions lead to ~100,000 HIV infections prevented annually, saving an estimated $40 billion in lifetime treatment costs. Bridge period navigation is one of the highest-value interventions in the PrEP implementation landscape.
+    </div>
+  </div>
+
+  <!-- Slide 14: Summary -->
+  <div class="slide-section" data-slide="14">
+    <div class="slide-number">Slide 14 &mdash; Validated. Scalable. Open.</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_14.png" alt="Validated. Scalable. Open." loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Four pillars of implementation readiness.</strong> Validated at scale (21.2M, &plusmn;0.018 pp). Equity-focused (greatest benefits for PWID +265% and Adolescents +147%). High impact (~100K infections/year prevented). Implementation ready &mdash; open-source code available for immediate adaptation.
+    </div>
+  </div>
+
+  <!-- Slide 15: Next Steps -->
+  <div class="slide-section" data-slide="15">
+    <div class="slide-number">Slide 15 &mdash; Next Steps</div>
+    <div class="slide-frame">
+      <img src="/research/images/lai_slide_15.png" alt="Next Steps: Clinical Validation - seeking pilot sites" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Seeking prospective pilot sites for Phase 1 clinical validation.</strong> 50&ndash;100 patients, 3&ndash;6 months. The computational validation is complete &mdash; the next step is real-world clinical confirmation of the algorithm's impact on bridge period outcomes.
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ INFOGRAPHIC ═══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">Visual Summary</div>
+    <h2>Bridging the Gap</h2>
+    <p>A comprehensive visual overview of the bridge period challenge, the computational solution, equity impact across populations, and global scale projections.</p>
+  </div>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
+    <img src="/research/images/infographic_lai_prep.jpg" alt="Bridging the Gap: Optimizing Global HIV Prevention with LAI-PrEP Decision Support — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ MIND MAP ═══ -->
+<section class="section" id="mindmap">
+  <div class="reveal">
+    <div class="section-label">Mind Map</div>
+    <h2>LAI-PrEP Bridge Period Decision Support</h2>
+    <p>Five interconnected domains: the bridge period challenge, decision support tool workflow, computational validation at 21.2M scale, global impact projections, and technical implementation.</p>
+  </div>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: #fff;">
+    <img src="/research/images/mindmap_lai_prep.png" alt="Mind Map: LAI-PrEP Bridge Period Decision Support" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+    <div style="width:24px;height:24px;background:#00d4ff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
+    <span style="font-weight:600;font-size:0.85rem;letter-spacing:0.08em;">Nyx Dynamics, LLC</span>
+  </div>
+  <p style="font-family:'Crimson Pro',serif;font-style:italic;color:var(--silver);font-size:0.85rem;margin-bottom:0.5rem;">"Illuminating hidden insights within data"</p>
+  <div class="footer-links">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:info@nyxdynamics.org">Contact</a>
+  </div>
+  <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+</footer>
+
+<script>
+// ── Scroll reveal for slides and other elements ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.slide-section, .reveal').forEach(el => observer.observe(el));
+
+// ── Progress bar ──
+const progressFill = document.getElementById('progressFill');
+
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressFill.style.width = progress + '%';
+}
+
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>
