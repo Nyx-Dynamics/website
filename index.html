@@ -203,6 +203,41 @@
       padding: 4px 10px; border-radius: 4px;
     }
 
+    /* Leader Profile (expanded) */
+    .leader-profile {
+      max-width: 800px; margin: 0 auto;
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 16px; padding: 48px; text-align: center;
+    }
+    .leader-header {
+      display: flex; align-items: center; gap: 20px;
+      justify-content: center; margin-bottom: 36px;
+    }
+    @media (max-width: 480px) {
+      .leader-header { flex-direction: column; text-align: center; }
+      .leader-profile { padding: 28px 20px; }
+    }
+    .leader-story { text-align: left; }
+    .leader-chapter { margin-bottom: 28px; }
+    .leader-chapter h4 {
+      color: var(--cyan); font-size: 15px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .leader-chapter p { color: var(--silver); font-size: 15px; line-height: 1.7; }
+    .evidence-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;
+    }
+    @media (max-width: 600px) { .evidence-grid { grid-template-columns: 1fr; } }
+    .evidence-item {
+      background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 10px; padding: 16px;
+    }
+    .evidence-label {
+      display: inline-block; color: var(--cyan); font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;
+    }
+    .evidence-item p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
     /* Contact */
     .contact-info { text-align: center; max-width: 500px; margin: 0 auto; }
     .contact-info p { margin-bottom: 12px; }
@@ -225,6 +260,115 @@
     .footer-brand span { color: var(--muted); font-size: 14px; }
     .footer-tagline { color: #4b5563; font-style: italic; font-size: 14px; }
     .footer-copy { color: #374151; font-size: 12px; margin-top: 16px; }
+
+    /* Origins — Cinematic */
+    .origins-cinema {
+      position: relative; width: 100%; height: 85vh; min-height: 520px;
+      overflow: hidden; cursor: pointer; background: #030308;
+    }
+    /* Image scene layers */
+    .origins-scene {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.4s ease;
+    }
+    .origins-scene.active { opacity: 1; }
+    .origins-scene-spark { background-image: url('assets/scene-spark.jpg'); }
+    .origins-scene-utopia { background-image: url('assets/scene-utopia.jpg'); }
+    .origins-scene-dystopia { background-image: url('assets/scene-dystopia.jpg'); }
+    .origins-scene-order { background-image: url('assets/scene-chaos-order.jpg'); }
+    .origins-scene-logo { background-image: url('assets/nyx-logo-cinematic.jpg'); }
+
+    /* Particle overlay canvas */
+    .origins-particles {
+      position: absolute; inset: 0; z-index: 2;
+      width: 100%; height: 100%; display: block;
+      pointer-events: none;
+    }
+
+    /* Subtitle overlay */
+    .origins-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      align-items: center; padding: 0 24px 80px; text-align: center;
+      pointer-events: none;
+    }
+    .origins-subtitle {
+      font-family: 'Playfair Display', serif; color: rgba(248,250,252,0.95);
+      font-size: clamp(16px, 2.8vw, 26px); font-style: italic;
+      max-width: 750px; line-height: 1.6;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.7);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      background: rgba(3,3,8,0.4); padding: 16px 28px; border-radius: 8px;
+    }
+    .origins-subtitle.visible { opacity: 1; transform: translateY(0); }
+
+    /* Play button */
+    .origins-play-wrap {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(3,3,8,0.6); transition: opacity 0.6s ease;
+    }
+    .origins-play-wrap.hidden { opacity: 0; pointer-events: none; }
+    .origins-play-btn {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px solid rgba(0,212,255,0.5);
+      background: rgba(0,212,255,0.06); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .origins-play-btn:hover {
+      background: rgba(0,212,255,0.12); border-color: var(--cyan);
+      box-shadow: 0 0 50px rgba(0,212,255,0.2);
+    }
+    .origins-play-icon {
+      width: 0; height: 0; border-style: solid;
+      border-width: 16px 0 16px 28px;
+      border-color: transparent transparent transparent var(--cyan);
+      margin-left: 6px;
+    }
+    .origins-play-label {
+      color: var(--muted); font-size: 13px; text-transform: uppercase;
+      letter-spacing: 2px; font-weight: 600; margin-top: 16px;
+    }
+    .origins-pause-hint {
+      position: absolute; top: 20px; right: 24px; z-index: 10;
+      color: var(--muted); font-size: 12px; opacity: 0; transition: opacity 0.3s;
+    }
+    .origins-cinema:hover .origins-pause-hint.visible { opacity: 1; }
+
+    /* Progress + dots */
+    .origins-progress {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: rgba(55,65,81,0.4); z-index: 10;
+    }
+    .origins-progress-fill {
+      height: 100%; background: var(--cyan); width: 0%;
+      transition: width 0.15s linear;
+    }
+    .origins-dots {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; gap: 10px;
+    }
+    .origins-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(55,65,81,0.6); border: 1px solid rgba(55,65,81,0.8);
+      transition: all 0.4s;
+    }
+    .origins-dot.active {
+      background: var(--cyan); border-color: var(--cyan);
+      box-shadow: 0 0 8px rgba(0,212,255,0.4);
+    }
+    .origins-dot.past {
+      background: rgba(0,212,255,0.25); border-color: rgba(0,212,255,0.35);
+    }
+    .origins-attribution {
+      text-align: center; padding: 32px 24px;
+    }
+    .origins-attribution blockquote {
+      font-size: clamp(16px, 2.5vw, 20px); margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
@@ -237,6 +381,7 @@
       </div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#origins">Origins</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="noctua.html">Noctua</a></li>
         <li><a href="/research">Research</a></li>
@@ -262,8 +407,145 @@
     </div>
   </section>
 
+  <!-- Origins -->
+  <section id="origins" style="padding: 0;">
+    <div class="origins-cinema" id="originsCinema">
+      <!-- Scene image layers (crossfade) -->
+      <div class="origins-scene origins-scene-spark active" data-scene="0"></div>
+      <div class="origins-scene origins-scene-utopia" data-scene="1"></div>
+      <div class="origins-scene origins-scene-dystopia" data-scene="2"></div>
+      <div class="origins-scene origins-scene-order" data-scene="3"></div>
+      <div class="origins-scene origins-scene-logo" data-scene="4"></div>
+
+      <!-- Particle overlay -->
+      <canvas class="origins-particles" id="originsParticles"></canvas>
+
+      <!-- Subtitle -->
+      <div class="origins-overlay">
+        <p class="origins-subtitle" id="originsSub"></p>
+      </div>
+
+      <!-- Play button -->
+      <div class="origins-play-wrap" id="originsPlayWrap">
+        <div class="origins-play-btn" id="originsPlayBtn" role="button" aria-label="Play our story" tabindex="0">
+          <div class="origins-play-icon"></div>
+        </div>
+        <p class="origins-play-label">Our Origin Story</p>
+      </div>
+      <div class="origins-pause-hint" id="originsPauseHint">Click to pause</div>
+
+      <!-- Dots + progress -->
+      <div class="origins-dots">
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+      </div>
+      <div class="origins-progress">
+        <div class="origins-progress-fill" id="originsProgressFill"></div>
+      </div>
+    </div>
+    <div class="origins-attribution">
+      <blockquote>"A reinvention born from profound challenge and growth &mdash; a reclaiming of voice, skills, and purpose."</blockquote>
+      <p class="quote-attr">&mdash; Adrian Demidont, Founder</p>
+    </div>
+  </section>
+
+  <!-- Leadership -->
+  <section id="leadership">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Leadership</h2>
+        <p>From bedside to algorithms &mdash; a clinician&rsquo;s evolution into computation</p>
+      </div>
+
+      <div class="leader-profile">
+        <div class="leader-header">
+          <div class="team-avatar">AD</div>
+          <div>
+            <h3 style="color: var(--white); font-size: 22px; margin-bottom: 4px;">Adrian Charles Demidont, DO</h3>
+            <p class="team-role">Founder &amp; CEO</p>
+          </div>
+        </div>
+
+        <div class="leader-story">
+          <div class="leader-chapter">
+            <h4>The Clinical Foundation</h4>
+            <p>For over two decades, Dr. Demidont practiced as a board-certified infectious diseases physician, witnessing firsthand how underserved populations are left behind by inequitable systems. As Chief Medical Officer at Anchor Health Initiative and Principal Medical Scientist at Gilead Sciences, he dedicated his clinical and academic career to building equitable healthcare &mdash; pushing boundaries and disrupting systems that failed the patients who needed them most.</p>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>The Computational Turn</h4>
+            <p>In 2018, a colleague introduced Dr. Demidont to the power of data science and machine learning. The realization was immediate: these tools could amplify everything he had spent decades fighting for &mdash; equity, access, and evidence-based care. What began as curiosity became a systematic transformation into a computationalist: someone who builds, validates, and deploys computational tools to solve real-world problems.</p>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>Evidence of a Computationalist</h4>
+            <p>The transition from clinician to computationalist is demonstrated not by credentials alone, but by building and shipping:</p>
+            <div class="evidence-grid">
+              <div class="evidence-item">
+                <span class="evidence-label">Built</span>
+                <p><strong style="color: var(--white);">Noctua</strong> &mdash; a full-stack NLP application for automated Vancouver citation auditing, from PDF/DOCX parsing to two-column gutter detection, deployed in production on Railway with Stripe billing integration. All research code is open-source on <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Published</span>
+                <p><strong style="color: var(--white);">6 computational manuscripts</strong> &mdash; 1 accepted (<em>Viruses</em>, MDPI: CDS algorithm validation at 21.2M patients), 5 under review at <em>Viruses</em>, <em>J Infectious Diseases</em>, <em>BMC Public Health</em>, <em>PLOS ONE</em>, and <em>PLOS Computational Biology</em>, spanning mathematical modeling, Monte Carlo simulation, algorithmic bias, and neurometabolic signal processing. All but one available as preprints on <a href="https://www.preprints.org" target="_blank">Preprints.org</a> and <a href="https://www.biorxiv.org" target="_blank">bioRxiv</a>.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Trained</span>
+                <p><strong style="color: var(--white);">MIT Sloan</strong> Executive Education in AI for Healthcare and <strong style="color: var(--white);">MITx</strong> Data Science &amp; Machine Learning certification &mdash; formal training in the computational methods now central to his work.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Founded</span>
+                <p><strong style="color: var(--white);">Nyx Dynamics</strong> &mdash; an AI consulting company that bridges clinical expertise with computational tools, serving healthcare organizations navigating algorithm deployment and equity validation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>Why It Matters</h4>
+            <p>The convergence of deep clinical experience with computational capability is rare. Most AI companies lack clinical context; most clinicians lack the ability to build and validate algorithms. Dr. Demidont operates at the intersection &mdash; a physician who writes the code, a data scientist who understands the patient.</p>
+          </div>
+        </div>
+
+        <div class="team-tags" style="margin-top: 28px;">
+          <span class="team-tag">MIT Sloan AI</span>
+          <span class="team-tag">MITx Data Science</span>
+          <span class="team-tag">AAHIVS</span>
+          <span class="team-tag">Full-Stack Developer</span>
+          <span class="team-tag">NLP / ML</span>
+          <span class="team-tag">Infectious Diseases</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Principles</h2>
+      </div>
+      <div class="principles-grid">
+        <div class="principle">
+          <h3>Context Matters</h3>
+          <p>An algorithm isn't good or bad per se – it is just a tool. Who is using it, and for which patients? We go beyond accuracy metrics.</p>
+        </div>
+        <div class="principle">
+          <h3>The Readiness Paradox</h3>
+          <p>Rigorous validation exposes uncertainty rather than eliminating it. Computationally ready ≠ clinically proven.</p>
+        </div>
+        <div class="principle">
+          <h3>Ethics Cannot Be Automated</h3>
+          <p>There cannot be a universal checklist – clinical context is too important. Human judgment will always be essential.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Services -->
-  <section id="services" class="bg-alt">
+  <section id="services">
     <div class="container">
       <div class="section-header">
         <h2 class="font-serif">Services</h2>
@@ -332,7 +614,7 @@
   </section>
 
   <!-- Industries -->
-  <section>
+  <section class="bg-alt">
     <div class="container">
       <div class="section-header">
         <h2 class="font-serif">Industries &amp; Focus Areas</h2>
@@ -352,7 +634,7 @@
   </section>
 
   <!-- Framework -->
-  <section id="framework" class="bg-alt">
+  <section id="framework">
     <div class="container">
       <div class="section-header">
         <h2 class="font-serif">AI Readiness Framework</h2>
@@ -435,7 +717,7 @@
               <li>6 diagnostic checks with severity-tagged findings</li>
               <li>Actionable renumber map for out-of-order citations</li>
               <li>Supports bracketed, parenthetical, superscript, and Lancet bare numbers</li>
-              <li>Free tier: 3 audits/month &middot; Researcher: $5/mo unlimited</li>
+              <li>Free tier: 3 audits/month &middot; Researcher: $15/mo unlimited</li>
             </ul>
             <div style="margin-top: 16px;">
               <span class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">Learn more</span>
@@ -479,50 +761,6 @@
     </div>
   </section>
 
-  <!-- Principles -->
-  <section class="bg-alt">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="font-serif">Principles</h2>
-      </div>
-      <div class="principles-grid">
-        <div class="principle">
-          <h3>Context Matters</h3>
-          <p>An algorithm isn't good or bad per se – it is just a tool. Who is using it, and for which patients? We go beyond accuracy metrics.</p>
-        </div>
-        <div class="principle">
-          <h3>The Readiness Paradox</h3>
-          <p>Rigorous validation exposes uncertainty rather than eliminating it. Computationally ready ≠ clinically proven.</p>
-        </div>
-        <div class="principle">
-          <h3>Ethics Cannot Be Automated</h3>
-          <p>There cannot be a universal checklist – clinical context is too important. Human judgment will always be essential.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team -->
-  <section>
-    <div class="container">
-      <div class="section-header">
-        <h2 class="font-serif">Leadership</h2>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">AD</div>
-        <h3>Adrian Charles Demidont, DO, FIDSA</h3>
-        <p class="team-role">Founder &amp; CEO</p>
-        <p class="team-bio">Board-certified infectious diseases physician with 20+ years of clinical experience. Former Principal Medical Scientist at Gilead Sciences and Chief Medical Officer at Anchor Health Initiative. MIT Sloan AI in Healthcare certification. Peer-reviewed researcher in HIV prevention and implementation science.</p>
-        <div class="team-tags">
-          <span class="team-tag">MIT Sloan</span>
-          <span class="team-tag">MITx Data Science</span>
-          <span class="team-tag">FIDSA</span>
-          <span class="team-tag">AAHIVS</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Contact -->
   <section id="contact" class="bg-alt">
     <div class="container">
@@ -556,5 +794,192 @@
       </div>
     </div>
   </footer>
+  <!-- Origins Cinematic Script -->
+  <script>
+  (function() {
+    var audio = new Audio('assets/nyx-origins-voiceover.mp3');
+    var cinema = document.getElementById('originsCinema');
+    var sub = document.getElementById('originsSub');
+    var playWrap = document.getElementById('originsPlayWrap');
+    var playBtn = document.getElementById('originsPlayBtn');
+    var pauseHint = document.getElementById('originsPauseHint');
+    var progressFill = document.getElementById('originsProgressFill');
+    var scenes = cinema.querySelectorAll('.origins-scene');
+    var dots = cinema.querySelectorAll('.origins-dot');
+    var pCanvas = document.getElementById('originsParticles');
+    var pc = pCanvas.getContext('2d');
+
+    var isPlaying = false, currentScene = 0;
+    var W = 0, H = 0, dpr = 1;
+    var particles = [];
+
+    // 5 scenes: [cueTime, subtitle]
+    var cues = [
+      [0,    "\u201CIn moments of stillness, where others see endings, we see beginnings. A single spark ignites.\u201D"],
+      [8.5,  "\u201CTechnology holds infinite potential \u2014 it can heal, connect, and inspire progress.\u201D"],
+      [16.8, "\u201CBut left unbridled, it can divide, harm, and erode trust. The choice is ours.\u201D"],
+      [22.5, "\u201CAt Nyx Dynamics, we embrace this moment. With every innovation we amplify possibility, dismantle inequity, and empower humanity.\u201D"],
+      [34.6, "\u201CThe future of AI isn\u2019t written yet. Together, let\u2019s shape it to serve humanity\u2019s greatest potential.\u201D"]
+    ];
+
+    // Scene-specific particle colors
+    var sceneColors = [
+      [0, 212, 255],    // spark: cyan
+      [20, 184, 166],   // utopia: teal
+      [180, 30, 30],    // dystopia: red
+      [0, 180, 220],    // order: cyan-teal
+      [0, 212, 255]     // logo: cyan
+    ];
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      var r = cinema.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return;
+      W = r.width; H = r.height;
+      pCanvas.width = Math.round(W * dpr);
+      pCanvas.height = Math.round(H * dpr);
+      pc.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+
+    // --- Particles ---
+    function initParticles() {
+      particles = [];
+      for (var i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2.5 + 0.5, a: Math.random() * 0.4 + 0.05,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function drawParticles(now) {
+      if (W < 1) return;
+      pc.clearRect(0, 0, W, H);
+
+      var col = sceneColors[currentScene] || sceneColors[0];
+      var speed = isPlaying ? 1 : 0.3;
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += (p.vx + Math.sin(now * 0.0008 + p.phase) * 0.15) * speed;
+        p.y += (p.vy + Math.cos(now * 0.0008 + p.phase) * 0.1) * speed;
+        if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+
+        // Glow
+        var ga = p.a * 0.15 * speed;
+        pc.beginPath();
+        pc.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        pc.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + ga + ')';
+        pc.fill();
+
+        // Core
+        pc.beginPath();
+        pc.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pc.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (p.a * speed) + ')';
+        pc.fill();
+      }
+
+      // Sparse connections
+      if (isPlaying) {
+        pc.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.03)';
+        pc.lineWidth = 0.5;
+        for (var i = 0; i < particles.length; i++) {
+          for (var j = i + 1; j < particles.length; j++) {
+            var dx = particles[i].x - particles[j].x;
+            var dy = particles[i].y - particles[j].y;
+            if (Math.abs(dx) < 150 && Math.abs(dy) < 150) {
+              pc.beginPath();
+              pc.moveTo(particles[i].x, particles[i].y);
+              pc.lineTo(particles[j].x, particles[j].y);
+              pc.stroke();
+            }
+          }
+        }
+      }
+
+      requestAnimationFrame(drawParticles);
+    }
+
+    // --- Scene transitions (CSS crossfade) ---
+    function setScene(idx) {
+      if (idx === currentScene) return;
+      currentScene = idx;
+
+      // Crossfade images
+      for (var i = 0; i < scenes.length; i++) {
+        scenes[i].classList.toggle('active', i === idx);
+      }
+
+      // Update dots
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active', 'past');
+        if (i === idx) dots[i].classList.add('active');
+        else if (i < idx) dots[i].classList.add('past');
+      }
+
+      // Fade subtitle
+      sub.classList.remove('visible');
+      setTimeout(function() {
+        sub.textContent = cues[idx][1];
+        sub.classList.add('visible');
+      }, 500);
+    }
+
+    // --- Play/Pause ---
+    function play() {
+      audio.play();
+      isPlaying = true;
+      playWrap.classList.add('hidden');
+      pauseHint.classList.add('visible');
+    }
+    function pause() {
+      audio.pause();
+      isPlaying = false;
+      pauseHint.classList.remove('visible');
+    }
+
+    playBtn.addEventListener('click', function(e) { e.stopPropagation(); play(); });
+    playBtn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+    });
+    cinema.addEventListener('click', function() {
+      if (!isPlaying && playWrap.classList.contains('hidden')) play();
+      else if (isPlaying) pause();
+    });
+
+    // --- Audio sync ---
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration) return;
+      progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      var idx = -1;
+      for (var i = cues.length - 1; i >= 0; i--) {
+        if (audio.currentTime >= cues[i][0]) { idx = i; break; }
+      }
+      if (idx >= 0) setScene(idx);
+    });
+
+    audio.addEventListener('ended', function() {
+      isPlaying = false;
+      pauseHint.classList.remove('visible');
+      setTimeout(function() {
+        playWrap.classList.remove('hidden');
+        sub.classList.remove('visible');
+        progressFill.style.width = '0%';
+        currentScene = 0;
+        for (var i = 0; i < scenes.length; i++) scenes[i].classList.toggle('active', i === 0);
+        for (var i = 0; i < dots.length; i++) dots[i].classList.remove('active', 'past');
+      }, 3000);
+    });
+
+    // --- Init ---
+    resize();
+    initParticles();
+    requestAnimationFrame(drawParticles);
+  })();
+  </script>
 </body>
 </html>
