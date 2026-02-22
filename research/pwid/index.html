@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Prevention Paradox for PWID | Nyx Dynamics Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg-deep: #080a10;
+  --bg-card: #111520;
+  --bg-card2: #1a1e30;
+  --teal: #14b8a6;
+  --teal-dim: #0d9488;
+  --red: #ef4444;
+  --red-dim: #b91c1c;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --amber: #f59e0b;
+  --indigo: #818cf8;
+  --white: #f0f4f8;
+  --silver: #94a3b8;
+  --muted: #475569;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-deep); }
+body { font-family: 'Outfit', sans-serif; color: var(--white); background: var(--bg-deep); overflow-x: hidden; line-height: 1.6; }
+
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+}
+
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* NAV */
+.site-nav { position: sticky; top: 0; z-index: 100; background: rgba(8,10,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 2rem; }
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+.nav-logo-mark { width: 32px; height: 32px; background: #00d4ff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
+.nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: #00d4ff; }
+@media (max-width: 700px) { .nav-links { display: none; } }
+
+/* Hero */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -20%; left: -20%; width: 140%; height: 140%; background: radial-gradient(ellipse at 40% 50%, rgba(20,184,166,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(239,68,68,0.04) 0%, transparent 50%); animation: drift 20s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translate(0,0); } to { transform: translate(-2%,1%) rotate(-1deg); } }
+.hero-content { position: relative; max-width: 800px; margin: 0 auto; }
+.hero-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--teal); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
+.hero h1 { font-family: 'Crimson Pro', serif; font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
+.hero h1 em { font-style: italic; font-weight: 300; color: var(--teal); }
+.hero-sub { font-size: 1.15rem; font-weight: 300; color: var(--silver); max-width: 620px; opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards; }
+.hero-meta { margin-top: 2.5rem; display: flex; gap: 2rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards; }
+.hero-meta a { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--teal-dim); text-decoration: none; border: 1px solid var(--teal-dim); padding: 0.4rem 1rem; border-radius: 4px; transition: all 0.3s; }
+.hero-meta a:hover { color: var(--teal); border-color: var(--teal); box-shadow: 0 0 15px rgba(20,184,166,0.15); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+
+.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+.scroll-hint span { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--teal), transparent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+/* Section */
+.section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+.section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.25em; color: var(--teal); text-transform: uppercase; margin-bottom: 0.75rem; }
+.section h2 { font-family: 'Crimson Pro', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+.section p { font-weight: 300; color: var(--silver); font-size: 1.05rem; margin-bottom: 1.25rem; max-width: 700px; }
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 2.5rem 0; }
+.stat-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.stat-card.teal::before { background: var(--teal); }
+.stat-card.red::before { background: var(--red); }
+.stat-card.amber::before { background: var(--amber); }
+.stat-card.green::before { background: var(--green); }
+.stat-card.indigo::before { background: var(--indigo); }
+.stat-value { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; font-weight: 600; margin-bottom: 0.25rem; }
+.stat-card.teal .stat-value { color: var(--teal); }
+.stat-card.red .stat-value { color: var(--red); }
+.stat-card.amber .stat-value { color: var(--amber); }
+.stat-card.green .stat-value { color: var(--green); }
+.stat-card.indigo .stat-value { color: var(--indigo); }
+.stat-label { font-size: 0.85rem; color: var(--silver); font-weight: 400; }
+.stat-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
+
+/* Callout boxes */
+.crisis-box { background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02)); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
+.crisis-box h3 { font-family: 'Crimson Pro', serif; color: var(--red); font-size: 1.3rem; margin-bottom: 0.75rem; }
+.insight-box { background: linear-gradient(135deg, rgba(20,184,166,0.06), rgba(20,184,166,0.01)); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
+.insight-box h3 { font-family: 'Crimson Pro', serif; color: var(--teal); font-size: 1.3rem; margin-bottom: 0.75rem; }
+.warning-box { background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.01)); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
+.warning-box h3 { font-family: 'Crimson Pro', serif; color: var(--amber); font-size: 1.3rem; margin-bottom: 0.75rem; }
+
+/* Barrier cascade */
+.barrier-cascade { display: flex; flex-direction: column; gap: 0; margin: 2rem 0; }
+.barrier-step { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1rem 0; position: relative; }
+.barrier-cascade::before { content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--teal), var(--amber), var(--red)); }
+.barrier-num { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; color: var(--bg-deep); position: relative; z-index: 1; }
+.barrier-step:nth-child(-n+3) .barrier-num { background: var(--teal); }
+.barrier-step:nth-child(n+4):nth-child(-n+5) .barrier-num { background: var(--amber); }
+.barrier-step:nth-child(n+6) .barrier-num { background: var(--red); }
+.barrier-text h4 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.25rem; }
+.barrier-text p { font-size: 0.9rem; color: var(--silver); font-weight: 300; margin-bottom: 0; }
+
+/* Check list */
+.check-list { list-style: none; margin: 1.5rem 0; }
+.check-list li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; font-weight: 300; color: var(--silver); font-size: 0.95rem; }
+.check-list li::before { content: '\2713'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+/* Media card */
+.media-card { margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: var(--bg-card); }
+.media-card img { width: 100%; display: block; height: auto; }
+
+.divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--teal), transparent); margin: 4rem auto; }
+
+/* Footer */
+.footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.04); }
+.footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }
+.footer-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--teal-dim); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--teal); }
+
+.counter { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="nav-logo-mark">N</div><div class="nav-logo-text">Nyx Dynamics</div></a>
+    <ul class="nav-links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/noctua">Noctua</a></li>
+      <li><a href="/research" class="active">Research</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Interactive Research Summary</div>
+    <h1>93% of Prevention Failures Are <em>Architectural</em></h1>
+    <p class="hero-sub">
+      Monte Carlo simulations reveal that structural barriers — not biology or pharmacology — are why HIV prevention is mathematically impossible for people who inject drugs under current policy.
+    </p>
+    <div class="hero-meta">
+      <a href="https://doi.org/10.20944/preprints202601.0948.v1" target="_blank">Preprint</a>
+      <a href="https://github.com/Nyx-Dynamics/HIV_Prevention_PWID" target="_blank">GitHub Repository</a>
+      <a href="/research">&larr; All Research</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll to explore</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- 01 THE PARADOX -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">01 &mdash; The Prevention Paradox</div>
+    <h2>A Drug That Works &mdash; In a System That Doesn't</h2>
+    <p>Long-acting injectable PrEP (LAI-PrEP) is over 96% effective in clinical trials. Yet for people who inject drugs, the actual probability of sustained prevention is 0.003%. This 5,434-fold disparity isn't a failure of medicine &mdash; it's a failure of architecture.</p>
+  </div>
+
+  <div class="crisis-box reveal">
+    <h3>The structural access crisis</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      Barriers like criminalization and housing instability create a median 72-hour access delay that structurally closes PEP as a prevention strategy for PWID. The biological window for parenteral exposure is 12&ndash;24 hours. By the time structural barriers are navigated, the window has already closed.
+    </p>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card teal">
+      <div class="stat-value">&gt;96%</div>
+      <div class="stat-label">LAI-PrEP clinical efficacy</div>
+      <div class="stat-sub">In controlled trial settings</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-value"><span class="counter" data-target="0.003" data-decimals="3">0</span>%</div>
+      <div class="stat-label">Actual PWID prevention success</div>
+      <div class="stat-sub">5,434-fold disparity</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-value">72h</div>
+      <div class="stat-label">Median structural access delay</div>
+      <div class="stat-sub">3&times; the parenteral PEP window</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 THE CASCADE -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">02 &mdash; The 8-Step Barrier Cascade</div>
+    <h2>Why Each Step Multiplies the Failure</h2>
+    <p>The simulation models an 8-step delivery cascade. Each barrier has an empirically derived pass probability. Because the barriers are multiplicative, even modest individual barriers compound into near-total system failure.</p>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card red">
+      <div class="stat-value"><span class="counter" data-target="93.1" data-decimals="1">0</span>%</div>
+      <div class="stat-label">Failures are architectural</div>
+      <div class="stat-sub">Not biology, not pharmacology</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-value"><span class="counter" data-target="38.4" data-decimals="1">0</span>%</div>
+      <div class="stat-label">Criminalization contribution</div>
+      <div class="stat-sub">Single largest barrier</div>
+    </div>
+    <div class="stat-card indigo">
+      <div class="stat-value">8</div>
+      <div class="stat-label">Sequential barriers modeled</div>
+      <div class="stat-sub">Monte Carlo simulation (n = 100,000)</div>
+    </div>
+  </div>
+
+  <div class="insight-box reveal">
+    <h3>Criminalization is the lead barrier</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      At 38.4%, criminalization is the single largest contributor to prevention cascade collapse. It doesn't just create a legal barrier &mdash; it structurally delays access past the biological point of no return. Decriminalization alone won't solve the problem (because other barriers remain), but no solution works without it.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 03 OUTBREAK RISK -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">03 &mdash; Outbreak Projections</div>
+    <h2>73% National Outbreak Probability Within 5 Years</h2>
+    <p>The simulation projects epidemic consequences of the current structural failure.</p>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="stat-card red">
+      <div class="stat-value"><span class="counter" data-target="73" data-decimals="0">0</span>%</div>
+      <div class="stat-label">National outbreak probability</div>
+      <div class="stat-sub">Within 5 years at current policy</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-value"><span class="counter" data-target="92.4" data-decimals="1">0</span>%</div>
+      <div class="stat-label">Pacific Northwest regional risk</div>
+      <div class="stat-sub">"Acute collapse" warning</div>
+    </div>
+  </div>
+
+  <div class="warning-box reveal">
+    <h3>Policy is the mathematical prerequisite</h3>
+    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
+      The simulation demonstrates that structural reform is required before pharmaceutical advances can become effective for PWID. Under current policy: prevention success is 0.003%. With full harm reduction: 9.55%. With full harm reduction plus algorithmic debiasing: 18.57%. Progressive policy, not better drugs, is the only path.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 CONTRIBUTIONS -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">04 &mdash; Contributions</div>
+    <h2>What This Study Provides</h2>
+  </div>
+
+  <ul class="check-list reveal">
+    <li>First Monte Carlo simulation quantifying structural barriers to HIV prevention for PWID</li>
+    <li>Identification of criminalization (38.4%) as the dominant barrier in the 8-step cascade</li>
+    <li>Proof that 93.1% of prevention failures are architectural, not biological or pharmacological</li>
+    <li>5-year outbreak projections: 73% national, 92.4% Pacific Northwest regional probability</li>
+    <li>Policy simulation showing that harm reduction alone improves success 3,183-fold (to 9.55%)</li>
+    <li>Mathematical demonstration that pharmaceutical advances cannot succeed without structural reform</li>
+  </ul>
+</section>
+
+<div class="divider"></div>
+
+<!-- INFOGRAPHIC -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">Visual Summary</div>
+    <h2>The Prevention Paradox</h2>
+    <p>Why systemic barriers outweigh medical breakthroughs for PWID &mdash; and why progressive policy, not better drugs, is the only path forward.</p>
+  </div>
+  <div class="reveal media-card">
+    <img src="/research/images/infographic_pwid.jpg" alt="The Prevention Paradox: Why Systemic Barriers Outweigh Medical Breakthroughs for PWID" loading="lazy" decoding="async">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+    <div style="width:24px;height:24px;background:#00d4ff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
+    <span style="font-weight:600;font-size:0.85rem;letter-spacing:0.08em;">Nyx Dynamics, LLC</span>
+  </div>
+  <p style="font-family:'Crimson Pro',serif;font-style:italic;color:var(--silver);font-size:0.85rem;margin-bottom:0.5rem;">"Illuminating hidden insights within data"</p>
+  <div class="footer-links">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:info@nyxdynamics.org">Contact</a>
+  </div>
+  <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function startCounter(el) {
+  el.classList.add('counted');
+  const target = parseFloat(el.dataset.target), decimals = parseInt(el.dataset.decimals) || 0, duration = 1200, start = performance.now();
+  function tick(now) { const p = Math.min((now - start) / duration, 1), e = 1 - Math.pow(1 - p, 3); el.textContent = (target * e).toFixed(decimals); if (p < 1) requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+}
+
+document.querySelectorAll('.stat-grid').forEach(el => {
+  new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter); }); }, { threshold: 0.3 }).observe(el);
+});
+</script>
+</body>
+</html>
