@@ -3,18 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noise Decorrelation in HIV | Nyx Dynamics Research</title>
+<title>Neuroprotective Noise Decorrelation | Nyx Dynamics Research</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
 
 :root {
-  --bg-deep: #060a12;
-  --bg-card: #0d1525;
-  --bg-card2: #111d32;
-  --cyan: #00d4ff;
-  --cyan-dim: #007a94;
-  --gold: #f59e0b;
+  --bg-deep: #080610;
+  --bg-card: #12101f;
+  --bg-card2: #1a1730;
+  --coral: #e07056;
+  --coral-dim: #c4553d;
+  --teal: #3d8b8b;
+  --teal-bright: #4db6ac;
+  --amber: #f59e0b;
   --red: #ef4444;
+  --cyan: #06b6d4;
   --green: #10b981;
   --indigo: #818cf8;
   --white: #f0f4f8;
@@ -37,7 +40,6 @@ body {
   line-height: 1.6;
 }
 
-/* ── Grain overlay ── */
 body::before {
   content: '';
   position: fixed;
@@ -47,7 +49,6 @@ body::before {
   z-index: 9999;
 }
 
-/* ── Scroll-driven fade-in ── */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -61,19 +62,21 @@ body::before {
 /* ── NAV ── */
 .site-nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(6,10,18,0.92);
+  background: rgba(8,6,16,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   padding: 0 2rem;
 }
 .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
-.nav-logo-mark { width: 32px; height: 32px; background: var(--cyan); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
+.nav-logo-mark { width: 32px; height: 32px; background: #00d4ff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
 .nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; }
 .nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+.nav-links a:hover, .nav-links a.active { color: #00d4ff; }
 @media (max-width: 700px) { .nav-links { display: none; } }
+
+/* ── Hero ── */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -91,14 +94,14 @@ body::before {
   left: -20%;
   width: 140%;
   height: 140%;
-  background: radial-gradient(ellipse at 30% 50%, rgba(0,212,255,0.06) 0%, transparent 50%),
-              radial-gradient(ellipse at 70% 30%, rgba(129,140,248,0.04) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 60% 40%, rgba(224,112,86,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 30% 70%, rgba(61,139,139,0.05) 0%, transparent 50%);
   animation: drift 20s ease-in-out infinite alternate;
 }
 
 @keyframes drift {
   from { transform: translate(0, 0) rotate(0deg); }
-  to { transform: translate(2%, -1%) rotate(1deg); }
+  to { transform: translate(-2%, 1%) rotate(-1deg); }
 }
 
 .hero-content {
@@ -111,7 +114,7 @@ body::before {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   letter-spacing: 0.3em;
-  color: var(--cyan);
+  color: var(--coral);
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   opacity: 0;
@@ -131,14 +134,14 @@ body::before {
 .hero h1 em {
   font-style: italic;
   font-weight: 300;
-  color: var(--cyan);
+  color: var(--coral);
 }
 
 .hero-sub {
   font-size: 1.15rem;
   font-weight: 300;
   color: var(--silver);
-  max-width: 600px;
+  max-width: 620px;
   opacity: 0;
   animation: fadeUp 0.8s ease 0.7s forwards;
 }
@@ -155,17 +158,17 @@ body::before {
 .hero-meta a {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
-  color: var(--cyan-dim);
+  color: var(--coral-dim);
   text-decoration: none;
-  border: 1px solid var(--cyan-dim);
+  border: 1px solid var(--coral-dim);
   padding: 0.4rem 1rem;
   border-radius: 4px;
   transition: all 0.3s;
 }
 .hero-meta a:hover {
-  color: var(--cyan);
-  border-color: var(--cyan);
-  box-shadow: 0 0 15px rgba(0,212,255,0.15);
+  color: var(--coral);
+  border-color: var(--coral);
+  box-shadow: 0 0 15px rgba(224,112,86,0.15);
 }
 
 @keyframes fadeUp {
@@ -173,7 +176,6 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Scroll indicator ── */
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
@@ -196,7 +198,7 @@ body::before {
 .scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--cyan), transparent);
+  background: linear-gradient(to bottom, var(--coral), transparent);
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
@@ -204,7 +206,7 @@ body::before {
   50% { opacity: 1; }
 }
 
-/* ── Section wrapper ── */
+/* ── Section ── */
 .section {
   padding: 6rem 2rem;
   max-width: 900px;
@@ -215,7 +217,7 @@ body::before {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.25em;
-  color: var(--cyan);
+  color: var(--coral);
   text-transform: uppercase;
   margin-bottom: 0.75rem;
 }
@@ -236,320 +238,102 @@ body::before {
   max-width: 700px;
 }
 
-/* ── Stat grid ── */
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin: 2.5rem 0;
-}
-
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 8px;
-  padding: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-}
-.stat-card.cyan::before { background: var(--cyan); }
-.stat-card.red::before { background: var(--red); }
-.stat-card.gold::before { background: var(--gold); }
-.stat-card.green::before { background: var(--green); }
-.stat-card.indigo::before { background: var(--indigo); }
-
-.stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.stat-card.cyan .stat-value { color: var(--cyan); }
-.stat-card.red .stat-value { color: var(--red); }
-.stat-card.gold .stat-value { color: var(--gold); }
-.stat-card.green .stat-value { color: var(--green); }
-.stat-card.indigo .stat-value { color: var(--indigo); }
-
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--silver);
-  font-weight: 400;
-}
-.stat-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.5rem;
-}
-
-/* ── Animated counter ── */
-.counter {
-  display: inline-block;
-}
-
-/* ── Narrative flow: paradox → mechanism → evidence ── */
-.paradox-box {
-  background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
-  border-left: 3px solid var(--red);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-}
-.paradox-box h3 {
-  font-family: 'Crimson Pro', serif;
-  color: var(--red);
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-}
-
-.mechanism-box {
-  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(0,212,255,0.01));
-  border-left: 3px solid var(--cyan);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 2rem 0;
-}
-.mechanism-box h3 {
-  font-family: 'Crimson Pro', serif;
-  color: var(--cyan);
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-}
-
-/* ── Key equation ── */
-.equation-display {
-  text-align: center;
-  padding: 2rem;
-  margin: 2rem 0;
-  background: var(--bg-card);
-  border-radius: 8px;
-  border: 1px solid rgba(0,212,255,0.1);
-}
-.equation-display .eq {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.8rem;
-  font-style: italic;
-  color: var(--white);
-  letter-spacing: 0.05em;
-}
-.equation-display .eq-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-/* ── Phase comparison ── */
-.phase-compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin: 2rem 0;
-}
-@media (max-width: 600px) {
-  .phase-compare { grid-template-columns: 1fr; }
-}
-
-.phase-card {
-  background: var(--bg-card);
-  border-radius: 8px;
-  padding: 1.5rem;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.04);
-  position: relative;
-}
-.phase-card.acute { border-top: 3px solid var(--red); }
-.phase-card.chronic { border-top: 3px solid var(--cyan); }
-
-.phase-card h4 {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-.phase-card.acute h4 { color: var(--red); }
-.phase-card.chronic h4 { color: var(--cyan); }
-
-.phase-card .big-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2.8rem;
-  font-weight: 600;
-}
-.phase-card.acute .big-num { color: var(--red); }
-.phase-card.chronic .big-num { color: var(--cyan); }
-
-.phase-card .unit {
-  font-size: 1rem;
-  color: var(--silver);
-  font-weight: 300;
-}
-.phase-card .detail {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.5rem;
-}
-
-.arrow-between {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  color: var(--gold);
-  font-weight: 600;
-}
-
-/* ── Timeline / flow ── */
-.flow-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 2rem 0;
-  position: relative;
-}
-.flow-steps::before {
-  content: '';
-  position: absolute;
-  left: 16px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--red), var(--cyan), var(--green));
-}
-.flow-step {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  padding: 1rem 0;
-}
-.flow-dot {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--bg-deep);
-  position: relative;
-  z-index: 1;
-}
-.flow-step:nth-child(1) .flow-dot { background: var(--red); }
-.flow-step:nth-child(2) .flow-dot { background: var(--gold); }
-.flow-step:nth-child(3) .flow-dot { background: var(--cyan); }
-.flow-step:nth-child(4) .flow-dot { background: var(--green); }
-
-.flow-text h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.flow-text p {
-  font-size: 0.9rem;
-  color: var(--silver);
-  font-weight: 300;
-  margin-bottom: 0;
-}
-
-/* ── Robustness checklist ── */
-.check-list {
-  list-style: none;
-  margin: 1.5rem 0;
-}
-.check-list li {
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-  padding: 0.6rem 0;
-  font-weight: 300;
-  color: var(--silver);
-  font-size: 0.95rem;
-}
-.check-list li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700;
-  font-size: 1rem;
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-}
-
 /* ── Divider ── */
 .divider {
   width: 60px;
   height: 2px;
-  background: linear-gradient(to right, var(--cyan), transparent);
+  background: linear-gradient(to right, var(--coral), transparent);
   margin: 4rem auto;
 }
 
-/* ── Shared media cards ── */
-.media-card {
-  margin: 2rem 0;
+/* ── Visual Deck ── */
+.deck-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.slide-section {
+  margin-bottom: 6rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.slide-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--coral);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.slide-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(224,112,86,0.3), transparent);
+}
+
+.slide-frame {
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-  background: var(--bg-card);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  background: #f0ece8;
 }
-.media-card img {
+.slide-frame:hover {
+  box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 30px rgba(224,112,86,0.06);
+  transform: translateY(-2px);
+}
+.slide-frame img {
   width: 100%;
   display: block;
   height: auto;
 }
 
-/* ── Mind map CTA ── */
-.mindmap-cta {
-  display: block;
-  padding: 1.75rem 2rem;
-  text-decoration: none;
-  color: var(--white);
-  background: linear-gradient(135deg, rgba(129,140,248,0.13), rgba(0,212,255,0.08));
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid rgba(129,140,248,0.22);
-}
-.mindmap-cta:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0,212,255,0.45);
-  box-shadow: 0 10px 25px rgba(0,212,255,0.12);
-}
-.mindmap-cta:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
-}
-.mindmap-cta-kicker {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cyan);
-  margin-bottom: 0.5rem;
-}
-.mindmap-cta-title {
-  display: block;
-  font-family: 'Crimson Pro', serif;
-  font-size: clamp(1.45rem, 2.3vw, 1.8rem);
-  line-height: 1.15;
-  margin-bottom: 0.45rem;
-}
-.mindmap-cta-copy {
-  display: block;
+.slide-caption {
+  margin-top: 1.25rem;
   font-size: 0.95rem;
-  color: var(--silver);
   font-weight: 300;
+  color: var(--silver);
+  line-height: 1.6;
+  max-width: 750px;
+}
+.slide-caption strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.slide-caption em {
+  color: var(--coral);
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* ── Progress bar ── */
+.deck-progress {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99;
+  background: rgba(255,255,255,0.03);
+}
+.deck-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--coral), var(--teal-bright));
+  transition: width 0.2s ease;
 }
 
 /* ── Footer ── */
@@ -557,18 +341,6 @@ body::before {
   text-align: center;
   padding: 4rem 2rem;
   border-top: 1px solid rgba(255,255,255,0.04);
-}
-.footer-name {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.4rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.footer-affil {
-  font-size: 0.9rem;
-  color: var(--silver);
-  font-weight: 300;
-  margin-bottom: 1.5rem;
 }
 .footer-links {
   display: flex;
@@ -579,11 +351,11 @@ body::before {
 .footer-links a {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: var(--cyan-dim);
+  color: var(--coral-dim);
   text-decoration: none;
   transition: color 0.3s;
 }
-.footer-links a:hover { color: var(--cyan); }
+.footer-links a:hover { color: var(--coral); }
 </style>
 </head>
 <body>
@@ -602,18 +374,22 @@ body::before {
   </div>
 </nav>
 
+<!-- Progress bar -->
+<div class="deck-progress">
+  <div class="deck-progress-fill" id="progressFill"></div>
+</div>
+
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-label">Interactive Research Summary</div>
-    <h1>Why Does the Brain Survive <em>Acute HIV?</em></h1>
+    <h1>The HIV <em>Neuro-Paradox</em></h1>
     <p class="hero-sub">
-      A computational framework proposing a mechanistic explanation for a 35-year clinical paradox through noise correlation dynamics in neuronal microtubules.
+      Noise decorrelation as a hypothetical quantum-biological mechanism for neuroprotection in HIV infection &mdash; toward solving the 35-year paradox of why neurons survive the cytokine storm but die in the quiet.
     </p>
     <div class="hero-meta">
-      <a href="https://www.biorxiv.org/content/10.64898/2026.02.10.703895v2" target="_blank">bioRxiv Preprint</a>
-      <a href="https://github.com/Nyx-Dynamics/noise_decorrelation_hiv" target="_blank">GitHub Repository</a>
-      <a href="/research">← All Research</a>
+      <a href="https://doi.org/10.1101/2024.12.19.703895" target="_blank">bioRxiv Preprint</a>
+      <a href="/research">&larr; All Research</a>
     </div>
   </div>
   <div class="scroll-hint">
@@ -622,220 +398,186 @@ body::before {
   </div>
 </section>
 
-<!-- ═══ THE PARADOX ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">01 — The Paradox</div>
-    <h2>The Assault Without the Damage</h2>
-    <p>During acute HIV infection, the brain endures a neurotoxic storm. Standard models predict neuronal loss. But it doesn't happen.</p>
+<!-- ═══ VISUAL DECK ═══ -->
+<div class="deck-container">
+
+  <div class="slide-section" data-slide="1">
+    <div class="slide-number">Slide 01 &mdash; Overview</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_1.png" alt="Noise Decorrelation as a Hypothetical Mechanism for Neuroprotection in HIV Infection" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Toward solving the 35-year-old paradox of HIV neurometabolic outcomes.</strong> During acute HIV, viral loads reach 10<sup>7</sup> copies/mL with massive inflammation &mdash; yet 80&ndash;93% of patients remain neurocognitively asymptomatic. In the chronic phase, viral load is suppressed, yet neurons progressively die.
+    </div>
   </div>
 
-  <div class="paradox-box reveal">
-    <h3>What happens during acute HIV</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      Massive neuroinflammation. Elevated glutamate excitotoxicity. Mitochondrial stress. Oxidative damage. Every marker says the brain should suffer — yet NAA, the gold-standard neuronal health metabolite, remains largely preserved. No quantitative model existed to explain why.
-    </p>
+  <div class="slide-section" data-slide="2">
+    <div class="slide-number">Slide 02 &mdash; The Evolutionary Constraint</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_2.png" alt="Neurons are post-mitotic: regeneration is 0%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Neurons cannot divide. Neuronal loss is permanent.</strong> Unlike liver or skin cells, mature CNS neurons are non-renewable. Evolution faces a critical problem: how to protect irreplaceable tissue during a massive inflammatory event.
+    </div>
   </div>
 
-  <div class="stat-grid reveal">
-    <div class="stat-card red">
-      <div class="stat-value">~220</div>
-      <div class="stat-label">Patients across 4 MRS studies</div>
+  <div class="slide-section" data-slide="3">
+    <div class="slide-number">Slide 03 &mdash; The Clinical Paradox</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_3.png" alt="The Clinical Paradox: neurons survive the storm but die in the quiet" loading="lazy" decoding="async">
     </div>
-    <div class="stat-card cyan">
-      <div class="stat-value">13</div>
-      <div class="stat-label">Group-level observations</div>
-    </div>
-    <div class="stat-card indigo">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Prior mechanistic models</div>
+    <div class="slide-caption">
+      <strong>The storm preserves. The quiet destroys.</strong> Acute phase: viral load at <em>10^7</em>, massive cytokine storm, yet NAA (neuronal integrity marker) is preserved. Chronic phase: viral load <em>&lt;50</em>, low inflammation, yet NAA declines. For 35 years, no mechanistic model has explained this.
     </div>
   </div>
-</section>
+
+  <div class="slide-section" data-slide="4">
+    <div class="slide-number">Slide 04 &mdash; Structure, Not Amplitude</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_4.png" alt="It's Not Amplitude. It's Structure." loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The spatial structure of environmental noise determines survival.</strong> Acute: decorrelated noise (<em>&xi; &approx; 0.42 nm</em>) &mdash; signal disrupted, deleterious states cannot propagate. PROTECTED. Chronic: correlated noise (<em>&xi; &approx; 0.79 nm</em>) &mdash; signal coherent, damage accumulates. VULNERABLE.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="5">
+    <div class="slide-number">Slide 05 &mdash; Quantum Protection</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_5.png" alt="A Quantum Protection Mechanism" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Like noise-canceling headphones for metabolic stress.</strong> Chronic correlated noise allows coherent excitation trapping at NAT8L, causing damage. Acute decorrelated noise enables noise-assisted decoherence, scattering deleterious energy. Analogous to photosynthetic complexes that exploit noise to prevent coherent excitation trapping.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="6">
+    <div class="slide-number">Slide 06 &mdash; Evolutionary Optimization</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_6.png" alt="Evolutionary Optimization: Speed, Cost, Reversibility" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The perfect solution for acute stress in non-renewable tissue.</strong> <em>Speed</em>: instant response, no gene expression lag. <em>Cost</em>: metabolically cheap, uses environmental noise. <em>Reversibility</em>: transient, turns off when threat passes. It uses the physics of inflammation itself.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="7">
+    <div class="slide-number">Slide 07 &mdash; Bayesian Methodology</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_7.png" alt="Hierarchical Bayesian Inference with PyMC" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>&ldquo;We didn&rsquo;t just fit a curve; we modeled the underlying physics of the data.&rdquo;</strong> 4 independent studies, ~220 patients, acute vs chronic MRS data. Hierarchical Bayesian model (PyMC) with physics-informed noise coupling yields posterior distributions, &xi; estimation, and protection scaling (&beta;).
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="8">
+    <div class="slide-number">Slide 08 &mdash; Distinct Physical Regimes</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_8.png" alt="Non-overlapping 95% posterior intervals" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Acute and chronic HIV occupy completely distinct noise regimes.</strong> Acute: <em>&xi; &approx; 0.425 nm</em>. Chronic: <em>&xi; &approx; 0.790 nm</em>. The 95% posterior intervals do not overlap. Healthy controls cluster with the chronic phase, confirming that the acute state is the anomaly &mdash; the protected state.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="9">
+    <div class="slide-number">Slide 09 &mdash; Statistical Decisiveness</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_9.png" alt="Bayes Factor > 1000, Cohen's d = 5.63, P > 99.9%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>This is not noise; it is a signal.</strong> Bayes Factor <em>&gt;1000</em> (decisive evidence). Cohen&rsquo;s d = <em>5.63</em> (massive effect size). P(&xi;<sub>acute</sub> &lt; &xi;<sub>chronic</sub>) <em>&gt;99.9%</em>. In clinical statistics, effect sizes of this magnitude are exceptionally rare.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="10">
+    <div class="slide-number">Slide 10 &mdash; Superlinear Scaling</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_10.png" alt="Superlinear Scaling: beta = 2.33" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Small changes in noise produce huge changes in protection.</strong> Protection scaling exponent <em>&beta; &approx; 2.33</em> is superlinear. Chronic phase shows 57% lower protection. This nonlinear amplification explains why even modest noise structure changes have dramatic neurological consequences.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="11">
+    <div class="slide-number">Slide 11 &mdash; Validation</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_11.png" alt="Model Accuracy: R² = 0.89, four twigs of convergence" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Four independent lines of evidence converge.</strong> Primary Bayesian model (<em>P &gt; 99.9%</em>). Enzyme kinetics model (<em>P &gt; 99.0%</em>). Individual patient analysis (<em>P = 92.4%</em>). Cross-cohort replication (3 independent cohorts). Predicted vs. observed NAA/Cr: <em>R&sup2; = 0.89</em>.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="12">
+    <div class="slide-number">Slide 12 &mdash; Phylogenetic Protection</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_12.png" alt="Ancient Structures Receive Strongest Protection" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The &ldquo;survival centers&rdquo; show the shortest noise correlation.</strong> Basal ganglia (500 MY): <em>&xi; &approx; 0.38 nm</em>, NAA +9%. Frontal white matter (200 MY): <em>&xi; &approx; 0.50 nm</em>, NAA +2%. Frontal grey matter (50 MY): <em>&xi; &approx; 0.63 nm</em>, NAA -9%. Protection fades in phylogenetically newer regions.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="13">
+    <div class="slide-number">Slide 13 &mdash; The Window of Opportunity</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_13.png" alt="Delaying ART shifts CNS from protected quantum state to vulnerable classical state" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Delaying ART shifts the CNS from a protected quantum state to a vulnerable classical state.</strong> Acute (<em>&xi; &approx; 0.42 nm</em>): protected &mdash; treat now. Transition: window closes. Chronic (<em>&xi; &approx; 0.79 nm</em>): vulnerable &mdash; permanent damage. Early ART initiation is neuroprotective.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="14">
+    <div class="slide-number">Slide 14 &mdash; Testable Framework</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_14.png" alt="Three falsifiable predictions, validation n=60" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Three falsifiable predictions.</strong> Longitudinal tracking should show &xi; tracking NAA, not viral load. In vitro neuronal cultures should respond to noise manipulation. Validation requires only <em>n=60</em> subjects for 80% power &mdash; the effect size is so large that modest samples suffice.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="15">
+    <div class="slide-number">Slide 15 &mdash; Proposed Solution</div>
+    <div class="slide-frame">
+      <img src="/research/images/nd_slide_15.png" alt="Nature evolved a quantum mechanism to protect what it could not replace" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Nature evolved a quantum mechanism to protect what it could not replace.</strong> 1. Acute HIV induces decorrelated noise. 2. This protects non-renewable neurons (superlinear &beta;=2.33). 3. Bayesian evidence is decisive (BF &gt; 1000). 4. Evolutionary logic solves the 35-year mystery.
+    </div>
+  </div>
+
+</div>
 
 <div class="divider"></div>
-
-<!-- ═══ THE MECHANISM ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">02 — The Mechanism</div>
-    <h2>Noise Decorrelation as a Firebreak</h2>
-    <p>We propose that shorter noise correlation during acute infection paradoxically protects neurons — like a firebreak limiting the spread of a wildfire.</p>
-  </div>
-
-  <div class="mechanism-box reveal">
-    <h3>The core idea</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      In neuronal microtubules, quantum-scale noise correlations determine how far damage signals propagate. During acute HIV, inflammation disrupts these correlations — shortening the correlation length ξ. Counterintuitively, this reduced coherence limits the coordinated spread of damage, preserving overall neuronal function.
-    </p>
-  </div>
-
-  <div class="equation-display reveal">
-    <div class="eq">Π<sub>ξ</sub> ∝ ξ<sup style="font-size:1.2rem">β<sub>ξ</sub></sup></div>
-    <div class="eq-label">Protection factor scales as a power law of correlation length</div>
-  </div>
-
-  <div class="flow-steps reveal">
-    <div class="flow-step">
-      <div class="flow-dot">1</div>
-      <div class="flow-text">
-        <h4>HIV triggers acute inflammation</h4>
-        <p>Neuroinflammatory cascade disrupts microtubule dynamics</p>
-      </div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-dot">2</div>
-      <div class="flow-text">
-        <h4>Noise correlation length shortens</h4>
-        <p>ξ drops from 0.79 nm (chronic) to 0.42 nm (acute) — an 86% recovery gap</p>
-      </div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-dot">3</div>
-      <div class="flow-text">
-        <h4>Damage propagation is limited</h4>
-        <p>Shorter ξ means damage signals can't coordinate across microtubule networks</p>
-      </div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-dot">4</div>
-      <div class="flow-text">
-        <h4>NAA is preserved</h4>
-        <p>Neuronal integrity maintained despite the inflammatory assault</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ PHASE COMPARISON ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">03 — Key Results</div>
-    <h2>Phase-Specific Coherence Lengths</h2>
-    <p>Hierarchical Bayesian inference reveals dramatically different noise correlation lengths across HIV phases.</p>
-  </div>
-
-  <div class="phase-compare reveal">
-    <div class="phase-card acute">
-      <h4>Acute Phase</h4>
-      <div class="big-num counter" data-target="0.425" data-decimals="3">0</div>
-      <div class="unit">nm</div>
-      <div class="detail">95% HDI [0.30, 0.54]</div>
-    </div>
-    <div class="phase-card chronic">
-      <h4>Chronic Phase</h4>
-      <div class="big-num counter" data-target="0.790" data-decimals="3">0</div>
-      <div class="unit">nm</div>
-      <div class="detail">95% HDI [0.66, 0.91]</div>
-    </div>
-  </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card gold">
-      <div class="stat-value">β = <span class="counter" data-target="2.33" data-decimals="2">0</span></div>
-      <div class="stat-label">Protection scaling exponent</div>
-      <div class="stat-sub">Superlinear: small ξ losses → large vulnerability</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-value">P > <span class="counter" data-target="0.999" data-decimals="3">0</span></div>
-      <div class="stat-label">Posterior prob. acute &lt; chronic</div>
-      <div class="stat-sub">Cohen's d = 5.63</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-value"><span class="counter" data-target="57" data-decimals="0">0</span>%</div>
-      <div class="stat-label">Below linear expectation</div>
-      <div class="stat-sub">Acute protection deficit vs. β = 1</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ ROBUSTNESS ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">04 — Robustness</div>
-    <h2>Validated Across Every Dimension</h2>
-    <p>The findings hold under rigorous sensitivity testing, multiple model specifications, and cross-cohort replication.</p>
-  </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card cyan">
-      <div class="stat-value">R² = <span class="counter" data-target="0.89" data-decimals="2">0</span></div>
-      <div class="stat-label">Model fit across all cohorts</div>
-      <div class="stat-sub">89% of observed NAA variance explained</div>
-    </div>
-    <div class="stat-card indigo">
-      <div class="stat-value">&gt;<span class="counter" data-target="98" data-decimals="0">0</span>%</div>
-      <div class="stat-label">Bayesian detection power</div>
-      <div class="stat-sub">n = 143 patients (current study)</div>
-    </div>
-  </div>
-
-  <ul class="check-list reveal">
-    <li>Three independent model versions (v3.6 primary, v4.0 enzyme, v2 individual) all confirm superlinear protection</li>
-    <li>Three cross-cohort replications show consistent acute protection pattern</li>
-    <li>Prior sensitivity analysis: conclusions hold from weak to strong priors</li>
-    <li>All R-hat values = 1.00, effective sample sizes well above thresholds</li>
-    <li>Prospective study needs only n = 60 for 80% power</li>
-  </ul>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══ IMPLICATIONS ═══ -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">05 — Significance</div>
-    <h2>From Paradox to Prediction</h2>
-    <p>This framework transforms a 35-year clinical observation into testable, falsifiable predictions — connecting quantum-scale microtubule dynamics to macroscopic neurological outcomes.</p>
-  </div>
-
-  <div class="mechanism-box reveal">
-    <h3>What this enables</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">
-      Targeted MRS studies can now directly test the noise decorrelation hypothesis. The model generates specific quantitative predictions for what should be observed in acute vs. chronic cohorts. If confirmed, it bridges condensed matter physics and clinical neuroscience through a single measurable parameter.
-    </p>
-  </div>
-</section>
 
 <!-- ═══ INFOGRAPHIC ═══ -->
 <section class="section">
   <div class="reveal">
     <div class="section-label">Visual Summary</div>
-    <h2>The Full Picture</h2>
-    <p>An infographic overview of the noise decorrelation mechanism, from the acute protective shield through the chronic transition to vulnerability.</p>
+    <h2>The Neural Shield</h2>
+    <p>A comprehensive visual overview of the noise decorrelation hypothesis: the clinical paradox, the quantum-biological mechanism, statistical evidence, phylogenetic protection gradients, and clinical implications.</p>
   </div>
-  <div class="reveal media-card">
-    <img src="/research/images/infographic_noise_decorrelation.jpg" alt="Solving the HIV Neurological Paradox: The Noise Decorrelation Hypothesis — Infographic" loading="lazy" decoding="async">
-  </div>
-
-  <div class="reveal" style="margin-top: 1rem;">
-    <div class="section-label">Visual Summary II</div>
-    <h2>The Post-Mitotic Shield</h2>
-    <p>How evolution prioritizes protection of phylogenetically older brain structures during acute HIV — and why the frontal cortex becomes vulnerable in the chronic phase.</p>
-  </div>
-  <div class="reveal media-card">
-    <img src="/research/images/infographic_noise_decorrelation_2.jpg" alt="The Post-Mitotic Shield: How Evolution Protects the Brain During Acute HIV — Infographic" loading="lazy" decoding="async">
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
+    <img src="/research/images/infographic_noise_decorrelation_3.jpg" alt="The Neural Shield: A Quantitative Mechanism for HIV Neuroprotection — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
   </div>
 </section>
 
 <div class="divider"></div>
+
 <!-- ═══ MIND MAP ═══ -->
 <section class="section" id="mindmap">
   <div class="reveal">
-    <div class="section-label">06 — Mind Map</div>
-    <h2>Explore the Interactive Map</h2>
-    <p>An interactive view of the complete mechanism, from acute neuroprotection through the chronic transition to vulnerability.</p>
+    <div class="section-label">Mind Map</div>
+    <h2>Neuroprotective Noise Decorrelation</h2>
+    <p>An overview of the framework connecting the clinical paradox, quantum-biological mechanism, Bayesian methodology, and evolutionary logic.</p>
   </div>
-  <div class="reveal media-card">
-    <a class="mindmap-cta" href="/research/noise-decorrelation/mindmap.html" aria-label="Open the interactive mind map for noise decorrelation in HIV">
-      <span class="mindmap-cta-kicker">Interactive View</span>
-      <span class="mindmap-cta-title">Open Mind Map</span>
-      <span class="mindmap-cta-copy">Trace each stage and key result across the full framework.</span>
-    </a>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: #fff;">
+    <img src="/research/images/mindmap_noise_decorrelation.png" alt="Mind Map: Neuroprotective Noise Decorrelation in HIV" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
   </div>
 </section>
 
@@ -844,7 +586,7 @@ body::before {
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
-    <div style="width:24px;height:24px;background:var(--cyan);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
+    <div style="width:24px;height:24px;background:#00d4ff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
     <span style="font-weight:600;font-size:0.85rem;letter-spacing:0.08em;">Nyx Dynamics, LLC</span>
   </div>
   <p style="font-family:'Crimson Pro',serif;font-style:italic;color:var(--silver);font-size:0.85rem;margin-bottom:0.5rem;">"Illuminating hidden insights within data"</p>
@@ -856,41 +598,28 @@ body::before {
   <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── Scroll reveal ──
+<script>
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
-      // Trigger counters inside this element
-      e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.slide-section, .reveal').forEach(el => observer.observe(el));
 
-// ── Animated counters ──
-function startCounter(el) {
-  el.classList.add('counted');
-  const target = parseFloat(el.dataset.target);
-  const decimals = parseInt(el.dataset.decimals) || 0;
-  const duration = 1200;
-  const start = performance.now();
+const progressFill = document.getElementById('progressFill');
 
-  function tick(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const current = target * eased;
-    el.textContent = current.toFixed(decimals);
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressFill.style.width = progress + '%';
 }
 
-// Also trigger counters in phase-compare cards (they're not inside .reveal sometimes)
-const phaseObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter);
-    }
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>
