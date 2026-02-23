@@ -121,6 +121,23 @@ body::before {
 
 .divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--teal), transparent); margin: 4rem auto; }
 
+/* Visual Deck */
+.deck-container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+.slide-section { margin-bottom: 6rem; opacity: 0; transform: translateY(50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.slide-section.visible { opacity: 1; transform: translateY(0); }
+.slide-number { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--teal); text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.slide-number::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(20,184,166,0.3), transparent); }
+.slide-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02); transition: box-shadow 0.4s ease, transform 0.4s ease; background: #111520; }
+.slide-frame:hover { box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 30px rgba(20,184,166,0.06); transform: translateY(-2px); }
+.slide-frame img { width: 100%; display: block; height: auto; }
+.slide-caption { margin-top: 1.25rem; font-size: 0.95rem; font-weight: 300; color: var(--silver); line-height: 1.6; max-width: 750px; }
+.slide-caption strong { color: var(--white); font-weight: 600; }
+.slide-caption em { color: var(--teal); font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+
+/* Progress bar */
+.deck-progress { position: fixed; top: 60px; left: 0; right: 0; height: 3px; z-index: 99; background: rgba(255,255,255,0.03); }
+.deck-progress-fill { height: 100%; width: 0%; background: linear-gradient(to right, var(--teal), var(--cyan)); transition: width 0.2s ease; }
+
 /* Footer */
 .footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.04); }
 .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }
@@ -146,6 +163,11 @@ body::before {
   </div>
 </nav>
 
+<!-- Progress bar -->
+<div class="deck-progress">
+  <div class="deck-progress-fill" id="progressFill"></div>
+</div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
@@ -162,6 +184,223 @@ body::before {
   </div>
   <div class="scroll-hint"><span>Scroll to explore</span><div class="scroll-line"></div></div>
 </section>
+
+<!-- ═══ VISUAL DECK ═══ -->
+<div class="deck-container">
+
+  <div class="slide-section" data-slide="1">
+    <div class="slide-number">Slide 01 &mdash; Title</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_1.png" alt="Structural Barriers, Stochastic Avoidance, and Outbreak Risk in HIV Prevention for PWID" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A Monte Carlo simulation study of HIV prevention for people who inject drugs.</strong> Under peer review at BMC Public Health. Preprint DOI: 10.20944/preprints202601.0948.v1
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="2">
+    <div class="slide-number">Slide 02 &mdash; The Efficacy-Effectiveness Gap</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_2.png" alt="Clinical trial efficacy >96% vs. real-world PWID effectiveness 0.003%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A drug that works &mdash; in a system that doesn&rsquo;t.</strong> Clinical trials (HPTN 083/084, PURPOSE) show <em>&gt;96%</em> efficacy in n &gt; 15,000. Yet modeled real-world effectiveness for PWID is <em>0.003%</em>. The gap is not pharmacological &mdash; it is architectural.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="3">
+    <div class="slide-number">Slide 03 &mdash; Systemic Disparity</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_3.png" alt="5,434-fold disparity between MSM and PWID prevention outcomes" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A 5,434-fold disparity.</strong> MSM reference population achieves <em>16.3%</em> sustained prevention probability. PWID outcome: <em>0.003%</em>. At every step of the cascade, PWID fall below 50% probability while MSM maintain above 50% at all steps.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="4">
+    <div class="slide-number">Slide 04 &mdash; Investigational Hypothesis</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_4.png" alt="Nested structural barriers produce prevention architecture rarely reachable for PWID" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Nested structural barriers &mdash; not pharmacological limitations &mdash; produce an unreachable prevention architecture.</strong> Policy, stigma, infrastructure, algorithms, and research exclusion form concentric rings around the biological core, each amplifying the others.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="5">
+    <div class="slide-number">Slide 05 &mdash; The Prevention Cascade</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_5.png" alt="8-step conditional probability cascade model" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Model A: An 8-step conditional probability sequence.</strong> <em>n = 100,000</em> individuals per scenario. P<sub>cascade</sub> = &prod; p<sub>i</sub> from i=1 to 8. The steps: Awareness &rarr; Willingness &rarr; Access &rarr; Disclosure &rarr; Provider &rarr; Testing &rarr; Initiation &rarr; Engagement.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="6">
+    <div class="slide-number">Slide 06 &mdash; Step Probabilities</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_6.png" alt="Input parameters showing base probabilities and barrier decrements" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Barriers function as additive decrements.</strong> Each cascade step has a base probability (0.70&ndash;0.85) reduced by structural barrier decrements (-0.40 to -0.60). Awareness drops from 0.70 to an effective <em>0.10</em>. Even willingness (base 0.80) collapses to <em>0.30</em>.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="7">
+    <div class="slide-number">Slide 07 &mdash; Probability Attrition</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_7.png" alt="Stacked bar chart showing barrier layers at each cascade step" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Visualizing where prevention collapses.</strong> Stacked barrier layers (policy/criminalization, stigma, infrastructure, research exclusion, HIV testing, ML/algorithmic bias) erode probability at every step. Cumulative PWID outcome: <em>4.65 &times; 10<sup>-5</sup></em> vs. MSM: <em>0.2107</em> &mdash; a 4,530-fold disparity.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="8">
+    <div class="slide-number">Slide 08 &mdash; Population Comparison</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_8.png" alt="Step completion comparison: MSM maintain >50% while PWID fall below at 6 of 8 steps" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>MSM maintain &gt;50% at all steps. PWID fall below 50% at 6 of 8.</strong> The bar chart makes the structural disparity visible: identical pharmacology, radically different outcomes. The <em>5,434-fold</em> disparity emerges from multiplicative barrier compounding.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="9">
+    <div class="slide-number">Slide 09 &mdash; Decomposition of Failure</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_9.png" alt="93.1% of failures are architectural; criminalization is 38.4%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>93.1% of prevention failures are architectural.</strong> Three-layer decomposition: Pathogen biology accounts for <em>0.0%</em> (addressed by drug efficacy). HIV testing: <em>6.9%</em>. Architectural barriers: <em>93.1%</em>. Within architecture, criminalization dominates at <em>38.4%</em>, followed by infrastructure (21.9%) and stigma (20.6%).
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="10">
+    <div class="slide-number">Slide 10 &mdash; Policy Scenarios</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_10.png" alt="Policy scenario analysis showing progressive improvement from 0.003% to 19.7%" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Policy reform is the mathematical prerequisite.</strong> Current policy: <em>0.003%</em>. Decriminalization only: 0.20%. Full harm reduction: <em>9.6%</em>. HR + ML debiasing: <em>18.6%</em>. Theoretical max: 19.7%. Only comprehensive structural reform approaches the MSM reference (<em>16.3%</em>).
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="11">
+    <div class="slide-number">Slide 11 &mdash; Stochastic Avoidance</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_11.png" alt="Definition of stochastic avoidance: outbreaks fail to occur despite R0 > 1 due to randomness" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Why hasn&rsquo;t the outbreak already happened?</strong> Stochastic avoidance: outbreaks fail to occur despite favorable transmission conditions (R<sub>0</sub> &gt; 1) purely due to randomness in early transmission events. Current state: low network density sustains high avoidance &mdash; but this is eroding.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="12">
+    <div class="slide-number">Slide 12 &mdash; Network Density Equation</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_12.png" alt="Governing equation for network density d(t)" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The governing equation for outbreak risk.</strong> d(t) = d<sub>0</sub> + &alpha;M(t) + &beta;H + &gamma;(1&ndash;SSP) + &delta;(1&ndash;OAT). Methamphetamine prevalence, housing instability, and gaps in syringe services and opioid agonist therapy all drive network density toward the critical threshold.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="13">
+    <div class="slide-number">Slide 13 &mdash; Baseline Forecast</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_13.png" alt="5-year outbreak probability 73%, 10-year 93.4%, median time 3.0 years" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>73% national outbreak probability within 5 years.</strong> The V1 additive model projects: 5-year probability <em>73.0%</em>, 10-year probability <em>93.4%</em>, median time to outbreak <em>3.0 years</em>. The curve shows probability accumulating rapidly through the late 2020s.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="14">
+    <div class="slide-number">Slide 14 &mdash; Sensitivity Analysis</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_14.png" alt="Tornado diagram showing top 3 drivers of outbreak probability" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Three parameters dominate the forecast.</strong> Baseline annual outbreak probability, baseline PWID network density, and meth effect on network density are the top drivers. The V2 multiplicative model adds a meth &times; housing interaction coefficient as a new structural term.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="15">
+    <div class="slide-number">Slide 15 &mdash; Model Refinement</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_15.png" alt="V1 Additive vs V2 Multiplicative model comparison" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>From additive to multiplicative: capturing synergistic vulnerability.</strong> V1 assumes methamphetamine and housing are independent. V2 adds an interaction term <em>&lambda; &middot; M(t) &middot; H</em> based on Hood et al. (2018), capturing the synergistic effect where co-occurring risks exceed the sum of parts.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="16">
+    <div class="slide-number">Slide 16 &mdash; Interaction Coefficient</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_16.png" alt="Lambda = 0.8, the meth-housing interaction coefficient" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The joint effect exceeds the sum by ~1.5-fold.</strong> Interaction coefficient <em>&lambda; = 0.8</em> (range 0.3&ndash;1.5), derived from Hood et al. (2018). The joint effect of methamphetamine use and unstable housing on viral suppression exceeds the sum of individual effects &mdash; synergistic structural vulnerability.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="17">
+    <div class="slide-number">Slide 17 &mdash; Comparative Forecast</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_17.png" alt="V1 vs V2 forecast: 73.0% vs 68.4% national 5-year risk" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Both models converge on catastrophic risk.</strong> V1 (additive): <em>73.0%</em> national 5-year risk. V2 (multiplicative): <em>68.4%</em>. The slight decrease nationally masks a critical redistribution of risk toward vulnerable regions where interaction effects concentrate.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="18">
+    <div class="slide-number">Slide 18 &mdash; Regional Collapse</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_18.png" alt="Pacific Northwest risk >92% with meth prevalence ~35% and high housing instability" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>The Pacific Northwest faces acute synergistic collapse.</strong> While national risk slightly decreases in V2, the interaction term drives density above critical thresholds faster in regions with co-occurring meth prevalence (~35%) and high housing instability. Risk concentrates, it doesn&rsquo;t disappear.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="19">
+    <div class="slide-number">Slide 19 &mdash; Regional Forecast Data</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_19.png" alt="Pacific Northwest: 92.4% 5-year risk, median 1.0 year to outbreak" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Structural intersections transform gradual erosion into acute regional collapse.</strong> National average (V2): <em>68.4%</em> 5-year risk, median 3.0 years. Pacific Northwest: <em>92.4%</em> 5-year risk, median <em>1.0 year</em> to outbreak. The interaction term compresses the timeline dramatically.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="20">
+    <div class="slide-number">Slide 20 &mdash; Evidence &amp; Validation</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_20.png" alt="120-fold evidence asymmetry between MSM and PWID; LOOCV validation framework" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>A 120-fold evidence asymmetry.</strong> Literature signal-to-noise ratio: MSM = <em>9,180</em> vs. PWID = <em>76</em>. LOOCV validation: training set validated across 9+ trials (19,800 participants), held-out set from Bangkok 2013 (2,413 participants). The evidence base itself is structurally biased.
+    </div>
+  </div>
+
+  <div class="slide-section" data-slide="21">
+    <div class="slide-number">Slide 21 &mdash; Conclusions</div>
+    <div class="slide-frame">
+      <img src="/research/images/pwid_slide_21.png" alt="Five analytic conclusions" loading="lazy" decoding="async">
+    </div>
+    <div class="slide-caption">
+      <strong>Five conclusions.</strong> 1. System failure: <em>5,434-fold</em> disparity despite identical pharmacology. 2. Root cause: <em>93.1%</em> architectural, criminalization at 38.4%. 3. Outbreak forecast: <em>68&ndash;73%</em> national 5-year probability. 4. Regional collapse: Pacific Northwest <em>&gt;92%</em>, median 1.0 year. 5. Structural policy reform is a mathematical prerequisite.
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
 
 <!-- 01 THE PARADOX -->
 <section class="section">
@@ -318,7 +557,17 @@ body::before {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter); } });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .slide-section').forEach(el => observer.observe(el));
+
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
 
 function startCounter(el) {
   el.classList.add('counted');
