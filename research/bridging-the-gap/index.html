@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The PrEP Cascade Paradigm Shift | Nyx Dynamics Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+:root {
+  --bg-deep: #080610;
+  --bg-card: #12101f;
+  --bg-card2: #1a1730;
+  --amber: #f59e0b;
+  --amber-dim: #b47208;
+  --red: #ef4444;
+  --red-dim: #b91c1c;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --indigo: #818cf8;
+  --violet: #a78bfa;
+  --white: #f0f4f8;
+  --silver: #94a3b8;
+  --muted: #475569;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-deep); }
+body { font-family: 'Outfit', sans-serif; color: var(--white); background: var(--bg-deep); overflow-x: hidden; line-height: 1.6; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.site-nav { position: sticky; top: 0; z-index: 100; background: rgba(8,6,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 2rem; }
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+.nav-logo-mark { width: 32px; height: 32px; background: #00d4ff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
+.nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: #00d4ff; }
+@media (max-width: 700px) { .nav-links { display: none; } }
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -20%; left: -20%; width: 140%; height: 140%; background: radial-gradient(ellipse at 60% 40%, rgba(6,182,212,0.05) 0%, transparent 50%), radial-gradient(ellipse at 30% 70%, rgba(129,140,248,0.04) 0%, transparent 50%); animation: drift 20s ease-in-out infinite alternate; }
+@keyframes drift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(30px, -20px) rotate(1deg); } }
+.hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1rem; }
+.hero h1 { font-family: 'Crimson Pro', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.5rem; }
+.hero h1 em { font-style: italic; color: var(--cyan); }
+.hero-sub { font-size: 1.05rem; font-weight: 300; color: var(--silver); line-height: 1.7; max-width: 650px; margin-bottom: 2rem; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.hero-meta a { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--amber-dim); text-decoration: none; padding: 0.4rem 0.9rem; border: 1px solid rgba(180,114,8,0.3); border-radius: 4px; transition: all 0.3s; }
+.hero-meta a:hover { color: var(--amber); border-color: var(--amber); background: rgba(245,158,11,0.06); }
+.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.scroll-hint span { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+.deck-container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+.slide-section { margin-bottom: 6rem; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.slide-section.visible { opacity: 1; transform: translateY(0); }
+.slide-number { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+.slide-frame { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+.slide-frame img { width: 100%; display: block; height: auto; }
+.slide-caption { margin-top: 1.25rem; font-size: 0.95rem; font-weight: 300; color: var(--silver); line-height: 1.6; max-width: 750px; }
+.slide-caption strong { color: var(--white); font-weight: 600; }
+.slide-caption em { color: var(--cyan); font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+.divider { max-width: 200px; margin: 0 auto; height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); }
+.section { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+.section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem; }
+.section h2 { font-family: 'Crimson Pro', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+.section p { font-weight: 300; color: var(--silver); max-width: 650px; }
+.deck-progress { position: fixed; top: 60px; left: 0; right: 0; height: 3px; z-index: 99; background: rgba(255,255,255,0.03); }
+.deck-progress-fill { height: 100%; width: 0%; background: linear-gradient(to right, var(--cyan), var(--indigo), var(--cyan)); transition: width 0.2s ease; }
+.footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.04); }
+.footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+.footer-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--amber-dim); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--amber); }
+</style>
+</head>
+<body>
+<nav class="site-nav"><div class="nav-inner"><a href="/" class="nav-logo"><div class="nav-logo-mark">N</div><div class="nav-logo-text">Nyx Dynamics</div></a><ul class="nav-links"><li><a href="/#about">About</a></li><li><a href="/#services">Services</a></li><li><a href="/noctua">Noctua</a></li><li><a href="/research" class="active">Research</a></li><li><a href="/#contact">Contact</a></li></ul></div></nav>
+<div class="deck-progress"><div class="deck-progress-fill" id="progressFill"></div></div>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Interactive Research Summary</div>
+    <h1>The PrEP Cascade <em>Paradigm Shift</em></h1>
+    <p class="hero-sub">
+      A visual walkthrough of how LAI-PrEP inverts the prevention cascade &mdash; shifting the critical failure point from post-initiation adherence to pre-initiation structural barriers, and why the 2&ndash;8 week bridge period is the key to unlocking global impact.
+    </p>
+    <div class="hero-meta">
+      <a href="https://doi.org/10.20944/preprints202512.2354.v1" target="_blank">Preprint</a>
+      <a href="https://github.com/Nyx-Dynamics/bridging_the_gap" target="_blank">GitHub Repository</a>
+      <a href="https://doi.org/10.5281/zenodo.18729431" target="_blank">Zenodo Archive</a>
+      <a href="/research">&larr; All Research</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll to explore</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="deck-container">
+
+  <div class="slide-section" data-slide="1">
+    <div class="slide-number">Slide 01 &mdash; Title</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_01.jpg" alt="Bridging the Gap: The PrEP Cascade Paradigm Shift" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Bridging the Gap: The PrEP Cascade Paradigm Shift for Long-Acting Injectable HIV Prevention.</strong> Converting clinical efficacy into public health impact. Data sources: HPTN 083/084, PURPOSE-1/2, CAN Community Health Network.</div>
+  </div>
+
+  <div class="slide-section" data-slide="2">
+    <div class="slide-number">Slide 02 &mdash; From Human to System Perfection</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_02.jpg" alt="Old Way: Oral PrEP vs New Way: LAI-PrEP" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The fundamental shift: from human perfection to system perfection.</strong> Oral PrEP demands daily behavioral compliance. LAI-PrEP transfers the burden to structural system dependency &mdash; clinical integration, scheduled dosings, and system adherence replace the daily pill decision.</div>
+  </div>
+
+  <div class="slide-section" data-slide="3">
+    <div class="slide-number">Slide 03 &mdash; The Clinical Triumph</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_03.jpg" alt="96% efficacy, 0 infections in PURPOSE-1, 66% superiority HPTN 083, 89% superiority HPTN 084" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The chemistry is solved. The drug works perfectly.</strong> Greater than <em>96%</em> efficacy across all groups (PURPOSE-2). Zero infections in the PURPOSE-1 cohort (n=5,338 cisgender women). <em>66%</em> superiority over oral PrEP in HPTN 083, <em>89%</em> in HPTN 084.</div>
+  </div>
+
+  <div class="slide-section" data-slide="4">
+    <div class="slide-number">Slide 04 &mdash; The Implementation Paradox</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_04.jpg" alt="99% clinical efficacy drops to 53% real-world initiation due to 47.1% attrition" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>From 99% efficacy to 53% real-world initiation.</strong> The <em>47.1%</em> pre-initiation attrition rate means nearly half of prescribed patients never receive their first injection. Oral PrEP fails through behavioral barriers (daily pill burden); LAI-PrEP fails through structural barriers (mandatory 2&ndash;8 week bridge).</div>
+  </div>
+
+  <div class="slide-section" data-slide="5">
+    <div class="slide-number">Slide 05 &mdash; The Reconceptualized Cascade</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_05.jpg" alt="Oral PrEP cascade vs LAI-PrEP cascade with bridge period as central failure point" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The drop-off happens BEFORE the start.</strong> The oral PrEP cascade fails at persistence (40&ndash;48% lost to daily pill burden). The LAI-PrEP cascade fails at bridge navigation (47.1% lost in the 2&ndash;8 week gap). This requires a fundamentally reconceptualized care cascade with bridge period navigation as a distinct, measurable step.</div>
+  </div>
+
+  <div class="slide-section" data-slide="6">
+    <div class="slide-number">Slide 06 &mdash; Anatomy of the Bridge Period</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_06.jpg" alt="Bridge period structural hurdles: insurance authorization, HIV testing, logistics" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The patient is motivated, but unprotected.</strong> From Day 0 (prescription) to Day 60 (first injection), patients must navigate three structural hurdles: insurance authorization and prior auth, HIV testing window periods (RNA vs. Ag/Ab), and cold-chain logistics and scheduling.</div>
+  </div>
+
+  <div class="slide-section" data-slide="7">
+    <div class="slide-number">Slide 07 &mdash; Adolescents (16&ndash;24)</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_07.jpg" alt="Adolescents: 30-40% projected completion, barriers: temporal discounting, privacy/EOB fear" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Adolescents face unique developmental barriers.</strong> Projected completion: <em>30&ndash;40%</em>. Temporal discounting reduces future risk salience. Privacy fears around Explanation of Benefits (EOB) statements deter youth on parental insurance from initiating LAI-PrEP.</div>
+  </div>
+
+  <div class="slide-section" data-slide="8">
+    <div class="slide-number">Slide 08 &mdash; Cisgender Women</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_08.jpg" alt="Cisgender women: 40-50% projected completion, barriers: competing priorities, medical mistrust" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Competing priorities and medical mistrust create compounding barriers for cisgender women.</strong> Projected completion: <em>40&ndash;50%</em>. Childcare and transportation demands compete with multi-visit bridge requirements. 39% cite side effect concerns. Contrast with PURPOSE-1: zero infections in the trial setting.</div>
+  </div>
+
+  <div class="slide-section" data-slide="9">
+    <div class="slide-number">Slide 09 &mdash; People Who Inject Drugs</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_09.jpg" alt="PWID: 20-30% projected completion, barriers: criminalization, housing instability, low awareness" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>PWID face the most severe structural barriers and the lowest projected completion.</strong> Projected: <em>20&ndash;30%</em>. Criminalization (17% avoid care due to legal fear), housing instability preventing appointment tracking, and an awareness gap (only 2% PrEP usage despite high need).</div>
+  </div>
+
+  <div class="slide-section" data-slide="10">
+    <div class="slide-number">Slide 10 &mdash; Transgender Persons</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_10.jpg" alt="Transgender persons: 35-45% projected completion, the trust gap" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The trust gap: healthcare discrimination, economic marginalization, and hormone interaction concerns.</strong> Projected completion: <em>35&ndash;45%</em>. These barriers compound to create healthcare avoidance. Contrast with PURPOSE-1: zero infections in the trial setting, where structural barriers were minimized.</div>
+  </div>
+
+  <div class="slide-section" data-slide="11">
+    <div class="slide-number">Slide 11 &mdash; Global Context: Sub-Saharan Africa</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_11.jpg" alt="Sub-Saharan Africa: 62% of global need, structural deficits in cold chain, workforce, testing" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>62% of global need, magnified structural deficits.</strong> Cold chain requirements (lenacapavir at 2&ndash;8&deg;C vs. cabotegravir), healthcare workforce shortages, and centralized lab testing creating 2&ndash;4 week delays. The bridge period challenge scales proportionally with infrastructure gaps.</div>
+  </div>
+
+  <div class="slide-section" data-slide="12">
+    <div class="slide-number">Slide 12 &mdash; Strategy 1: Eliminate the Bridge</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_12.jpg" alt="Oral-to-injectable switch: eliminate the bridge entirely, Tier 1 evidence, 85-90% initiation" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The highest-impact strategy: eliminate the bridge entirely.</strong> Oral-to-injectable switch bypasses the bridge period for existing PrEP users. Tier 1 (strong) evidence. Impact: increases initiation to <em>85&ndash;90%</em>. The bridge becomes a non-issue when patients transition from continuous oral coverage.</div>
+  </div>
+
+  <div class="slide-section" data-slide="13">
+    <div class="slide-number">Slide 13 &mdash; Strategy 2: Compress the Bridge</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_13.jpg" alt="RNA/rapid testing reduces bridge from 45 days to 10-14 days" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Advanced HIV testing strategies reduce the danger zone by ~30 days.</strong> Standard Ag/Ab testing requires a 45-day window period with high attrition risk. RNA/rapid testing compresses this to <em>10&ndash;14 days</em>, enabling rapid start and dramatically reducing the exposure window.</div>
+  </div>
+
+  <div class="slide-section" data-slide="14">
+    <div class="slide-number">Slide 14 &mdash; The POC Challenge</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_14.jpg" alt="Point-of-care testing: balancing access vs. perfect safety" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The access vs. safety tradeoff.</strong> Lack of point-of-care RNA testing creates multi-visit burdens. WHO July 2025 guidance offers mitigation. In resource-limited settings, the strategy must prioritize access over maximal risk reduction &mdash; because attrition from delayed access prevents more infections than the residual window period risk.</div>
+  </div>
+
+  <div class="slide-section" data-slide="15">
+    <div class="slide-number">Slide 15 &mdash; The Intervention Library</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_15.jpg" alt="21 evidence-based strategies in a three-tier pyramid: Proven (RCTs), Observational, Emerging" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>21 evidence-based strategies categorized by rigor.</strong> Tier 1 (Proven/RCTs): oral switch, patient navigation, SMS reminders. Tier 2 (Observational): RNA testing, transport support. Tier 3 (Emerging): pharmacist prescribing, bundled payments. Source: global health evidence synthesis and WHO guidelines.</div>
+  </div>
+
+  <div class="slide-section" data-slide="16">
+    <div class="slide-number">Slide 16 &mdash; The CDS Tool</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_16.jpg" alt="CDS algorithm: patient profile → algorithm → tailored intervention" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Navigating the bridge requires a GPS, not just a map.</strong> The clinical decision support algorithm takes a patient profile (e.g., adolescent + no transport) and generates a tailored intervention recommendation (e.g., Tier 1: SMS reminders + Tier 2: rideshare voucher). Validated computationally at 21.2M patients in the companion paper.</div>
+  </div>
+
+  <div class="slide-section" data-slide="17">
+    <div class="slide-number">Slide 17 &mdash; Equity Implications</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_17.jpg" alt="Relative improvement: adolescents +147%, PWID +265%" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Interventions narrow the gap. Without them, LAI-PrEP widens inequality.</strong> Adolescents: <em>+147%</em> relative improvement. PWID: <em>+265%</em>. The populations facing the greatest structural barriers see the greatest marginal benefit from systematic bridge period support.</div>
+  </div>
+
+  <div class="slide-section" data-slide="18">
+    <div class="slide-number">Slide 18 &mdash; Safety &amp; Irreversibility</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_18.jpg" alt="Bridge period as safety valve: HPTN and PURPOSE evidence" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The bridge period is a safety feature, not just a barrier.</strong> We don&rsquo;t abandon safety; we streamline the process. The islatravir lesson (monitoring failures) vs. lenacapavir&rsquo;s success reinforces that safety protocols must be maintained while reducing structural friction.</div>
+  </div>
+
+  <div class="slide-section" data-slide="19">
+    <div class="slide-number">Slide 19 &mdash; Research Priorities</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_19.jpg" alt="Research checklist: real-world measurement, economic evaluation, implementation trials, equity monitoring" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>Four research priorities to close the evidence-to-implementation gap.</strong> Real-world measurement of bridge duration. Economic evaluation of RNA testing vs. attrition costs. Implementation trials (HPTN 102/103). Equity monitoring through EquiPrEP protocols.</div>
+  </div>
+
+  <div class="slide-section" data-slide="20">
+    <div class="slide-number">Slide 20 &mdash; The New Paradigm</div>
+    <div class="slide-frame"><img src="/research/images/btg_slide_20.jpg" alt="The new paradigm: from behavioral adherence to structural access, from individual burden to system responsibility" loading="lazy" decoding="async"></div>
+    <div class="slide-caption"><strong>The bridge is the key to impact.</strong> From behavioral adherence &rarr; structural access. From individual burden &rarr; system responsibility. The LAI-PrEP implementation paradox is solvable &mdash; but only if we reconceptualize where the failure occurs and invest in the systems to navigate it.</div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<section class="section" id="mindmap">
+  <div class="reveal">
+    <div class="section-label">Mind Map</div>
+    <h2>LAI-PrEP Cascade Paradigm Shift</h2>
+    <p>An overview of the framework&rsquo;s six interconnected domains: the implementation paradox, the bridge period, reconceptualized care cascade, population-specific barriers, evidence-based strategies, and measurement metrics.</p>
+  </div>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: #fff;">
+    <img src="/research/images/mindmap_bridging_the_gap.png" alt="Mind Map: LAI-PrEP Cascade Paradigm Shift" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">Visual Summary</div>
+    <h2>Solving the LAI-PrEP Implementation Paradox</h2>
+    <p>From the 47.1% attrition cliff to evidence-based bridge period navigation &mdash; reconceptualizing the prevention cascade, closing the equity gap, and achieving 81&ndash;83% persistence after first dose.</p>
+  </div>
+  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
+    <img src="/research/images/infographic_bridging_the_gap.jpg" alt="Bridging the Gap: Solving the LAI-PrEP Implementation Paradox — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer class="footer">
+  <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+    <div style="width:24px;height:24px;background:#00d4ff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8rem;color:var(--bg-deep);">N</div>
+    <span style="font-weight:600;font-size:0.85rem;letter-spacing:0.08em;">Nyx Dynamics, LLC</span>
+  </div>
+  <p style="font-family:'Crimson Pro',serif;font-style:italic;color:var(--silver);font-size:0.85rem;margin-bottom:0.5rem;">&ldquo;Illuminating hidden insights within data&rdquo;</p>
+  <div class="footer-links">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:info@nyxdynamics.org">Contact</a>
+  </div>
+  <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.slide-section, .reveal').forEach(el => observer.observe(el));
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressFill.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>
