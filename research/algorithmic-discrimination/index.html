@@ -4,398 +4,298 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Algorithmic Discrimination: Synergistic Barrier Model | Nyx Dynamics Research</title>
+<meta name="description" content="A quantitative model proving algorithmic discrimination operates as a synergistic barrier system. medRxiv 2026. Demidont AC.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+:root{--cyan:#00D4FF;--bg:#0a0a0f;--card:#111318;--border:#1e2330;--text:#f8fafc;--silver:#cbd5e1;--muted:#94a3b8;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--purple:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7}
 
-:root {
-  --bg-deep: #0a0810;
-  --bg-card: #13111f;
-  --bg-card2: #1c1930;
-  --orange: #f97316;
-  --orange-dim: #c2410c;
-  --red: #ef4444;
-  --cyan: #06b6d4;
-  --green: #10b981;
-  --indigo: #818cf8;
-  --violet: #a78bfa;
-  --pink: #ec4899;
-  --white: #f0f4f8;
-  --silver: #94a3b8;
-  --muted: #475569;
-  --border: rgba(255,255,255,0.06);
-  --nav-bg: rgba(10,8,16,0.92);
-}
+.nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cyan);text-decoration:none;font-weight:700}
+.nav-links{display:flex;gap:1.5rem}.nav-links a{color:var(--silver);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--cyan)}
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { background: var(--bg-deep); scroll-behavior: smooth; }
-body {
-  font-family: 'Outfit', sans-serif;
-  color: var(--white);
-  background: var(--bg-deep);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.4rem 1rem;border-radius:20px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;max-width:800px;margin-bottom:1rem}.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero .sub{color:var(--silver);font-size:1.05rem;max-width:700px;margin-bottom:2rem}
+.hero .links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.hero .links a{padding:.6rem 1.5rem;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-p{background:var(--cyan);color:#000}.btn-p:hover{box-shadow:0 0 20px rgba(0,212,255,.4)}
+.btn-o{border:1px solid var(--border);color:var(--silver)}.btn-o:hover{border-color:var(--cyan);color:var(--cyan)}
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
+.section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+.sn{font-size:.75rem;color:var(--cyan);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem}
+.section p,.section li{color:var(--silver);font-size:.95rem}.section p+p{margin-top:1rem}
 
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-}
-.nav-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; height: 60px;
-}
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
-.nav-logo-mark { width: 32px; height: 32px; background: #00d4ff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 1.1rem; color: var(--bg-deep); }
-.nav-logo-text { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.nav-links { display: flex; gap: 1.5rem; list-style: none; }
-.nav-links a { font-size: 0.85rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color: #00d4ff; }
-@media (max-width: 700px) { .nav-links { display: none; } }
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:2rem 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:700;color:var(--cyan)}.stat-card .label{font-size:.75rem;color:var(--muted);margin-top:.25rem}
 
-/* ── Scroll reveal ── */
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.layer{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.layer h4{font-size:.95rem;font-weight:600;margin-bottom:.5rem}.layer .barriers{color:var(--muted);font-size:.85rem}
 
-/* ── Hero ── */
-.hero {
-  min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
-  padding: 2rem; position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; top: -20%; left: -20%; width: 140%; height: 140%;
-  background: radial-gradient(ellipse at 50% 40%, rgba(249,115,22,0.05) 0%, transparent 50%),
-              radial-gradient(ellipse at 30% 70%, rgba(236,72,153,0.03) 0%, transparent 50%);
-  animation: drift 20s ease-in-out infinite alternate;
-}
-@keyframes drift { from { transform: translate(0,0); } to { transform: translate(-2%,1%); } }
+.formula{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;margin:2rem 0;font-size:1.1rem;font-family:'JetBrains Mono',monospace;color:var(--cyan)}
+.formula .note{font-family:'Inter',sans-serif;color:var(--muted);font-size:.8rem;margin-top:.5rem}
 
-.hero-content { position: relative; max-width: 800px; margin: 0 auto; }
-.hero-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--orange); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
-.hero h1 { font-family: 'Crimson Pro', serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
-.hero h1 em { font-style: italic; font-weight: 300; color: var(--orange); }
-.hero-sub { font-size: 1.15rem; font-weight: 300; color: var(--silver); max-width: 620px; opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards; }
-.hero-meta { margin-top: 2.5rem; display: flex; gap: 2rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards; }
-.hero-meta a { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--orange-dim); text-decoration: none; border: 1px solid var(--orange-dim); padding: 0.4rem 1rem; border-radius: 4px; transition: all 0.3s; }
-.hero-meta a:hover { color: var(--orange); border-color: var(--orange); box-shadow: 0 0 15px rgba(249,115,22,0.15); }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+.finding-bar{margin-bottom:1rem}.finding-bar .bar-label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.3rem}
+.finding-bar .bar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}.finding-bar .bar-fill{height:100%;border-radius:4px}
 
-.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
-.scroll-hint span { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
-.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--orange), transparent); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+/* TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.tab{padding:.5rem 1.2rem;border-radius:8px 8px 0 0;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;font-family:'Inter',sans-serif}
+.tab:hover{color:var(--silver)}.tab.active{background:var(--card);border-color:var(--border);border-bottom-color:var(--card);color:var(--cyan)}
+.tab-content{display:none}.tab-content.active{display:block}
 
-/* ── Section ── */
-.section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
-.section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.25em; color: var(--orange); text-transform: uppercase; margin-bottom: 0.75rem; }
-.section h2 { font-family: 'Crimson Pro', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
-.section p { font-weight: 300; color: var(--silver); font-size: 1.05rem; margin-bottom: 1.25rem; max-width: 700px; }
+/* INFOGRAPHIC */
+.infographic-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin:1rem 0}
+.infographic-wrap img{width:100%;display:block}
 
-/* ── Stat grid ── */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 2.5rem 0; }
-.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
-.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.stat-card.orange::before { background: var(--orange); }
-.stat-card.red::before { background: var(--red); }
-.stat-card.cyan::before { background: var(--cyan); }
-.stat-card.green::before { background: var(--green); }
-.stat-card.indigo::before { background: var(--indigo); }
-.stat-card.pink::before { background: var(--pink); }
-.stat-value { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; font-weight: 600; margin-bottom: 0.25rem; }
-.stat-card.orange .stat-value { color: var(--orange); }
-.stat-card.red .stat-value { color: var(--red); }
-.stat-card.cyan .stat-value { color: var(--cyan); }
-.stat-card.green .stat-value { color: var(--green); }
-.stat-card.indigo .stat-value { color: var(--indigo); }
-.stat-card.pink .stat-value { color: var(--pink); }
-.stat-label { font-size: 0.85rem; color: var(--silver); font-weight: 400; }
-.stat-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
+/* FLASHCARDS */
+.fc-controls{display:flex;gap:1rem;align-items:center;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+.fc-controls button{background:var(--card);border:1px solid var(--border);color:var(--silver);padding:.5rem 1.2rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-family:'Inter',sans-serif;transition:all .2s}
+.fc-controls button:hover{border-color:var(--cyan);color:var(--cyan)}
+.fc-counter{color:var(--muted);font-size:.85rem;min-width:80px;text-align:center}
+.fc-filter{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+.fbtn{padding:.3rem .8rem;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.fbtn:hover,.fbtn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08)}
+.flashcard{perspective:1000px;height:280px;cursor:pointer;margin:0 auto;max-width:700px}
+.fc-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-front{background:linear-gradient(135deg,#111827,#1a1f2e);border:1px solid var(--border)}
+.fc-front .ql{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-weight:600}
+.fc-front p{font-size:.92rem;color:var(--silver);line-height:1.6}
+.fc-back{background:linear-gradient(135deg,#0c1a2a,#112030);border:1px solid rgba(0,212,255,.3);transform:rotateY(180deg)}
+.fc-back .al{font-size:.7rem;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-weight:600}
+.fc-back p{font-size:.92rem;color:var(--text);line-height:1.6}
+.fc-tag{position:absolute;bottom:.75rem;right:1rem;font-size:.63rem;color:var(--muted);background:rgba(255,255,255,.05);padding:.15rem .5rem;border-radius:4px}
 
-/* ── Callout boxes ── */
-.problem-box { background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02)); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
-.problem-box h3 { font-family: 'Crimson Pro', serif; color: var(--red); font-size: 1.3rem; margin-bottom: 0.75rem; }
-.insight-box { background: linear-gradient(135deg, rgba(249,115,22,0.06), rgba(249,115,22,0.01)); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
-.insight-box h3 { font-family: 'Crimson Pro', serif; color: var(--orange); font-size: 1.3rem; margin-bottom: 0.75rem; }
-.solution-box { background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(16,185,129,0.01)); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 1.5rem 2rem; margin: 2rem 0; }
-.solution-box h3 { font-family: 'Crimson Pro', serif; color: var(--green); font-size: 1.3rem; margin-bottom: 0.75rem; }
+/* SLIDES */
+.slide-viewer{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.slide-stage{position:relative;width:100%;padding-top:56.25%;overflow:hidden}
+.slide-stage img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#111}
+.slide-nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-top:1px solid var(--border);background:rgba(0,0,0,.3)}
+.slide-nav button{background:none;border:1px solid var(--border);color:var(--silver);padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.8rem;font-family:'Inter',sans-serif;transition:all .2s}
+.slide-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+.slide-nav .sc{color:var(--muted);font-size:.8rem}
+.slide-dots{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:none}
+.sdot.active{background:var(--cyan);box-shadow:0 0 8px rgba(0,212,255,.5)}
 
-/* ── Layer visualization ── */
-.layer-stack { display: flex; flex-direction: column; gap: 0; margin: 2.5rem 0; }
-.layer-block { padding: 1.25rem 1.5rem; border: 1px solid var(--border); position: relative; }
-.layer-block:first-child { border-radius: 8px 8px 0 0; }
-.layer-block:last-child { border-radius: 0 0 8px 8px; }
-.layer-block h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.layer-block p { font-size: 0.85rem; color: var(--silver); font-weight: 300; margin: 0; }
-.layer-block .barriers { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
-.layer-block:nth-child(1) { background: rgba(6,182,212,0.06); }
-.layer-block:nth-child(1) h4 { color: var(--cyan); }
-.layer-block:nth-child(2) { background: rgba(249,115,22,0.06); }
-.layer-block:nth-child(2) h4 { color: var(--orange); }
-.layer-block:nth-child(3) { background: rgba(236,72,153,0.06); }
-.layer-block:nth-child(3) h4 { color: var(--pink); }
-.multiply-sign { text-align: center; font-size: 1.5rem; color: var(--muted); padding: 0.25rem 0; }
+/* CITATION */
+.cite-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:2rem 0}
+.cite-box .cl{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-weight:600}
+.cite-box .ct{font-size:.85rem;color:var(--silver);font-family:'JetBrains Mono',monospace;line-height:1.6;word-break:break-all}
+.cite-box a{color:var(--cyan)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.3rem .8rem;border-radius:6px;cursor:pointer;font-size:.75rem;font-family:'Inter',sans-serif;margin-top:.75rem;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,255,.2)}
 
-/* ── Equation ── */
-.equation-display { text-align: center; padding: 2rem; margin: 2rem 0; background: var(--bg-card); border-radius: 8px; border: 1px solid rgba(249,115,22,0.1); }
-.equation-display .eq { font-family: 'Crimson Pro', serif; font-size: 1.8rem; font-style: italic; color: var(--white); }
-.equation-display .eq-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 0.75rem; }
+.footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+.footer .logo{font-family:'Playfair Display',serif;color:var(--cyan);font-size:1.3rem;margin-bottom:.5rem}
+.footer .tagline{color:var(--muted);font-size:.8rem;font-style:italic;margin-bottom:1rem}
+.footer .flinks{display:flex;gap:1.5rem;justify-content:center;margin-bottom:1rem}
+.footer .flinks a{color:var(--silver);text-decoration:none;font-size:.8rem}.footer .flinks a:hover{color:var(--cyan)}
+.footer .cp{color:var(--muted);font-size:.7rem}
 
-/* ── Check list ── */
-.check-list { list-style: none; margin: 1.5rem 0; }
-.check-list li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; font-weight: 300; color: var(--silver); font-size: 0.95rem; }
-.check-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-
-.divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--orange), transparent); margin: 4rem auto; }
-
-/* ── Footer ── */
-.site-footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); }
-.footer-logo { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
-.footer-logo .fmark { width: 24px; height: 24px; background: #00d4ff; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 0.8rem; color: var(--bg-deep); }
-.footer-logo span { font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; }
-.site-footer p { font-size: 0.75rem; color: var(--muted); }
-.site-footer .tagline { font-family: 'Crimson Pro', serif; font-style: italic; color: var(--silver); font-size: 0.85rem; margin-bottom: 0.5rem; }
-.footer-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; }
-.footer-links a { font-size: 0.8rem; color: var(--silver); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: #00d4ff; }
-
-.counter { display: inline-block; }
+@media(max-width:768px){.hero h1{font-size:1.8rem}.flashcard{height:320px}.nav-links{gap:.75rem}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><div class="nav-logo-mark">N</div><div class="nav-logo-text">Nyx Dynamics</div></a>
-    <ul class="nav-links">
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#services">Services</a></li>
-      <li><a href="/noctua">Noctua</a></li>
-      <li><a href="/research" class="active">Research</a></li>
-      <li><a href="/#contact">Contact</a></li>
-    </ul>
+<nav class="nav">
+  <a href="/" class="nav-logo">N Nyx Dynamics</a>
+  <div class="nav-links">
+    <a href="/#about">About</a><a href="/#services">Services</a><a href="/noctua">Noctua</a><a href="/research">Research</a><a href="/#contact">Contact</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-label">Interactive Research Summary</div>
-    <h1>Why Incremental Reforms <em>Always Fail</em></h1>
-    <p class="hero-sub">A quantitative model proving that algorithmic discrimination operates as a synergistic barrier system — where fixing one thing fixes nothing.</p>
-    <div class="hero-meta">
-      <a href="https://github.com/Nyx-Dynamics/algorithmic-bias-epidemiology-academic" target="_blank">GitHub Repository</a>
-      <a href="/research">← All Research</a>
-    </div>
+<header class="hero">
+  <div class="badge"><span class="dot"></span> Interactive Research Summary</div>
+  <h1>Why Incremental Reforms <em>Always Fail</em></h1>
+  <p class="sub">A quantitative model proving that algorithmic discrimination operates as a synergistic barrier system — where fixing one thing fixes nothing.</p>
+  <div class="links">
+    <a href="https://doi.org/10.64898/2026.02.22.26346836" target="_blank" class="btn-p">medRxiv Preprint</a>
+    <a href="https://github.com/Nyx-Dynamics/algorithmic-bias-epidemiology-academic" target="_blank" class="btn-o">GitHub Repository</a>
+    <a href="/research" class="btn-o">← All Research</a>
   </div>
-  <div class="scroll-hint"><span>Scroll to explore</span><div class="scroll-line"></div></div>
-</section>
+</header>
 
-<!-- 01 THE PROBLEM -->
+<!-- 01 PROBLEM -->
 <section class="section">
-  <div class="reveal">
-    <div class="section-label">01 — The Problem</div>
-    <h2>Discrimination That Resists Every Fix</h2>
-    <p>Algorithmic systems now gatekeep employment, housing, credit, and healthcare. Despite audits, regulations, and reforms — discrimination persists. Why?</p>
-  </div>
-  <div class="problem-box reveal">
-    <h3>The pattern is consistent</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">Improve data accuracy — discrimination continues. Provide legal aid — discrimination continues. Mandate algorithmic audits — discrimination continues. Every single-target reform fails. We hypothesized this isn't a magnitude problem but a structural one: the barriers reinforce each other synergistically.</p>
-  </div>
-  <div class="stat-grid reveal">
-    <div class="stat-card orange">
-      <div class="stat-value">11</div>
-      <div class="stat-label">Sequential barriers modeled</div>
-      <div class="stat-sub">Across 3 interacting layers</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-value"><span class="counter" data-target="0.0018" data-decimals="4">0</span>%</div>
-      <div class="stat-label">Baseline success rate</div>
-      <div class="stat-sub">&lt; 2 in 100,000 navigate all barriers</div>
-    </div>
-    <div class="stat-card indigo">
-      <div class="stat-value">&lt;0.02%</div>
-      <div class="stat-label">Best single-barrier fix</div>
-      <div class="stat-sub">Removing any one barrier → negligible</div>
-    </div>
+  <div class="sn">01 — The Problem</div>
+  <h2>Discrimination That Resists Every Fix</h2>
+  <p>Algorithmic systems now gatekeep employment, housing, credit, and healthcare. Despite audits, regulations, and reforms — discrimination persists. Why?</p>
+  <p>Improve data accuracy — discrimination continues. Provide legal aid — discrimination continues. Mandate algorithmic audits — discrimination continues. Every single-target reform fails. We hypothesized this isn't a magnitude problem but a <em>structural</em> one: the barriers reinforce each other synergistically.</p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">11</div><div class="label">Sequential barriers modeled across 3 interacting layers</div></div>
+    <div class="stat-card"><div class="num">0.0018%</div><div class="label">Baseline success rate — fewer than 2 in 100,000</div></div>
+    <div class="stat-card"><div class="num">&lt;0.02%</div><div class="label">Best single-barrier fix — negligible improvement</div></div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- 02 THE MODEL -->
+<!-- 02 BARRIER SYSTEM -->
 <section class="section">
-  <div class="reveal">
-    <div class="section-label">02 — The Barrier System</div>
-    <h2>Three Layers That Multiply</h2>
-    <p>We modeled algorithmic discrimination as a multiplicative cascade across three interacting layers. Each barrier has an empirically derived pass probability from federal datasets and peer-reviewed audits.</p>
-  </div>
-
-  <div class="layer-stack reveal">
-    <div class="layer-block">
-      <h4>Layer 1 — Data Integration</h4>
-      <p>How biased data enters and persists across interconnected systems</p>
-      <div class="barriers">Rapid Data Transmission (0.30) · Multi-System Integration (0.55) · Permanent Storage (0.45)</div>
-    </div>
-    <div class="layer-block">
-      <h4>Layer 2 — Data Accuracy</h4>
-      <p>How hard it is to detect, correct, and propagate fixes to erroneous data</p>
-      <div class="barriers">Error Detection (0.35) · Correction Process (0.35) · Incomplete Propagation (0.40)</div>
-    </div>
-    <div class="layer-block">
-      <h4>Layer 3 — Institutional Access</h4>
-      <p>The legal and institutional barriers to challenging algorithmic decisions</p>
-      <div class="barriers">Awareness Gap (0.30) · Record Access (0.55) · Legal Knowledge (0.25) · Legal Resources (0.40) · Systemic Bias (0.30)</div>
-    </div>
-  </div>
-
-  <div class="equation-display reveal">
-    <div class="eq">P(success) = ∏<sub>i=1</sub><sup>11</sup> p<sub>i</sub> = 0.0018%</div>
-    <div class="eq-label">Multiplicative cascade: barriers don't add — they multiply</div>
-  </div>
+  <div class="sn">02 — The Barrier System</div>
+  <h2>Three Layers That Multiply</h2>
+  <p>We modeled algorithmic discrimination as a multiplicative cascade across three interacting layers. Each barrier has an empirically derived pass probability from federal datasets and peer-reviewed audits.</p>
+  <div class="layer"><h4 style="color:#22c55e">Layer 1 — Data Integration</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">How biased data enters and persists across interconnected systems</p><div class="barriers">Rapid Data Transmission (0.30) · Multi-System Integration (0.55) · Permanent Storage (0.45)</div></div>
+  <div class="layer"><h4 style="color:#3b82f6">Layer 2 — Data Accuracy</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">How hard it is to detect, correct, and propagate fixes to erroneous data</p><div class="barriers">Error Detection (0.35) · Correction Process (0.35) · Incomplete Propagation (0.40)</div></div>
+  <div class="layer"><h4 style="color:#ef4444">Layer 3 — Institutional Access</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">The legal and institutional barriers to challenging algorithmic decisions</p><div class="barriers">Awareness Gap (0.30) · Record Access (0.55) · Legal Knowledge (0.25) · Legal Resources (0.40) · Systemic Bias (0.30)</div></div>
+  <div class="formula">P(success) = ∏<sub>i=1</sub><sup>11</sup> p<sub>i</sub> = 0.0018%<div class="note">Multiplicative cascade: barriers don't add — they multiply</div></div>
 </section>
 
-<div class="divider"></div>
-
-<!-- 03 INTERACTION DOMINANCE -->
+<!-- 03 KEY FINDING -->
 <section class="section">
-  <div class="reveal">
-    <div class="section-label">03 — The Key Finding</div>
-    <h2>87.6% Interaction Dominance</h2>
-    <p>Factorial decomposition reveals the system is overwhelmingly driven by the three-way interaction between layers — not by individual barriers or even pairwise combinations.</p>
+  <div class="sn">03 — The Key Finding</div>
+  <h2>87.6% Interaction Dominance</h2>
+  <p>Factorial decomposition reveals the system is overwhelmingly driven by the three-way interaction between layers — not by individual barriers or even pairwise combinations.</p>
+  <div style="margin:2rem 0">
+    <div class="finding-bar"><div class="bar-label"><span>Three-way interaction (L1 × L2 × L3)</span><span style="color:var(--cyan);font-weight:700">87.6%</span></div><div class="bar-track"><div class="bar-fill" style="width:87.6%;background:var(--cyan)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>Two-way interactions</span><span style="color:var(--yellow)">12.1%</span></div><div class="bar-track"><div class="bar-fill" style="width:12.1%;background:var(--yellow)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>Main effects (individual layers)</span><span style="color:var(--red)">0.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:2%;background:var(--red)"></div></div></div>
   </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card pink">
-      <div class="stat-value"><span class="counter" data-target="87.6" data-decimals="1">0</span>%</div>
-      <div class="stat-label">Three-way interaction</div>
-      <div class="stat-sub">L1 × L2 × L3 dominates total variance</div>
-    </div>
-    <div class="stat-card cyan">
-      <div class="stat-value"><span class="counter" data-target="0.3" data-decimals="1">0</span>%</div>
-      <div class="stat-label">Main effects combined</div>
-      <div class="stat-sub">Individual layers explain almost nothing</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="stat-value"><span class="counter" data-target="11.9" data-decimals="1">0</span>%</div>
-      <div class="stat-label">Two-way interactions</div>
-      <div class="stat-sub">Pairwise effects are secondary</div>
-    </div>
-  </div>
-
-  <div class="insight-box reveal">
-    <h3>What this means</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">The barriers don't just coexist — they amplify each other. Fixing data accuracy without fixing institutional access doesn't help, because the interaction between them is what maintains the barrier. This is why every reform that targets a single layer fails: you're addressing 0.3% of the problem while 87.6% remains structurally intact.</p>
-  </div>
+  <p>The barriers don't just coexist — they amplify each other. Fixing data accuracy without fixing institutional access doesn't help, because the <em>interaction</em> between them maintains the barrier. This is why every reform targeting a single layer fails: you're addressing 0.3% of the problem while 87.6% remains structurally intact.</p>
 </section>
 
-<div class="divider"></div>
-
-<!-- 04 HOCKEY STICK -->
+<!-- 04 STRATEGY -->
 <section class="section">
-  <div class="reveal">
-    <div class="section-label">04 — Strategy Equivalence</div>
-    <h2>Order Is Irrelevant. Only Completeness Matters.</h2>
-    <p>We compared four barrier removal strategies: forward, backward, greedy by marginal impact, and random. All produce the same hockey stick curve — near-zero improvement until the final 2–3 barriers are removed.</p>
+  <div class="sn">04 — Strategy Equivalence</div>
+  <h2>Order Is Irrelevant. Only Completeness Matters.</h2>
+  <p>We compared four barrier removal strategies: forward, backward, greedy by marginal impact, and random. All produce the same hockey stick curve — near-zero improvement until the final 2–3 barriers are removed.</p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num" style="font-family:'JetBrains Mono',monospace;font-size:1.4rem">F = 0.07</div><div class="label">ANOVA across strategies — p = 0.98</div></div>
+    <div class="stat-card"><div class="num">100%</div><div class="label">Bootstrap robustness (n = 1,000)</div></div>
   </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card green">
-      <div class="stat-value">F = 0.07</div>
-      <div class="stat-label">ANOVA across strategies</div>
-      <div class="stat-sub">p = 0.98 — no strategy outperforms another</div>
-    </div>
-    <div class="stat-card indigo">
-      <div class="stat-value">100%</div>
-      <div class="stat-label">Bootstrap robustness</div>
-      <div class="stat-sub">All findings hold across n = 1,000 resamples</div>
-    </div>
-  </div>
-
-  <div class="insight-box reveal">
-    <h3>The combination therapy analogy</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">This is exactly how drug resistance works in infectious disease. Incomplete antiretroviral therapy doesn't partially suppress HIV — it selects for resistance. Similarly, incomplete policy reform doesn't partially reduce algorithmic discrimination — it leaves the synergistic structure intact. The same mathematical principle that makes combination therapy necessary in HIV applies here: coordinated, multi-layer intervention is required.</p>
-  </div>
+  <p>This is exactly how drug resistance works in infectious disease. Incomplete antiretroviral therapy doesn't partially suppress HIV — it selects for resistance. Similarly, incomplete policy reform doesn't partially reduce algorithmic discrimination — it leaves the synergistic structure intact.</p>
 </section>
-
-<div class="divider"></div>
 
 <!-- 05 POLICY -->
 <section class="section">
-  <div class="reveal">
-    <div class="section-label">05 — Policy Implications</div>
-    <h2>From Siloed Regulation to Coordinated Reform</h2>
-    <p>The current regulatory architecture mirrors the barrier fragmentation: CFPB handles credit, EEOC handles employment, HHS handles healthcare algorithms. Our model demonstrates this siloing is mathematically guaranteed to fail.</p>
-  </div>
-
-  <div class="solution-box reveal">
-    <h3>What the math requires</h3>
-    <p style="color: var(--silver); font-weight: 300; font-size: 0.95rem;">Coordinated, simultaneous intervention across all three layers. Not sequential reform, not prioritized reform, not incremental reform. The three-way interaction means that any partial approach leaves the synergistic structure intact. Multi-agency coordination isn't just good policy — it's the only policy the mathematics permit.</p>
-  </div>
-
-  <ul class="check-list reveal">
-    <li>All barrier parameters traced to CFPB, FTC, LSC federal data and peer-reviewed audits</li>
-    <li>Shapley value decomposition identifies Legal Knowledge Gap (11.3%) and Rapid Data Transmission (11.1%) as top contributors</li>
-    <li>Signal-to-noise ratio confirms robustness up to ~25% parameter noise</li>
-    <li>Global sensitivity analysis (Sobol indices + Morris screening) confirms interaction-dominant dynamics across full uncertainty range</li>
-    <li>Framework generalizes to any multi-barrier system with synergistic structure</li>
-  </ul>
+  <div class="sn">05 — Policy Implications</div>
+  <h2>From Siloed Regulation to Coordinated Reform</h2>
+  <p>The current regulatory architecture mirrors the barrier fragmentation: CFPB handles credit, EEOC handles employment, HHS handles healthcare algorithms. Our model demonstrates this siloing is mathematically guaranteed to fail.</p>
+  <p>Coordinated, simultaneous intervention across all three layers. Not sequential reform, not prioritized reform, not incremental reform. The three-way interaction means that any partial approach leaves the synergistic structure intact. Multi-agency coordination isn't just good policy — it's the only policy the mathematics permit.</p>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:1.5rem">All barrier parameters traced to CFPB, FTC, LSC federal data and peer-reviewed audits · Shapley value decomposition identifies Legal Knowledge Gap (11.3%) and Rapid Data Transmission (11.1%) as top contributors · Signal-to-noise ratio confirms robustness up to ~25% parameter noise · Global sensitivity analysis (Sobol indices + Morris screening) confirms interaction-dominant dynamics across full uncertainty range</p>
 </section>
 
-<div class="divider"></div>
+<!-- RESOURCES SECTION -->
+<section class="section" style="max-width:1100px">
+  <div class="sn">Resources</div>
+  <h2>Explore the Research</h2>
 
-<!-- INFOGRAPHIC -->
-<section class="section">
-  <div class="reveal">
-    <div class="section-label">Visual Summary</div>
-    <h2>Breaking the Synergy</h2>
-    <p>An infographic overview of the 11-barrier gauntlet, interaction dominance, and the hockey stick curve that explains why incremental reform always fails.</p>
+  <div class="tabs" id="resource-tabs">
+    <button class="tab active" data-tab="slides">Slide Deck</button>
+    <button class="tab" data-tab="infographic">Infographic</button>
+    <button class="tab" data-tab="flashcards">Study Flashcards (64)</button>
+    <button class="tab" data-tab="citation">Citation</button>
   </div>
-  <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
-    <img src="/research/images/infographic_algorithmic_discrimination.jpg" alt="Breaking the Synergy: Why Incremental Algorithmic Reforms Fail" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+
+  <!-- SLIDES TAB -->
+  <div class="tab-content active" id="tab-slides">
+    <div class="slide-viewer">
+      <div class="slide-stage"><img id="slide-img" src="/research/slides/slide-01.jpg" alt="Slide 1"></div>
+      <div class="slide-nav">
+        <button onclick="changeSlide(-1)">← Prev</button>
+        <div style="text-align:center">
+          <div class="sc" id="slide-counter">1 / 20</div>
+          <div class="slide-dots" id="slide-dots"></div>
+        </div>
+        <button onclick="changeSlide(1)">Next →</button>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:.75rem"><a href="/research/Synergistic_Algorithmic_Recourse.pptx" download style="color:var(--cyan);font-size:.85rem;text-decoration:none">↓ Download PPTX</a></p>
+  </div>
+
+  <!-- INFOGRAPHIC TAB -->
+  <div class="tab-content" id="tab-infographic">
+    <div class="infographic-wrap">
+      <img src="/research/images/infographic_algorithmic_discrimination_v2.jpg" alt="Breaking the Synergistic Trap: Why Incremental AI Reform Fails" loading="lazy">
+    </div>
+  </div>
+
+  <!-- FLASHCARDS TAB -->
+  <div class="tab-content" id="tab-flashcards">
+    <div class="fc-filter" id="fc-filter"></div>
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-inner" id="fc-inner">
+        <div class="fc-front"><div class="ql">Question</div><p id="fc-q"></p><div class="fc-tag" id="fc-cat"></div></div>
+        <div class="fc-back"><div class="al">Answer</div><p id="fc-a"></p><div class="fc-tag" id="fc-cat2"></div></div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button onclick="prevCard()">← Prev</button>
+      <div class="fc-counter" id="fc-counter"></div>
+      <button onclick="nextCard()">Next →</button>
+      <button onclick="shuffleCards()" style="margin-left:1rem">Shuffle</button>
+    </div>
+  </div>
+
+  <!-- CITATION TAB -->
+  <div class="tab-content" id="tab-citation">
+    <div class="cite-box">
+      <div class="cl">Preprint Citation</div>
+      <p class="ct" id="cite-text">Demidont AC. Algorithmic Discrimination as a Synergistic Barrier System: Formal Mathematical Propositions for Multi-Layer Healthcare AI Bias. <em>medRxiv</em> 2026. doi: <a href="https://doi.org/10.64898/2026.02.22.26346836" target="_blank">10.64898/2026.02.22.26346836</a></p>
+      <button class="copy-btn" onclick="copyCite()">Copy citation</button>
+    </div>
+    <div class="cite-box">
+      <div class="cl">BibTeX</div>
+      <p class="ct">@article{Demidont2026algo,<br>&nbsp;&nbsp;author = {Demidont, A.C.},<br>&nbsp;&nbsp;title = {Algorithmic Discrimination as a Synergistic Barrier System: Formal Mathematical Propositions for Multi-Layer Healthcare AI Bias},<br>&nbsp;&nbsp;journal = {medRxiv},<br>&nbsp;&nbsp;year = {2026},<br>&nbsp;&nbsp;doi = {10.64898/2026.02.22.26346836}<br>}</p>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-logo"><div class="fmark">N</div><span>Nyx Dynamics, LLC</span></div>
+<footer class="footer">
+  <div class="logo">N Nyx Dynamics, LLC</div>
   <div class="tagline">"Illuminating hidden insights within data"</div>
-  <div class="footer-links">
+  <div class="flinks">
     <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
     <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
     <a href="mailto:info@nyxdynamics.org">Contact</a>
   </div>
-  <p>&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+  <div class="cp">© 2026 Nyx Dynamics, LLC. All rights reserved.</div>
 </footer>
 
 <script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter); } });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-function startCounter(el) {
-  el.classList.add('counted');
-  const target = parseFloat(el.dataset.target), decimals = parseInt(el.dataset.decimals) || 0, duration = 1200, start = performance.now();
-  function tick(now) { const p = Math.min((now - start) / duration, 1), e = 1 - Math.pow(1 - p, 3); el.textContent = (target * e).toFixed(decimals); if (p < 1) requestAnimationFrame(tick); }
-  requestAnimationFrame(tick);
-}
-
-document.querySelectorAll('.stat-grid').forEach(el => {
-  new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.counter:not(.counted)').forEach(startCounter); }); }, { threshold: 0.3 }).observe(el);
+// TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+  });
 });
+
+// SLIDE VIEWER
+let currentSlide=1;const totalSlides=20;
+const dotsEl=document.getElementById('slide-dots');
+for(let i=1;i<=totalSlides;i++){const d=document.createElement('button');d.className='sdot'+(i===1?' active':'');d.onclick=()=>goSlide(i);dotsEl.appendChild(d);}
+function goSlide(n){currentSlide=n;document.getElementById('slide-img').src='/research/slides/slide-'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-counter').textContent=n+' / '+totalSlides;document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===n-1));}
+function changeSlide(d){let n=currentSlide+d;if(n<1)n=totalSlides;if(n>totalSlides)n=1;goSlide(n);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')changeSlide(1);if(e.key==='ArrowLeft')changeSlide(-1);});
+
+// FLASHCARDS
+const allCards=[{"q": "What type of system structure is used to formalize the 11 barriers individuals face when seeking recourse from adverse algorithmic decisions?", "a": "A series-structured system (multiplicative barrier model).", "cat": "Mathematical Framework"}, {"q": "Under the baseline parameterization derived from federal datasets, what is the end-to-end probability of successfully navigating algorithmic recourse?", "a": "0.0018% (fewer than 2 in 100,000 individuals).", "cat": "General"}, {"q": "According to the study, what is the maximum absolute improvement observed when removing any single barrier to recourse?", "a": "Less than 0.02%.", "cat": "General"}, {"q": "Which specific cross-layer interaction accounts for 87.6% of the total achievable improvement in the recourse system?", "a": "The three-way interaction between Data Integration, Data Accuracy, and Institutional Access layers.", "cat": "Data Integration"}, {"q": "Define the 'Clinical AI Recourse' process as described in the source material.", "a": "The multi-stage navigation of error detection, data correction, and institutional appeals following an adverse algorithmic decision.", "cat": "Data Accuracy"}, {"q": "Why does the study argue that incremental reforms targeting individual barriers are structurally insufficient?", "a": "Because barriers function synergistically, meaning multiplicative blocking keeps system success near zero unless most barriers are removed.", "cat": "Mathematical Framework"}, {"q": "In the context of the 11-barrier model, what are the three primary layers of barriers?", "a": "Data Integration, Data Accuracy, and Institutional Access.", "cat": "Data Integration"}, {"q": "What are the three specific barriers categorized under the 'Data Integration' layer?", "a": "Rapid Data Transmission, Multi-System Integration, and Permanent Storage.", "cat": "Data Integration"}, {"q": "Which layer includes the barriers 'Error Detection Difficulty,' 'Correction Process Barriers,' and 'Incomplete Correction Propagation'?", "a": "Data Accuracy.", "cat": "Data Accuracy"}, {"q": "List the five barriers categorized under the 'Institutional Access' layer.", "a": "Awareness Gap, Record Access Barriers, Legal Knowledge Gap, Legal Resource Barriers, and Systemic Bias in Algorithms.", "cat": "Institutional Access"}, {"q": "The barrier involving the speed at which adverse data propagates across interconnected systems is called _____.", "a": "Rapid Data Transmission.", "cat": "Data Integration"}, {"q": "How is the 'Multi-System Integration' barrier defined?", "a": "The breadth of adverse data propagation across different, interconnected decision systems.", "cat": "Data Integration"}, {"q": "Which barrier relates to the 7-year retention period allowed by the Fair Credit Reporting Act (FCRA)?", "a": "Permanent Storage.", "cat": "Data Integration"}, {"q": "The 'Error Detection Difficulty' barrier represents the challenge of _____.", "a": "Successfully identifying specific erroneous data elements within complex records.", "cat": "Data Accuracy"}, {"q": "What does the 'Incomplete Correction Propagation' barrier describe?", "a": "The failure of data corrections at one agency to automatically propagate to other agencies or downstream users.", "cat": "Data Accuracy"}, {"q": "Which barrier in the 'Institutional' layer has the lowest pass probability at 0.25?", "a": "Legal Knowledge Gap.", "cat": "Institutional Access"}, {"q": "Define the 'Awareness Gap' barrier in the context of institutional access.", "a": "The failure of individuals to become aware of an adverse decision or their right to seek recourse.", "cat": "Institutional Access"}, {"q": "What does 'Proposition 1' establish regarding single-barrier interventions?", "a": "Absolute improvement is linear in baseline success probability (P), making every single-barrier effect necessarily small when P is low.", "cat": "Mathematical Framework"}, {"q": "According to 'Proposition 2,' on what scale do policy outcomes and equity metrics show interaction dominance?", "a": "The probability scale (where stacking is multiplicative).", "cat": "Mathematical Framework"}, {"q": "On which scale do barriers contribute additively, causing interactions to vanish in the model?", "a": "The log scale (log P = \u03a3 log p_i).", "cat": "Mathematical Framework"}, {"q": "What is the mathematical definition of the baseline success probability (P) in this multiplicative model?", "a": "P(success) = \u220f_{i=1}^{11} p_i.", "cat": "Mathematical Framework"}, {"q": "Which mathematical property of series systems causes single-lever interventions to yield small absolute effects when baseline success is low?", "a": "Multiplicative blocking.", "cat": "Mathematical Framework"}, {"q": "Comparison of different barrier removal strategies (Forward, Backward, Greedy, Random) revealed strategy _____.", "a": "Equivalence (removal ordering is irrelevant).", "cat": "Policy Implications"}, {"q": "What characteristic trajectory is observed as barriers are removed, indicating near-zero improvement until the final barriers are addressed?", "a": "A 'hockey stick' or threshold trajectory.", "cat": "Policy Implications"}, {"q": "Which barrier was identified by Shapley value attribution as the top contributor to success improvement (11.3%)?", "a": "Legal Knowledge Gap.", "cat": "Institutional Access"}, {"q": "Why are Shapley values considered a 'fair' attribution method in this study?", "a": "They account for all possible barrier removal orderings to assign relative causal contribution.", "cat": "Sensitivity & Validation"}, {"q": "In global sensitivity analysis, what does a large gap between the first-order index (S1) and total-order index (ST) indicate?", "a": "High involvement in interaction effects.", "cat": "Sensitivity & Validation"}, {"q": "Which analysis method was used to identify barriers with the highest nonlinear or interaction involvement (\u03c3)?", "a": "Morris screening.", "cat": "Sensitivity & Validation"}, {"q": "How robust were the study's principal findings across 1,000 bootstrap resamples?", "a": "100.0% robustness.", "cat": "Sensitivity & Validation"}, {"q": "The study compares algorithmic recourse barriers to what medical phenomenon where incomplete intervention addresses symptoms but leaves the structure intact?", "a": "Combination therapy in infectious diseases (e.g., HIV antiretroviral therapy).", "cat": "Policy Implications"}, {"q": "What regulatory issue is identified as mirroring the barrier fragmentation in the model?", "a": "Regulatory fragmentation across separate agencies (e.g., CFPB, EEOC, and HHS).", "cat": "General"}, {"q": "What is the pass probability assigned to 'Systemic Bias in Algorithms' based on the Obermeyer et al. study?", "a": "0.30 (reflecting the proportion of the system that lacks structural bias).", "cat": "Institutional Access"}, {"q": "The 'Legal Resource Barriers' pass probability of 0.40 is derived from which primary source?", "a": "Legal Services Corporation (LSC) 2022 report on the 'Justice Gap'.", "cat": "Institutional Access"}, {"q": "What empirical finding led to the 0.55 pass probability for 'Record Access Barriers'?", "a": "Practical access difficulties despite statutory rights under the FCRA.", "cat": "Institutional Access"}, {"q": "Which barrier represents the 'justice gap' where individuals seek help for only 1 in 4 substantial civil legal problems?", "a": "Awareness Gap.", "cat": "Institutional Access"}, {"q": "What does the 'Signal-to-Noise Ratio' (SNR) analysis demonstrate about the model?", "a": "Model findings remain robust up to approximately 25% parameter noise.", "cat": "Sensitivity & Validation"}, {"q": "According to the study, effective mitigation of algorithmic harm requires coordinated intervention across which three areas?", "a": "Data integration, data accuracy, and institutional access.", "cat": "Data Integration"}, {"q": "What is the 'Threshold Pattern' generic to series systems as it relates to recourse?", "a": "Improvement remains negligible until most barriers are removed, then increases rapidly.", "cat": "Mathematical Framework"}, {"q": "How does 'Proposition 1' relate to advocacy for algorithmic audits?", "a": "It demonstrates that auditing alone is mathematically bounded by the system's baseline success probability.", "cat": "Mathematical Framework"}, {"q": "The barrier 'Correction Process Barriers' has a pass probability of 0.35 because _____.", "a": "Only 37% of consumers in an FTC study reported their dispute concerns were fully addressed.", "cat": "Data Accuracy"}, {"q": "Which layer had a main effect of 0.0% in the factorial decomposition analysis?", "a": "Both Layer 1 (Data Integration) and Layer 2 (Data Accuracy).", "cat": "Data Integration"}, {"q": "The three-way interaction effect magnitude (83.4% absolute, 87.6% normalized) supports what approach to governance?", "a": "Coordinated multi-layer intervention (multi-agency reform).", "cat": "Policy Implications"}, {"q": "True or False: The removal ordering of barriers significantly impacts the final success probability.", "a": "False (ordering is irrelevant; only completeness determines the outcome).", "cat": "Policy Implications"}, {"q": "Which source was used to map probabilities for data integration dynamics in credit reporting?", "a": "The Consumer Financial Protection Bureau (CFPB).", "cat": "Data Integration"}, {"q": "In the 'Morris Screening' plot, which barrier showed the highest mean absolute effect (\u03bc^*)?", "a": "Legal Knowledge Gap.", "cat": "Institutional Access"}, {"q": "What is the primary implication of 'Proposition 1' for health systems proposing patient notification requirements?", "a": "The impact of notification is mathematically limited by the existing low baseline success of the entire recourse system.", "cat": "Mathematical Framework"}, {"q": "How does the model treat the relationship between barriers (e.g., correlation vs. independence)?", "a": "It assumes multiplicative independence (though the author notes correlation could alter effects).", "cat": "Mathematical Framework"}, {"q": "The baseline system success probability means that for every 100,000 people facing algorithmic discrimination, how many are expected to succeed in recourse?", "a": "Fewer than 2 individuals.", "cat": "General"}, {"q": "What is the normalized variance contribution of two-way interactions between L1 and L2?", "a": "3.4%.", "cat": "General"}, {"q": "In Figure 4D, which barrier has the largest 'Interaction Contribution' (ST - S1)?", "a": "Legal Resource Barriers.", "cat": "Institutional Access"}, {"q": "Which barrier's pass probability was derived from a study showing cost-based proxy variables reduced identification of high-risk Black patients by 62%?", "a": "Systemic Bias in Algorithms.", "cat": "Institutional Access"}, {"q": "According to the 'Strategy Comparison' (Fig 2), what happens to success probability when 10 out of 11 barriers are removed?", "a": "Success probability increases significantly (to between 30% and 60% depending on the strategy), but remains far from 100%.", "cat": "General"}, {"q": "Which barrier relates to the speed at which data furnishers transmit information to consumer reporting agencies?", "a": "Rapid Data Transmission.", "cat": "Data Integration"}, {"q": "What percentage of employers are estimated to use recruitment management systems to filter candidates?", "a": "75%.", "cat": "General"}, {"q": "The model's baseline resolution probability (0.0018%) is calculated using how many barriers?", "a": "11 sequential barriers.", "cat": "General"}, {"q": "Which analysis validated that core qualitative findings are robust to 'substantial empirical uncertainty'?", "a": "Signal-to-Noise Ratio (SNR) analysis.", "cat": "Sensitivity & Validation"}, {"q": "Concept: Sociotechnical Nature of Algorithmic Discrimination", "a": "Discrimination arises from interactions between design choices, data practices, institutional contexts, and deployment environments, rather than a single component.", "cat": "Institutional Access"}, {"q": "How does the 'Series Reliability' engineering concept apply to patient safety and algorithmic recourse?", "a": "Adverse events occur when multiple barriers fail simultaneously, and the system fails if any single component in the series fails.", "cat": "Mathematical Framework"}, {"q": "What is the primary source for the 'Awareness Gap' statistic?", "a": "Legal Services Corporation (LSC) 2022.", "cat": "Institutional Access"}, {"q": "The 'Permanent Storage' barrier represents unexpired adverse data; what is the pass probability for navigating this barrier?", "a": "0.45.", "cat": "Data Integration"}, {"q": "Why were 'conservative' mapping decisions made when deriving pass probabilities?", "a": "To favor higher pass probabilities and avoid overstating interaction effects.", "cat": "General"}, {"q": "Which specific statistical method confirmed the irrelevance of barrier removal ordering (F = 0.07, P = 0.98)?", "a": "ANOVA (Analysis of Variance).", "cat": "Sensitivity & Validation"}, {"q": "Which barrier addresses the 'justice gap' where 92% of low-income Americans' civil legal needs are unmet?", "a": "Awareness Gap (mapped to a 0.30 pass probability).", "cat": "Institutional Access"}, {"q": "According to the ANOVA decomposition (Table 1), what is the success improvement (\u0394 Success) for removing only the Institutional layer (L3)?", "a": "0.3%.", "cat": "Institutional Access"}];
+let cards=[...allCards],cardIdx=0;
+const cats=[...new Set(allCards.map(c=>c.cat))];
+let activeCat='All';
+
+const filterEl=document.getElementById('fc-filter');
+['All',...cats].forEach(c=>{const b=document.createElement('button');b.className='fbtn'+(c==='All'?' active':'');b.textContent=c==='All'?'All ('+allCards.length+')':c;b.onclick=()=>{activeCat=c;cards=c==='All'?[...allCards]:allCards.filter(x=>x.cat===c);cardIdx=0;showCard();document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');};filterEl.appendChild(b);});
+
+function showCard(){if(!cards.length)return;const c=cards[cardIdx];document.getElementById('fc-q').textContent=c.q;document.getElementById('fc-a').textContent=c.a;document.getElementById('fc-cat').textContent=c.cat;document.getElementById('fc-cat2').textContent=c.cat;document.getElementById('fc-counter').textContent=(cardIdx+1)+' / '+cards.length;document.getElementById('flashcard').classList.remove('flipped');}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%cards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+cards.length)%cards.length;showCard();}
+function shuffleCards(){for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]];}cardIdx=0;showCard();}
+showCard();
+
+// COPY CITATION
+function copyCite(){const t=document.getElementById('cite-text').textContent;navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.copy-btn');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy citation',2000);});}
 </script>
 </body>
 </html>

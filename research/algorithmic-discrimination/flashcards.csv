@@ -1,0 +1,64 @@
+What type of system structure is used to formalize the 11 barriers individuals face when seeking recourse from adverse algorithmic decisions?,A series-structured system (multiplicative barrier model).
+"Under the baseline parameterization derived from federal datasets, what is the end-to-end probability of successfully navigating algorithmic recourse?","$0.0018\%$ (fewer than 2 in 100,000 individuals)."
+"According to the study, what is the maximum absolute improvement observed when removing any single barrier to recourse?",Less than $0.02\%$.
+Which specific cross-layer interaction accounts for $87.6\%$ of the total achievable improvement in the recourse system?,"The three-way interaction between Data Integration, Data Accuracy, and Institutional Access layers."
+Define the 'Clinical AI Recourse' process as described in the source material.,"The multi-stage navigation of error detection, data correction, and institutional appeals following an adverse algorithmic decision."
+Why does the study argue that incremental reforms targeting individual barriers are structurally insufficient?,"Because barriers function synergistically, meaning multiplicative blocking keeps system success near zero unless most barriers are removed."
+"In the context of the 11-barrier model, what are the three primary layers of barriers?","Data Integration, Data Accuracy, and Institutional Access."
+What are the three specific barriers categorized under the 'Data Integration' layer?,"Rapid Data Transmission, Multi-System Integration, and Permanent Storage."
+"Which layer includes the barriers 'Error Detection Difficulty,' 'Correction Process Barriers,' and 'Incomplete Correction Propagation'?",Data Accuracy.
+List the five barriers categorized under the 'Institutional Access' layer.,"Awareness Gap, Record Access Barriers, Legal Knowledge Gap, Legal Resource Barriers, and Systemic Bias in Algorithms."
+The barrier involving the speed at which adverse data propagates across interconnected systems is called _____.,Rapid Data Transmission.
+How is the 'Multi-System Integration' barrier defined?,"The breadth of adverse data propagation across different, interconnected decision systems."
+Which barrier relates to the 7-year retention period allowed by the Fair Credit Reporting Act (FCRA)?,Permanent Storage.
+The 'Error Detection Difficulty' barrier represents the challenge of _____.,Successfully identifying specific erroneous data elements within complex records.
+What does the 'Incomplete Correction Propagation' barrier describe?,The failure of data corrections at one agency to automatically propagate to other agencies or downstream users.
+Which barrier in the 'Institutional' layer has the lowest pass probability at $0.25$?,Legal Knowledge Gap.
+Define the 'Awareness Gap' barrier in the context of institutional access.,The failure of individuals to become aware of an adverse decision or their right to seek recourse.
+What does 'Proposition 1' establish regarding single-barrier interventions?,"Absolute improvement is linear in baseline success probability ($P$), making every single-barrier effect necessarily small when $P$ is low."
+"According to 'Proposition 2,' on what scale do policy outcomes and equity metrics show interaction dominance?",The probability scale (where stacking is multiplicative).
+"On which scale do barriers contribute additively, causing interactions to vanish in the model?",The log scale ($log P = \sum log p_i$).
+What is the mathematical definition of the baseline success probability ($P$) in this multiplicative model?,$P(\text{success}) = \prod_{i=1}^{11} p_i$.
+Which mathematical property of series systems causes single-lever interventions to yield small absolute effects when baseline success is low?,Multiplicative blocking.
+"Comparison of different barrier removal strategies (Forward, Backward, Greedy, Random) revealed strategy _____.",Equivalence (removal ordering is irrelevant).
+"What characteristic trajectory is observed as barriers are removed, indicating near-zero improvement until the final barriers are addressed?",A 'hockey stick' or threshold trajectory.
+Which barrier was identified by Shapley value attribution as the top contributor to success improvement ($11.3\%$)?,Legal Knowledge Gap.
+Why are Shapley values considered a 'fair' attribution method in this study?,They account for all possible barrier removal orderings to assign relative causal contribution.
+"In global sensitivity analysis, what does a large gap between the first-order index ($S1$) and total-order index ($ST$) indicate?",High involvement in interaction effects.
+Which analysis method was used to identify barriers with the highest nonlinear or interaction involvement ($σ$)?,Morris screening.
+"How robust were the study's principal findings across $1,000$ bootstrap resamples?",$100.0\%$ robustness.
+The study compares algorithmic recourse barriers to what medical phenomenon where incomplete intervention addresses symptoms but leaves the structure intact?,"Combination therapy in infectious diseases (e.g., HIV antiretroviral therapy)."
+What regulatory issue is identified as mirroring the barrier fragmentation in the model?,"Regulatory fragmentation across separate agencies (e.g., CFPB, EEOC, and HHS)."
+What is the pass probability assigned to 'Systemic Bias in Algorithms' based on the Obermeyer et al. study?,$0.30$ (reflecting the proportion of the system that lacks structural bias).
+The 'Legal Resource Barriers' pass probability of $0.40$ is derived from which primary source?,Legal Services Corporation (LSC) 2022 report on the 'Justice Gap'.
+What empirical finding led to the $0.55$ pass probability for 'Record Access Barriers'?,Practical access difficulties despite statutory rights under the FCRA.
+Which barrier represents the 'justice gap' where individuals seek help for only 1 in 4 substantial civil legal problems?,Awareness Gap.
+What does the 'Signal-to-Noise Ratio' (SNR) analysis demonstrate about the model?,Model findings remain robust up to approximately $25\%$ parameter noise.
+"According to the study, effective mitigation of algorithmic harm requires coordinated intervention across which three areas?","Data integration, data accuracy, and institutional access."
+What is the 'Threshold Pattern' generic to series systems as it relates to recourse?,"Improvement remains negligible until most barriers are removed, then increases rapidly."
+How does 'Proposition 1' relate to advocacy for algorithmic audits?,It demonstrates that auditing alone is mathematically bounded by the system's baseline success probability.
+The barrier 'Correction Process Barriers' has a pass probability of $0.35$ because _____.,Only $37\%$ of consumers in an FTC study reported their dispute concerns were fully addressed.
+Which layer had a main effect of $0.0\%$ in the factorial decomposition analysis?,Both Layer 1 (Data Integration) and Layer 2 (Data Accuracy).
+"The three-way interaction effect magnitude ($83.4\%$ absolute, $87.6\%$ normalized) supports what approach to governance?",Coordinated multi-layer intervention (multi-agency reform).
+True or False: The removal ordering of barriers significantly impacts the final success probability.,False (ordering is irrelevant; only completeness determines the outcome).
+Which source was used to map probabilities for data integration dynamics in credit reporting?,The Consumer Financial Protection Bureau (CFPB).
+"In the 'Morris Screening' plot, which barrier showed the highest mean absolute effect ($μ^*$)?",Legal Knowledge Gap.
+What is the primary implication of 'Proposition 1' for health systems proposing patient notification requirements?,The impact of notification is mathematically limited by the existing low baseline success of the entire recourse system.
+"How does the model treat the relationship between barriers (e.g., correlation vs. independence)?",It assumes multiplicative independence (though the author notes correlation could alter effects).
+"The baseline system success probability means that for every $100,000$ people facing algorithmic discrimination, how many are expected to succeed in recourse?",Fewer than $2$ individuals.
+What is the normalized variance contribution of two-way interactions between L1 and L2?,$3.4\%$.
+"In Figure 4D, which barrier has the largest 'Interaction Contribution' ($ST - S1$)?",Legal Resource Barriers.
+Which barrier's pass probability was derived from a study showing cost-based proxy variables reduced identification of high-risk Black patients by $62\%$?,Systemic Bias in Algorithms.
+"According to the 'Strategy Comparison' (Fig 2), what happens to success probability when 10 out of 11 barriers are removed?","Success probability increases significantly (to between $30\%$ and $60\%$ depending on the strategy), but remains far from $100\%$."
+Which barrier relates to the speed at which data furnishers transmit information to consumer reporting agencies?,Rapid Data Transmission.
+What percentage of employers are estimated to use recruitment management systems to filter candidates?,$75\%$.
+The model's baseline resolution probability ($0.0018\%$) is calculated using how many barriers?,11 sequential barriers.
+Which analysis validated that core qualitative findings are robust to 'substantial empirical uncertainty'?,Signal-to-Noise Ratio (SNR) analysis.
+Concept: Sociotechnical Nature of Algorithmic Discrimination,"Discrimination arises from interactions between design choices, data practices, institutional contexts, and deployment environments, rather than a single component."
+How does the 'Series Reliability' engineering concept apply to patient safety and algorithmic recourse?,"Adverse events occur when multiple barriers fail simultaneously, and the system fails if any single component in the series fails."
+What is the primary source for the 'Awareness Gap' statistic?,Legal Services Corporation (LSC) 2022.
+The 'Permanent Storage' barrier represents unexpired adverse data; what is the pass probability for navigating this barrier?,$0.45$.
+Why were 'conservative' mapping decisions made when deriving pass probabilities?,To favor higher pass probabilities and avoid overstating interaction effects.
+"Which specific statistical method confirmed the irrelevance of barrier removal ordering ($F = 0.07, P = 0.98$)?",ANOVA (Analysis of Variance).
+Which barrier addresses the 'justice gap' where $92\%$ of low-income Americans' civil legal needs are unmet?,Awareness Gap (mapped to a $0.30$ pass probability).
+"According to the ANOVA decomposition (Table 1), what is the success improvement ($\Delta$ Success) for removing only the Institutional layer (L3)?",$0.3\%$.
