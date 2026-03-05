@@ -1,331 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research | Nyx Dynamics</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research | Nyx Dynamics</title>
+  <meta name="description" content="Peer-reviewed computational research in HIV prevention implementation science, algorithmic equity, and neurometabolic signal processing. Nyx Dynamics, LLC.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cyan: #00D4FF;
+      --cyan-bright: #5CE1FF;
+      --black: #0a0a0f;
+      --charcoal: #111827;
+      --gray: #374151;
+      --white: #f8fafc;
+      --silver: #cbd5e1;
+      --muted: #94a3b8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--black); color: var(--silver); line-height: 1.6; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { color: var(--cyan-bright); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-:root {
-  --bg: #0a0a0f;
-  --bg-card: #111118;
-  --bg-hover: #1a1a24;
-  --cyan: #00d4ff;
-  --cyan-dim: #007a94;
-  --amber: #f59e0b;
-  --red: #ef4444;
-  --green: #10b981;
-  --indigo: #818cf8;
-  --violet: #a78bfa;
-  --white: #f0f4f8;
-  --silver: #94a3b8;
-  --muted: #475569;
-  --border: rgba(255,255,255,0.06);
-}
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--gray); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #14B8A6); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--black); font-size: 18px; box-shadow: 0 0 15px rgba(0,212,255,0.3); }
+    .logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 20px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    @media (max-width: 768px) { .nav-links { display: none; } }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { background: var(--bg); }
-body {
-  font-family: 'Outfit', sans-serif;
-  color: var(--white);
-  background: var(--bg);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+    /* HERO */
+    .hero { padding: 160px 0 80px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(0,212,255,0.08) 0%, transparent 55%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .hero-tag { color: var(--cyan); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+    .hero h1 { font-family: 'Playfair Display', serif; color: var(--white); font-size: clamp(32px, 5vw, 52px); line-height: 1.12; margin-bottom: 20px; }
+    .hero-lead { font-size: 17px; color: var(--silver); max-width: 640px; line-height: 1.75; margin-bottom: 32px; }
+    .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+    .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cyan); font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .hero-stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-}
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: var(--white);
-}
-.nav-logo-mark {
-  width: 32px;
-  height: 32px;
-  background: var(--cyan);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Crimson Pro', serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--bg);
-}
-.nav-logo-text {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-}
-.nav-links a {
-  font-size: 0.85rem;
-  color: var(--silver);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    /* SECTION */
+    section { padding: 72px 0; }
+    .section-label { color: var(--cyan); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; color: var(--white); font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 12px; }
+    .section-sub { color: var(--muted); font-size: 15px; max-width: 600px; margin-bottom: 48px; }
+    .bg-alt { background: rgba(17,24,39,0.4); }
 
-@media (max-width: 700px) {
-  .nav-links { display: none; }
-}
+    /* PROJECT CARDS */
+    .projects-grid { display: flex; flex-direction: column; gap: 28px; }
 
-/* ── HERO ── */
-.hero {
-  padding: 5rem 2rem 3rem;
-  text-align: center;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(0,212,255,0.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hero h1 {
-  font-family: 'Crimson Pro', serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.hero p {
-  font-weight: 300;
-  color: var(--silver);
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-}
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-  position: relative;
-}
-.hero-stat {
-  text-align: center;
-}
-.hero-stat .num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-.hero-stat .label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
+    .project-card { background: rgba(17,24,39,0.6); border: 1px solid var(--gray); border-radius: 14px; padding: 36px; transition: border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; }
+    .project-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+    .project-card.published::before  { background: var(--cyan); }
+    .project-card.inpress::before    { background: #818cf8; }
+    .project-card.review::before     { background: #f59e0b; }
+    .project-card.inprep::before     { background: #6b7280; }
+    .project-card:hover { border-color: rgba(0,212,255,0.35); box-shadow: 0 0 40px rgba(0,212,255,0.07); }
+    @media (max-width: 680px) { .project-card { grid-template-columns: 1fr; } }
 
-/* ── PAPER GRID ── */
-.papers {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem;
-  flex: 1;
-}
-.papers-section-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  color: var(--cyan);
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
+    .project-main {}
+    .project-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 
-.paper-card {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 1.5rem;
-  align-items: start;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.3s, background 0.3s;
-  text-decoration: none;
-  color: inherit;
-}
-.paper-card:hover {
-  border-color: rgba(0,212,255,0.15);
-  background: var(--bg-hover);
-}
+    .badge { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+    .badge-published { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
+    .badge-inpress   { background: rgba(129,140,248,0.1); color: #a5b4fc; border: 1px solid rgba(129,140,248,0.3); }
+    .badge-review    { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+    .badge-preprint  { background: rgba(52,211,153,0.1); color: #6ee7b7; border: 1px solid rgba(52,211,153,0.25); }
+    .badge-inprep    { background: rgba(107,114,128,0.15); color: #9ca3af; border: 1px solid rgba(107,114,128,0.3); }
 
-.paper-status {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
-  white-space: nowrap;
-  margin-top: 0.25rem;
-}
-.status-accepted { background: rgba(16,185,129,0.15); color: var(--green); }
-.status-review { background: rgba(0,212,255,0.1); color: var(--cyan); }
-.status-screening { background: rgba(245,158,11,0.1); color: var(--amber); }
-.status-preprint { background: rgba(129,140,248,0.1); color: var(--indigo); }
-.status-revisions { background: rgba(167,139,250,0.1); color: var(--violet); }
+    .project-journal { font-size: 13px; color: var(--muted); font-style: italic; }
+    .project-title { font-family: 'Playfair Display', serif; color: var(--white); font-size: 19px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+    .project-desc { color: var(--silver); font-size: 14px; line-height: 1.75; margin-bottom: 20px; max-width: 680px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .project-tag { background: rgba(55,65,81,0.5); color: var(--muted); font-size: 11px; padding: 4px 10px; border-radius: 4px; }
+    .project-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .project-links a { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 7px; transition: all 0.2s; }
+    .link-primary { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
+    .link-primary:hover { background: rgba(0,212,255,0.2); box-shadow: 0 0 16px rgba(0,212,255,0.15); color: var(--cyan); }
+    .link-secondary { background: transparent; color: var(--muted); border: 1px solid var(--gray); }
+    .link-secondary:hover { color: var(--silver); border-color: var(--silver); }
 
-.paper-body h3 {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-  line-height: 1.3;
-}
-.paper-meta {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-.paper-meta span {
-  margin-right: 1rem;
-}
-.paper-desc {
-  font-size: 0.9rem;
-  color: var(--silver);
-  font-weight: 300;
-  line-height: 1.5;
-}
+    .project-aside { display: flex; flex-direction: column; gap: 12px; min-width: 160px; }
+    .aside-stat { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.1); border-radius: 10px; padding: 14px 16px; text-align: center; }
+    .aside-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--cyan); font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .aside-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
 
-.paper-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-end;
-  margin-top: 0.25rem;
-}
-.paper-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--cyan-dim);
-  text-decoration: none;
-  border: 1px solid rgba(0,212,255,0.2);
-  padding: 0.3rem 0.7rem;
-  border-radius: 4px;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.paper-link:hover {
-  color: var(--cyan);
-  border-color: var(--cyan);
-  box-shadow: 0 0 10px rgba(0,212,255,0.1);
-}
-.paper-link.primary {
-  background: rgba(0,212,255,0.08);
-  border-color: rgba(0,212,255,0.3);
-  color: var(--cyan);
-}
+    /* OPEN SCIENCE */
+    .open-science { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
+    .os-card { background: rgba(17,24,39,0.5); border: 1px solid var(--gray); border-radius: 12px; padding: 24px; transition: border-color 0.3s; }
+    .os-card:hover { border-color: rgba(0,212,255,0.3); }
+    .os-card h4 { color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .os-card p { color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .os-card a { color: var(--cyan); }
 
-@media (max-width: 700px) {
-  .paper-card {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-  .paper-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-}
-
-/* ── FOOTER ── */
-footer {
-  text-align: center;
-  padding: 3rem 2rem;
-  border-top: 1px solid var(--border);
-  margin-top: 3rem;
-}
-.footer-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.footer-logo .nav-logo-mark {
-  width: 24px; height: 24px;
-  font-size: 0.8rem;
-}
-.footer-logo span {
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-}
-footer p {
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-footer .tagline {
-  font-family: 'Crimson Pro', serif;
-  font-style: italic;
-  color: var(--silver);
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
-}
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin: 1rem 0;
-}
-.footer-links a {
-  font-size: 0.8rem;
-  color: var(--silver);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--cyan); }
-</style>
+    /* FOOTER */
+    footer { border-top: 1px solid var(--gray); padding: 48px 0; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-brand span { color: var(--muted); font-size: 14px; }
+    .footer-copy { color: #374151; font-size: 12px; margin-top: 8px; }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-mark">N</div>
-      <div class="nav-logo-text">Nyx Dynamics</div>
-    </a>
+    <div class="logo">
+      <div class="logo-icon">N</div>
+      <span class="logo-text">NYX DYNAMICS</span>
+    </div>
     <ul class="nav-links">
       <li><a href="/#about">About</a></li>
       <li><a href="/#services">Services</a></li>
-      <li><a href="/noctua">Noctua</a></li>
+      <li><a href="/noctua.html">Noctua</a></li>
       <li><a href="/research" class="active">Research</a></li>
       <li><a href="/#contact">Contact</a></li>
     </ul>
@@ -334,157 +131,249 @@ footer .tagline {
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Research</h1>
-  <p>Computational epidemiology applied to biological and institutional systems. All code open source. All analyses reproducible.</p>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="num" style="color: var(--green)">1</div>
-      <div class="label">Accepted</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num" style="color: var(--cyan)">4</div>
-      <div class="label">Under Review</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num" style="color: var(--violet)">1</div>
-      <div class="label">Revising</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num" style="color: var(--white)">6</div>
-      <div class="label">Total</div>
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-tag">Nyx Dynamics &mdash; Research Portfolio</p>
+      <h1 class="font-serif">Computational Research<br>at the Intersection of<br>Medicine &amp; Algorithms</h1>
+      <p class="hero-lead">Peer-reviewed work spanning HIV prevention implementation science, algorithmic equity, mathematical modeling of infection dynamics, and neurometabolic signal processing. All code open-source. All data archived.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Published / In Press</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">2</div>
+          <div class="hero-stat-label">Under Review</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">1</div>
+          <div class="hero-stat-label">In Preparation</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">21.2M</div>
+          <div class="hero-stat-label">Patients Validated</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PAPERS -->
-<section class="papers">
+<!-- PROJECTS -->
+<section class="bg-alt">
+  <div class="container">
+    <p class="section-label">Active Research</p>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-sub">Each project includes a dedicated page with slide deck, mind map, and infographic.</p>
 
-  <div class="papers-section-title">HIV Prevention Science</div>
+    <div class="projects-grid">
 
-  <!-- LAI-PrEP CDS -->
-  <div class="paper-card">
-    <div class="paper-status status-accepted">ACCEPTED</div>
-    <div class="paper-body">
-      <h3>Computational Validation of a CDS Algorithm for LAI-PrEP Bridge Period Navigation at UNAIDS Global Target Scale</h3>
-      <div class="paper-meta">
-        <span>Viruses (MDPI) · IF 3.5</span>
-        <span>Accepted Jan 10, 2026</span>
+      <!-- 1. LAI-PrEP Bridge Period -->
+      <div class="project-card published">
+        <div class="project-main">
+          <div class="project-meta">
+            <span class="badge badge-published">Published</span>
+            <span class="badge badge-inpress">In Press</span>
+            <span class="project-journal">Viruses 2026 &mdash; Two Companion Papers</span>
+          </div>
+          <h3 class="project-title">LAI-PrEP Bridge Period: Clinical Decision Support Tool</h3>
+          <p class="project-desc">Long-acting injectable PrEP demonstrates &gt;96% HIV prevention efficacy, yet 47.1% of prescribed patients never receive their first injection. This project defines the 2&ndash;8 week &ldquo;bridge period&rdquo; as the critical implementation bottleneck, proposes a reconceptualized PrEP cascade, synthesizes a 21-intervention evidence library across 7 population categories, and delivers a computationally validated clinical decision support tool &mdash; validated across 21.2 million synthetic patients at UNAIDS global PrEP target scale with &plusmn;0.018 pp precision.</p>
+          <div class="project-tags">
+            <span class="project-tag">HIV Prevention</span>
+            <span class="project-tag">Implementation Science</span>
+            <span class="project-tag">Clinical Decision Support</span>
+            <span class="project-tag">Monte Carlo Validation</span>
+            <span class="project-tag">Health Equity</span>
+            <span class="project-tag">LAI-PrEP</span>
+          </div>
+          <div class="project-links">
+            <a href="/research/lai-prep-bridge-period-clinical-decision-tool/" class="link-primary">Project Page</a>
+            <a href="https://doi.org/10.3390/v18020237" target="_blank" class="link-secondary">Paper I (DOI)</a>
+            <a href="https://doi.org/10.20944/preprints202512.2354.v1" target="_blank" class="link-secondary">Paper II (Preprint)</a>
+            <a href="https://github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub" target="_blank" class="link-secondary">GitHub</a>
+          </div>
+        </div>
+        <div class="project-aside">
+          <div class="aside-stat">
+            <div class="aside-num">21.2M</div>
+            <div class="aside-label">patients validated</div>
+          </div>
+          <div class="aside-stat">
+            <div class="aside-num">47.1%</div>
+            <div class="aside-label">bridge period attrition</div>
+          </div>
+          <div class="aside-stat">
+            <div class="aside-num">100K</div>
+            <div class="aside-label">infections preventable annually</div>
+          </div>
+        </div>
       </div>
-      <div class="paper-desc">Clinical decision support tool for long-acting injectable PrEP bridge period navigation, validated at 21.2 million patients matching UNAIDS global scale targets.</div>
-    </div>
-    <div class="paper-links">
-      <a href="https://doi.org/10.3390/v18020237" class="paper-link primary" target="_blank">Published</a>
-      <a href="/research/lai-prep-bridge/" class="paper-link">Interactive Summary</a>
-      <a href="https://github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub" class="paper-link" target="_blank">GitHub</a>
+
+      <!-- 2. Algorithmic Discrimination -->
+      <div class="project-card review">
+        <div class="project-main">
+          <div class="project-meta">
+            <span class="badge badge-review">Under Review</span>
+            <span class="badge badge-preprint">Preprint</span>
+            <span class="project-journal">PLOS Digital Health</span>
+          </div>
+          <h3 class="project-title">Synergistic Algorithmic Recourse &amp; Structural Discrimination in Healthcare AI</h3>
+          <p class="project-desc">A mathematical and computational framework for identifying and quantifying synergistic algorithmic discrimination &mdash; where individual algorithmic features are equitable in isolation but combine multiplicatively to produce discriminatory outcomes. Proposes a recourse framework for correcting compounding bias in clinical decision support systems, with direct application to PrEP eligibility, risk stratification, and treatment recommendation algorithms.</p>
+          <div class="project-tags">
+            <span class="project-tag">Algorithmic Bias</span>
+            <span class="project-tag">Health Equity</span>
+            <span class="project-tag">Clinical AI</span>
+            <span class="project-tag">Recourse Framework</span>
+            <span class="project-tag">Structural Discrimination</span>
+          </div>
+          <div class="project-links">
+            <a href="/research/algorithmic-discrimination/" class="link-primary">Project Page</a>
+            <a href="https://www.medrxiv.org" target="_blank" class="link-secondary">medRxiv Preprint</a>
+          </div>
+        </div>
+        <div class="project-aside">
+          <div class="aside-stat">
+            <div class="aside-num">PLOS</div>
+            <div class="aside-label">Digital Health — under review</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Noise Decorrelation / PNAS -->
+      <div class="project-card review">
+        <div class="project-main">
+          <div class="project-meta">
+            <span class="badge badge-review">Under Review</span>
+            <span class="badge badge-preprint">bioRxiv</span>
+            <span class="project-journal">PNAS &mdash; Tracking #2026-07722</span>
+          </div>
+          <h3 class="project-title">Noise Correlation Length Distinguishes Neurometabolic Protection from Vulnerability Across HIV Infection Phases</h3>
+          <p class="project-desc">A signal processing framework demonstrating that noise correlation length &mdash; a measure of spatial autocorrelation in metabolic fluctuation patterns &mdash; reliably distinguishes neuroprotective from neurovulnerable states across phases of HIV infection. Provides a computationally tractable biomarker framework for neurometabolic monitoring in people living with HIV, with implications for early detection of HIV-associated neurocognitive disorders.</p>
+          <div class="project-tags">
+            <span class="project-tag">Signal Processing</span>
+            <span class="project-tag">Neurometabolic</span>
+            <span class="project-tag">HIV Neurology</span>
+            <span class="project-tag">Biomarker</span>
+            <span class="project-tag">HAND</span>
+          </div>
+          <div class="project-links">
+            <a href="/research/noise-decorrelation/" class="link-primary">Project Page</a>
+            <a href="https://www.biorxiv.org" target="_blank" class="link-secondary">bioRxiv Preprint</a>
+          </div>
+        </div>
+        <div class="project-aside">
+          <div class="aside-stat">
+            <div class="aside-num">PNAS</div>
+            <div class="aside-label">under review — submitted March 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. PWID / Structural Barriers -->
+      <div class="project-card review">
+        <div class="project-main">
+          <div class="project-meta">
+            <span class="badge badge-review">Under Review</span>
+            <span class="project-journal">BMC Public Health</span>
+          </div>
+          <h3 class="project-title">Structural Barriers, Stochastic Avoidance, and Outbreak Risk in HIV Prevention for People Who Inject Drugs</h3>
+          <p class="project-desc">A population-specific analysis of the structural, legal, and healthcare system barriers preventing people who inject drugs (PWID) from initiating long-acting injectable PrEP. PWID represent the highest-risk and lowest-coverage population in HIV prevention, with only 2% currently using PrEP despite indicated need. This work quantifies the compounding effect of criminalization, housing instability, stigma, and healthcare avoidance on bridge period completion, and evaluates syringe service program integration as the primary delivery pathway.</p>
+          <div class="project-tags">
+            <span class="project-tag">PWID</span>
+            <span class="project-tag">LAI-PrEP</span>
+            <span class="project-tag">Structural Barriers</span>
+            <span class="project-tag">Harm Reduction</span>
+            <span class="project-tag">Health Equity</span>
+          </div>
+          <div class="project-links">
+            <a href="/research/pwid/" class="link-primary">Project Page</a>
+            <a href="https://doi.org/10.20944/preprints202601.0948.v1" target="_blank" class="link-secondary">Preprint (DOI)</a>
+          </div>
+        </div>
+        <div class="project-aside">
+          <div class="aside-stat">
+            <div class="aside-num">2%</div>
+            <div class="aside-label">PWID currently using PrEP despite need</div>
+          </div>
+          <div class="aside-stat">
+            <div class="aside-num">+265%</div>
+            <div class="aside-label">improvement with targeted interventions</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Prevention Theorem -->
+      <div class="project-card inprep">
+        <div class="project-main">
+          <div class="project-meta">
+            <span class="badge badge-inprep">In Preparation</span>
+            <span class="badge badge-preprint">Preprint</span>
+            <span class="project-journal">Target: Science</span>
+          </div>
+          <h3 class="project-title">The Prevention Theorem: Time-Dependent Constraints on Post-Exposure Prophylaxis for HIV</h3>
+          <p class="project-desc">A formal mathematical framework establishing that HIV post-exposure prophylaxis efficacy is governed by a finite, quantifiable prevention window determined by viral replication kinetics and the irreversibility of systemic infection establishment. Derives closed-form theorems for optimal PrEP timing under stochastic exposure conditions, with direct implications for same-day PrEP initiation protocols, bridge period design, and the pharmacokinetic rationale for conservative LAI-PrEP initiation requirements.</p>
+          <div class="project-tags">
+            <span class="project-tag">Mathematical Modeling</span>
+            <span class="project-tag">HIV PEP/PrEP</span>
+            <span class="project-tag">Infection Dynamics</span>
+            <span class="project-tag">Viral Kinetics</span>
+            <span class="project-tag">Prevention Science</span>
+          </div>
+          <div class="project-links">
+            <a href="/research/prevention-theorem/" class="link-primary">Project Page</a>
+            <a href="https://doi.org/10.20944/preprints202601.1090.v1" target="_blank" class="link-secondary">Preprint (DOI)</a>
+          </div>
+        </div>
+        <div class="project-aside">
+          <div class="aside-stat">
+            <div class="aside-num">Science</div>
+            <div class="aside-label">target journal — in preparation</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+</section>
 
-  <!-- Prevention Theorem -->
-  <div class="paper-card">
-    <div class="paper-status status-review">UNDER REVIEW</div>
-    <div class="paper-body">
-      <h3>Finite Prevention Windows Under Irreversible Infection Establishment: A Mathematical Framework for HIV PEP Timing</h3>
-      <div class="paper-meta">
-        <span>J Infect Dis</span>
-        <span>JID-S-26-00368</span>
+<!-- OPEN SCIENCE -->
+<section>
+  <div class="container">
+    <p class="section-label">Open Science</p>
+    <h2 class="section-title">Principles &amp; Access</h2>
+    <p class="section-sub">All research code is open-source. All datasets are publicly archived. All tools are free for healthcare providers and researchers.</p>
+    <div class="open-science">
+      <div class="os-card">
+        <h4>Code &mdash; GitHub</h4>
+        <p>All computational tools and analysis code available at <a href="https://github.com/Nyx-Dynamics" target="_blank">github.com/Nyx-Dynamics</a>. GPG-signed commits. Pharma-Restricted Open Healthcare License.</p>
       </div>
-      <div class="paper-desc">First formal mathematical framework proving prevention windows are finite under irreversible establishment. Derives closed-form survival functions for PEP efficacy and identifies the "shadow zone" where treatment appears effective but failure is predetermined.</div>
-    </div>
-    <div class="paper-links">
-      <a href="/research/prevention-theorem/" class="paper-link primary">Interactive Summary</a>
-      <a href="https://doi.org/10.20944/preprints202601.1090.v1" class="paper-link" target="_blank">Preprint</a>
-      <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" class="paper-link" target="_blank">GitHub</a>
+      <div class="os-card">
+        <h4>Data &mdash; Zenodo</h4>
+        <p>Datasets and validation results archived at <a href="https://doi.org/10.5281/zenodo.17873201" target="_blank">Zenodo DOI: 10.5281/zenodo.17873201</a> with permanent DOI assignment.</p>
+      </div>
+      <div class="os-card">
+        <h4>Conflict of Interest</h4>
+        <p>Dr. Demidont was formerly employed by Gilead Sciences (ending October 2024); all holdings divested December 2024. No industry funding. Disclosed per ICMJE guidelines in all publications.</p>
+      </div>
+      <div class="os-card">
+        <h4>AI Disclosure</h4>
+        <p>Manuscripts developed with assistance from Anthropic Claude and other AI tools per ICMJE-compliant disclosure. Author maintains full responsibility for all scientific content and conclusions.</p>
+      </div>
     </div>
   </div>
-
-  <!-- PWID -->
-  <div class="paper-card">
-    <div class="paper-status status-review">PEER REVIEW</div>
-    <div class="paper-body">
-      <h3>Structural Barriers, Stochastic Avoidance, and Outbreak Risk in HIV Prevention for PWID: A Monte Carlo Simulation Study</h3>
-      <div class="paper-meta">
-        <span>BMC Public Health</span>
-        <span>10+ reviewers assigned</span>
-      </div>
-      <div class="paper-desc">Monte Carlo simulations demonstrating that structural barriers — criminalization, housing instability — create a median 72-hour access delay that structurally closes PEP as a prevention strategy for people who inject drugs.</div>
-    </div>
-    <div class="paper-links">
-      <a href="/research/pwid/" class="paper-link primary">Interactive Summary</a>
-      <a href="https://doi.org/10.20944/preprints202601.0948.v1" class="paper-link" target="_blank">Preprint</a>
-      <a href="https://github.com/Nyx-Dynamics/HIV_Prevention_PWID" class="paper-link" target="_blank">GitHub</a>
-    </div>
-  </div>
-
-  <!-- Bridging the Gap -->
-  <div class="paper-card">
-    <div class="paper-status status-review">UNDER REVIEW</div>
-    <div class="paper-body">
-      <h3>Bridging the Gap: The PrEP Cascade Paradigm Shift for Long-Acting Injectable HIV Prevention</h3>
-      <div class="paper-meta">
-        <span>Viruses (MDPI)</span>
-        <span>Resubmitted Feb 21, 2026</span>
-      </div>
-      <div class="paper-desc">Analysis of the PrEP cascade paradigm shift required for long-acting injectable HIV prevention implementation.</div>
-    </div>
-    <div class="paper-links">
-      <a href="https://doi.org/10.20944/preprints202512.2354.v1" class="paper-link" target="_blank">Preprint</a>
-      <a href="https://github.com/Nyx-Dynamics/bridging_the_gap" class="paper-link" target="_blank">GitHub</a>
-    </div>
-  </div>
-
-  <div class="papers-section-title" style="margin-top: 3rem;">HIV Neuroscience</div>
-
-  <!-- Noise Decorrelation -->
-  <div class="paper-card">
-    <div class="paper-status status-review">UNDER REVIEW</div>
-    <div class="paper-body">
-      <h3>Noise Decorrelation as a Hypothetical Mechanism for Phase-Specific Neurometabolic Outcomes in HIV Infection</h3>
-      <div class="paper-meta">
-        <span>PLOS Computational Biology</span>
-        <span>bioRxiv 2026/703895</span>
-      </div>
-      <div class="paper-desc">Resolves a 35-year clinical paradox: why the brain survives acute HIV. Hierarchical Bayesian inference reveals shorter noise correlation during acute infection provides superlinear neuroprotection (β = 2.33) through a decorrelation shield mechanism.</div>
-    </div>
-    <div class="paper-links">
-      <a href="/research/noise-decorrelation/" class="paper-link primary">Interactive Summary</a>
-      <a href="https://www.biorxiv.org/content/10.64898/2026.02.10.703895v2" class="paper-link" target="_blank">bioRxiv</a>
-      <a href="https://github.com/Nyx-Dynamics/noise_decorrelation_hiv" class="paper-link" target="_blank">GitHub</a>
-    </div>
-  </div>
-
-  <div class="papers-section-title" style="margin-top: 3rem;">Algorithmic Epidemiology</div>
-
-  <!-- Algorithmic Discrimination -->
-  <div class="paper-card">
-    <div class="paper-status status-revisions">REVISING</div>
-    <div class="paper-body">
-      <h3>Algorithmic Discrimination as a Synergistic Barrier System: A Quantitative Interaction-Dominant Model</h3>
-      <div class="paper-meta">
-        <span>Target journal TBD</span>
-      </div>
-      <div class="paper-desc">Models algorithmic discrimination as an 11-barrier synergistic system. The three-way interaction between data integration, data accuracy, and institutional access accounts for 87.6% of total effect — explaining why incremental reforms are mathematically insufficient.</div>
-    </div>
-    <div class="paper-links">
-      <a href="/research/algorithmic-discrimination/" class="paper-link primary">Interactive Summary</a>
-      <a href="https://github.com/Nyx-Dynamics/algorithmic-bias-epidemiology-academic" class="paper-link" target="_blank">GitHub</a>
-    </div>
-  </div>
-
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    <div class="nav-logo-mark">N</div>
-    <span>Nyx Dynamics, LLC</span>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-icon" style="width:32px;height:32px;font-size:14px;">N</div>
+        <span>Nyx Dynamics, LLC</span>
+      </div>
+      <p style="font-style:italic; color:#4b5563; font-size:14px;">"Guiding AI to Shape a Better Future"</p>
+      <p class="footer-copy">&copy; 2026 Nyx Dynamics, LLC &mdash; Fairfield, CT &mdash; acdemidont@nyxdynamics.org</p>
+    </div>
   </div>
-  <div class="tagline">"Illuminating hidden insights within data"</div>
-  <div class="footer-links">
-    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
-    <a href="mailto:info@nyxdynamics.org">Contact</a>
-  </div>
-  <p>&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
 </footer>
 
 </body>
