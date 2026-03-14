@@ -400,9 +400,13 @@ body::before {
     </p>
     <div class="hero-meta">
       <a href="https://doi.org/10.20944/preprints202601.1090.v1" target="_blank">Preprint</a>
-      <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" target="_blank">GitHub Repository</a>
-      <a href="https://doi.org/10.5281/zenodo.18745661" target="_blank">Zenodo Database</a>
+      <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" target="_blank">GitHub</a>
+      <a href="https://doi.org/10.5281/zenodo.19011771" target="_blank">Zenodo v5</a>
       <a href="/research">&larr; All Research</a>
+    </div>
+    <div style="margin-top:2rem;display:inline-flex;align-items:center;gap:0.75rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);padding:0.6rem 1.25rem;border-radius:8px;opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite;display:inline-block;"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--amber);letter-spacing:0.1em;text-transform:uppercase;">Submitted to <span style="color:var(--white);font-style:italic;">Science</span> &mdash; Manuscript ID: aeh1546 &mdash; March 13, 2026</span>
     </div>
   </div>
   <div class="scroll-hint">
@@ -547,7 +551,7 @@ body::before {
     <p>An overview of the framework's four interconnected domains: mathematical foundations, route-dependent windows, structural access barriers, and prevention architecture.</p>
   </div>
   <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: #fff;">
-    <img src="/research/images/mindmap_prevention_theorem.png" alt="Mind Map: HIV PEP Timing and Prevention Windows" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+    <img src="/research/prevention-theorem/images/mindmap_prevention_theorem.png" alt="Mind Map: HIV PEP Prevention Windows — Mathematical Framework, Route-Dependent Compression, Structural Barriers, Prevention Implications" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
   </div>
 </section>
 
@@ -561,7 +565,7 @@ body::before {
     <p>Why route matters for PEP efficacy &mdash; mapping biological windows for mucosal vs. parenteral exposure and the structural access crisis for PWID.</p>
   </div>
   <div class="reveal" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3);">
-    <img src="/research/images/infographic_prevention_theorem.jpg" alt="The HIV Prevention Clock: Why Route Matters for PEP Efficacy — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
+    <img src="/research/prevention-theorem/images/infographic_prevention_theorem.jpg" alt="The Closing Window: Why HIV PEP Fails for Injection Exposure — Infographic" loading="lazy" decoding="async" style="width: 100%; display: block; height: auto;">
   </div>
 </section>
 
@@ -577,12 +581,12 @@ body::before {
   <div class="footer-links">
     <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
     <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
-    <a href="mailto:info@nyxdynamics.org">Contact</a>
+    <a href="/cdn-cgi/l/email-protection#7d14131b123d1304051904131c10141e0e53120f1a">Contact</a>
   </div>
   <p style="color: var(--muted); font-size: 0.7rem; margin-top: 1rem;">&copy; 2026 Nyx Dynamics, LLC. All rights reserved.</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Scroll reveal for slides and other elements ──
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -602,11 +606,4 @@ function updateProgress() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  progressFill.style.width = progress + '%';
-}
-
-window.addEventListener('scroll', updateProgress, { passive: true });
-updateProgress();
-</script>
-</body>
-</html>
+  progressF
