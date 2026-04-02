@@ -406,7 +406,7 @@ body::before {
     </div>
     <div style="margin-top:2rem;display:inline-flex;align-items:center;gap:0.75rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);padding:0.6rem 1.25rem;border-radius:8px;opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;">
       <span style="width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite;display:inline-block;"></span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--amber);letter-spacing:0.1em;text-transform:uppercase;">Submitted to <span style="color:var(--white);font-style:italic;">Science</span> &mdash; Manuscript ID: aeh1546 &mdash; March 13, 2026</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--amber);letter-spacing:0.1em;text-transform:uppercase;">Submitted to <span style="color:var(--white);font-style:italic;">Science Advances</span> &mdash; Manuscript ID: aeh1546 &mdash; March 13, 2026</span>
     </div>
   </div>
   <div class="scroll-hint">
@@ -606,4 +606,10 @@ function updateProgress() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  progressF
+  progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>

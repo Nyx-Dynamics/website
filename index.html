@@ -490,7 +490,7 @@
               </div>
               <div class="evidence-item">
                 <span class="evidence-label">Published</span>
-                <p><strong style="color: var(--white);">6 computational manuscripts</strong> &mdash; 1 accepted (<em>Viruses</em>, MDPI: CDS algorithm validation at 21.2M patients), 4 under review at <em>Viruses</em>, <em>J Infectious Diseases</em>, <em>BMC Public Health</em>, and <em>PLOS Computational Biology</em>, spanning mathematical modeling, Monte Carlo simulation, algorithmic bias, and neurometabolic signal processing. All but one available as preprints on <a href="https://www.preprints.org" target="_blank">Preprints.org</a> and <a href="https://www.biorxiv.org" target="_blank">bioRxiv</a>.</p>
+                <p><strong style="color: var(--white);">6 computational manuscripts</strong> &mdash; 1 accepted (<em>Viruses</em>, MDPI: CDS algorithm validation at 21.2M patients), 4 under review at <em>Viruses</em>, <em>J Infectious Diseases</em>, <em>BMC Public Health</em>, and <em>eLife</em>, spanning mathematical modeling, Monte Carlo simulation, algorithmic bias, and neurometabolic signal processing. All but one available as preprints on <a href="https://www.preprints.org" target="_blank">Preprints.org</a> and <a href="https://www.biorxiv.org" target="_blank">bioRxiv</a>.</p>
               </div>
               <div class="evidence-item">
                 <span class="evidence-label">Trained</span>
@@ -736,7 +736,7 @@
       </div>
       <div class="news-grid">
 
-        <!-- Science submission — pinned featured card -->
+        <!-- Science Advances submission — pinned featured card -->
         <div class="news-card featured" style="border-color:rgba(0,212,255,0.35);background:rgba(0,212,255,0.04);grid-column:1/-1;">
           <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
             <span class="news-tag" style="color:var(--cyan);">🧬 Research Submission</span>
@@ -746,7 +746,7 @@
             </span>
           </div>
           <p class="news-date">March 13, 2026 &middot; Manuscript ID: aeh1546</p>
-          <h3 style="font-size:18px;line-height:1.4;">Submitted to <em>Science</em>: Finite Prevention Windows for HIV Post-Exposure Prophylaxis</h3>
+          <h3 style="font-size:18px;line-height:1.4;">Submitted to <em>Science Advances</em>: Finite Prevention Windows for HIV Post-Exposure Prophylaxis</h3>
           <p style="margin-top:0.5rem;">Irreversible proviral integration defines a finite, route-specific window during which PEP can succeed. For parenteral (injection) exposure, this window compresses ~3&times; versus mucosal exposure — to 16–28 hours. Structural access delays for PWID systematically eliminate it, bounding population-level PEP efficacy below 10%. A structural failure, not a pharmacological one.</p>
           <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
             <a href="/research/prevention-theorem" class="btn btn-primary" style="padding:8px 18px;font-size:13px;">Research Page</a>
@@ -992,4 +992,14 @@
         progressFill.style.width = '0%';
         currentScene = 0;
         for (var i = 0; i < scenes.length; i++) scenes[i].classList.toggle('active', i === 0);
+      }, 1000);
+    });
+
+    resize();
+    initParticles();
+    requestAnimationFrame(drawParticles);
+  })();
+  </script>
+</body>
+</html>
    
