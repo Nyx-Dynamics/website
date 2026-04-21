@@ -490,7 +490,7 @@
               </div>
               <div class="evidence-item">
                 <span class="evidence-label">Published</span>
-                <p><strong style="color: var(--white);">6 computational manuscripts</strong> &mdash; 1 accepted (<em>Viruses</em>, MDPI: CDS algorithm validation at 21.2M patients), 4 under review at <em>Viruses</em>, <em>J Infectious Diseases</em>, <em>BMC Public Health</em>, and <em>PLOS Computational Biology</em>, spanning mathematical modeling, Monte Carlo simulation, algorithmic bias, and neurometabolic signal processing. All but one available as preprints on <a href="https://www.preprints.org" target="_blank">Preprints.org</a> and <a href="https://www.biorxiv.org" target="_blank">bioRxiv</a>.</p>
+                <p><strong style="color: var(--white);">6 computational manuscripts</strong> &mdash; 1 accepted (<em>Viruses</em>, MDPI: CDS algorithm validation at 21.2M patients), 4 under review at <em>Viruses</em>, <em>J Infectious Diseases</em>, <em>BMC Public Health</em>, and <em>eLife</em>, spanning mathematical modeling, Monte Carlo simulation, algorithmic bias, and neurometabolic signal processing. All but one available as preprints on <a href="https://www.preprints.org" target="_blank">Preprints.org</a> and <a href="https://www.biorxiv.org" target="_blank">bioRxiv</a>.</p>
               </div>
               <div class="evidence-item">
                 <span class="evidence-label">Trained</span>
@@ -735,22 +735,43 @@
         <h2 class="font-serif">In the News</h2>
       </div>
       <div class="news-grid">
+
+        <!-- Science Advances submission — pinned featured card -->
+        <div class="news-card featured" style="border-color:rgba(0,212,255,0.35);background:rgba(0,212,255,0.04);grid-column:1/-1;">
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
+            <span class="news-tag" style="color:var(--cyan);">🧬 Research Submission</span>
+            <span style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);padding:0.2rem 0.7rem;border-radius:12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;display:inline-block;"></span>
+              Under Review
+            </span>
+          </div>
+          <p class="news-date">March 13, 2026 &middot; Manuscript ID: aeh1546</p>
+          <h3 style="font-size:18px;line-height:1.4;">Submitted to <em>Science Advances</em>: Finite Prevention Windows for HIV Post-Exposure Prophylaxis</h3>
+          <p style="margin-top:0.5rem;">Irreversible proviral integration defines a finite, route-specific window during which PEP can succeed. For parenteral (injection) exposure, this window compresses ~3&times; versus mucosal exposure — to 16–28 hours. Structural access delays for PWID systematically eliminate it, bounding population-level PEP efficacy below 10%. A structural failure, not a pharmacological one.</p>
+          <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <a href="/research/prevention-theorem" class="btn btn-primary" style="padding:8px 18px;font-size:13px;">Research Page</a>
+            <a href="https://doi.org/10.20944/preprints202601.1090.v1" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">Preprint</a>
+            <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">GitHub</a>
+            <a href="https://doi.org/10.5281/zenodo.19011771" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">Zenodo</a>
+          </div>
+        </div>
+
+        <div class="news-card featured">
+          <span class="news-tag">Research</span>
+          <p class="news-date">Jan 2026</p>
+          <h3>LAI-PrEP Bridge Period Algorithm Accepted in <em>Viruses</em></h3>
+          <p>Computational validation of a clinical decision support algorithm for LAI-PrEP bridge period navigation, validated at UNAIDS global target scale.</p>
+        </div>
         <div class="news-card featured">
           <span class="news-tag">Featured</span>
           <p class="news-date">Jan 2025</p>
           <h3>MIT Sloan AI in Healthcare Certification</h3>
           <p>Nyx Dynamics founder completes MIT Sloan Executive Education program on AI implementation in clinical settings.</p>
         </div>
-        <div class="news-card featured">
-          <span class="news-tag">Featured</span>
+        <div class="news-card">
           <p class="news-date">Dec 2024</p>
           <h3>Healthcare AI Readiness Framework Published</h3>
           <p>Our six-question framework for evaluating clinical AI readiness now available for healthcare organizations.</p>
-        </div>
-        <div class="news-card">
-          <p class="news-date">Nov 2024</p>
-          <h3>Nyx Dynamics Joins AI Safety Discussions</h3>
-          <p>Contributing to national conversations on responsible healthcare AI deployment.</p>
         </div>
         <div class="news-card">
           <p class="news-date">Oct 2024</p>
@@ -769,7 +790,7 @@
         <p>Ready to ensure your healthcare AI works equitably for all patients?</p>
       </div>
       <div class="contact-info">
-        <p><span class="contact-label">Email:</span> <a href="mailto:info@nyxdynamics.org">info@nyxdynamics.org</a></p>
+        <p><span class="contact-label">Email:</span> <a href="/cdn-cgi/l/email-protection#e78e898188a7899e9f839e89868a8e8494c9889580"><span class="__cf_email__" data-cfemail="224b4c444d624c5b5a465b4c434f4b41510c4d5045">[email&#160;protected]</span></a></p>
         <p><span class="contact-label">Phone:</span> 267.534.9203</p>
         <p><span class="contact-label">Fax:</span> 203.872.1117</p>
         <p><span class="contact-label">Locations:</span><br>Philadelphia, PA<br>Fairfield, CT</p>
@@ -795,7 +816,7 @@
     </div>
   </footer>
   <!-- Origins Cinematic Script -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   (function() {
     var audio = new Audio('assets/nyx-origins-voiceover.mp3');
     var cinema = document.getElementById('originsCinema');
@@ -971,11 +992,9 @@
         progressFill.style.width = '0%';
         currentScene = 0;
         for (var i = 0; i < scenes.length; i++) scenes[i].classList.toggle('active', i === 0);
-        for (var i = 0; i < dots.length; i++) dots[i].classList.remove('active', 'past');
-      }, 3000);
+      }, 1000);
     });
 
-    // --- Init ---
     resize();
     initParticles();
     requestAnimationFrame(drawParticles);
@@ -983,3 +1002,4 @@
   </script>
 </body>
 </html>
+   
