@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibration-to-Deployment Mismatch in HIV Prevention Trials | Nyx Dynamics Research</title>
+<meta name="description" content="Survival-biased Kassanjee/Gao incidence estimation in PURPOSE 1, PURPOSE 2, and other RITA-based PrEP efficacy trials. Demidont AC, 2026.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#00D4FF;--bg:#0a0a0f;--card:#111318;--border:#1e2330;--text:#f8fafc;--silver:#cbd5e1;--muted:#94a3b8;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--purple:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cyan);text-decoration:none;font-weight:700}
+.nav-links{display:flex;gap:1.5rem}.nav-links a{color:var(--silver);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--cyan)}
+
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.4rem 1rem;border-radius:20px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;max-width:900px;margin-bottom:1rem}.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero .sub{color:var(--silver);font-size:1.05rem;max-width:760px;margin-bottom:2rem}
+.hero .links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.hero .links a{padding:.6rem 1.5rem;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-p{background:var(--cyan);color:#000}.btn-p:hover{box-shadow:0 0 20px rgba(0,212,255,.4)}
+.btn-o{border:1px solid var(--border);color:var(--silver)}.btn-o:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+.sn{font-size:.75rem;color:var(--cyan);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem}
+.section p,.section li{color:var(--silver);font-size:.95rem}.section p+p{margin-top:1rem}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:2rem 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:700;color:var(--cyan)}.stat-card .label{font-size:.75rem;color:var(--muted);margin-top:.25rem}
+
+.layer{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.layer h4{font-size:.95rem;font-weight:600;margin-bottom:.5rem}.layer .barriers{color:var(--muted);font-size:.85rem}
+
+.formula{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;margin:1.25rem 0;font-size:1.1rem;font-family:'JetBrains Mono',monospace;color:var(--cyan)}
+.formula .note{font-family:'Inter',sans-serif;color:var(--muted);font-size:.8rem;margin-top:.5rem}
+
+.finding-bar{margin-bottom:1rem}.finding-bar .bar-label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.3rem}
+.finding-bar .bar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}.finding-bar .bar-fill{height:100%;border-radius:4px}
+
+/* TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.tab{padding:.5rem 1.2rem;border-radius:8px 8px 0 0;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;font-family:'Inter',sans-serif}
+.tab:hover{color:var(--silver)}.tab.active{background:var(--card);border-color:var(--border);border-bottom-color:var(--card);color:var(--cyan)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* INFOGRAPHIC / FIGURES */
+.infographic-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin:1rem 0}
+.infographic-wrap img{width:100%;display:block}
+.fig-block{margin-bottom:2rem}
+.fig-block h4{color:var(--text);font-size:.95rem;margin-bottom:.5rem;font-weight:600}
+.fig-block .caption{color:var(--muted);font-size:.8rem;margin-top:.5rem;line-height:1.5}
+
+/* SLIDES */
+.slide-viewer{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.slide-stage{position:relative;width:100%;padding-top:56.25%;overflow:hidden}
+.slide-stage img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#111}
+.slide-nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-top:1px solid var(--border);background:rgba(0,0,0,.3)}
+.slide-nav button{background:none;border:1px solid var(--border);color:var(--silver);padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.8rem;font-family:'Inter',sans-serif;transition:all .2s}
+.slide-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+.slide-nav .sc{color:var(--muted);font-size:.8rem}
+.slide-dots{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:none}
+.sdot.active{background:var(--cyan);box-shadow:0 0 8px rgba(0,212,255,.5)}
+
+/* CITATION */
+.cite-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:2rem 0}
+.cite-box .cl{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-weight:600}
+.cite-box .ct{font-size:.85rem;color:var(--silver);font-family:'JetBrains Mono',monospace;line-height:1.6;word-break:break-word}
+.cite-box a{color:var(--cyan)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.3rem .8rem;border-radius:6px;cursor:pointer;font-size:.75rem;font-family:'Inter',sans-serif;margin-top:.75rem;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,255,.2)}
+
+.footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+.footer .logo{font-family:'Playfair Display',serif;color:var(--cyan);font-size:1.3rem;margin-bottom:.5rem}
+.footer .tagline{color:var(--muted);font-size:.8rem;font-style:italic;margin-bottom:1rem}
+.footer .flinks{display:flex;gap:1.5rem;justify-content:center;margin-bottom:1rem}
+.footer .flinks a{color:var(--silver);text-decoration:none;font-size:.8rem}.footer .flinks a:hover{color:var(--cyan)}
+.footer .cp{color:var(--muted);font-size:.7rem}
+
+@media(max-width:768px){.hero h1{font-size:1.8rem}.nav-links{gap:.75rem}.formula{font-size:.95rem}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">N Nyx Dynamics</a>
+  <div class="nav-links">
+    <a href="/#about">About</a><a href="/#services">Services</a><a href="/noctua">Noctua</a><a href="/research">Research</a><a href="/#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="badge"><span class="dot"></span> Manuscript In Revision</div>
+  <h1>Calibration-to-Deployment Mismatch in <em>HIV Prevention Trials</em></h1>
+  <p class="sub">How structural censoring biases counterfactual incidence estimates in PURPOSE 1, PURPOSE 2, and other RITA-based PrEP efficacy trials.</p>
+  <div class="links">
+    <a href="/research/calibration_deployment_letter_v6.pdf" target="_blank" class="btn-p">Read the Letter (PDF)</a>
+    <a href="/research/calibration_deployment_supplement_v6.pdf" target="_blank" class="btn-o">Supplement (PDF)</a>
+    <a href="https://github.com/Nyx-Dynamics" target="_blank" class="btn-o">GitHub</a>
+    <a href="/research" class="btn-o">← All Research</a>
+  </div>
+</header>
+
+<!-- 01 PROBLEM -->
+<section class="section">
+  <div class="sn">01 — The Problem</div>
+  <h2>A Closed-System Assumption Inside an Open-System Population</h2>
+  <p>Cross-sectional HIV incidence estimation using recent-infection testing algorithms (RITAs) — the Kassanjee estimator, extended with delta-method variance by Gao et al. — is the analytic backbone of counterfactual-controlled PrEP efficacy trials. It supplied the background incidence (bHIV) for the pivotal PURPOSE 1 (NCT04994509) and PURPOSE 2 (NCT04925752) trials of long-acting injectable lenacapavir.</p>
+  <p>The estimator's validity rests on a single assumption: that every individual infected within the recency window <em>[0, T]</em> is observable at screening — alive, non-incarcerated, housed, and presenting for testing with uniform probability. This is a convenience of calibration, not a biological claim. In populations experiencing structural censoring — overdose mortality, incarceration, displacement, carceral disruption of healthcare, intimate partner violence — the assumption fails directionally and quantifiably. The failure mode is not random noise. It is systematic deflation of estimated background incidence, with magnitude correlated with the very structural vulnerabilities trial designs ostensibly aim to serve.</p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">34</div><div class="label">High-burden US MSAs analyzed (AIDSVu 2023)</div></div>
+    <div class="stat-card"><div class="num">8.7&ndash;27.3%</div><div class="label">Kassanjee denominator inflation, empirical range</div></div>
+    <div class="stat-card"><div class="num">3.1%</div><div class="label">Max IRR attenuation, highest-severity empirical cohort</div></div>
+  </div>
+</section>
+
+<!-- 02 MECHANISM -->
+<section class="section">
+  <div class="sn">02 — The Mechanism of Bias</div>
+  <h2>Survival-Biased Effective MDRI</h2>
+  <p>Let γ(t) denote the instantaneous hazard of structural censoring — the per-unit-time probability of transition into an unobservable state. The effective mean duration of recent infection, conditional on the population's structural hazard profile, is the joint probability that an individual infected at age 0 (i) tests recent at age <em>t</em> and (ii) remains observable at screening:</p>
+  <div class="formula">Ω*(γ) &nbsp;=&nbsp; ∫<sub>0</sub><sup>T</sup> P<sub>R</sub>(t) S<sub>c</sub>(t) dt<div class="note">Distribution-free: requires no parametric form for γ or P<sub>R</sub></div></div>
+  <p>Under a piecewise-constant hazard with the standard exponential approximation P<sub>R</sub>(t) ≈ P<sub>0</sub>·exp(−t/τ) where τ ≈ 173 days for the Sedia LAg-EIA at conventional ODn &lt; 1.5, the integral collapses to a closed-form correction:</p>
+  <div class="formula">Ω*(γ) &nbsp;≈&nbsp; Ω / (1 + γτ)<div class="note">For γ ∈ [10⁻⁴, 10⁻³] /day and τ = 173d: Ω*/Ω spans 0.85 to 0.98 — deflation of 2% to 15%</div></div>
+  <p>Substituting Ω*(γ) into the Gao 2021 cross-sectional incidence estimator yields a reported background incidence that is deflated by the factor Ω*/Ω. The intervention arm is also subject to attenuation, through a different mechanism — infections during longitudinal follow-up are detected only if the participant remains observable through the next scheduled HIV test. The reported IRR therefore relates to the true IRR via a joint bias factor:</p>
+  <div class="formula">IRR<sub>reported</sub> &nbsp;=&nbsp; IRR<sub>true</sub> · ρ<sub>int</sub> / ρ<sub>screen</sub> &nbsp;≡&nbsp; IRR<sub>true</sub> · B<sub>IRR</sub>(γ, r)<div class="note">B<sub>IRR</sub> &lt; 1 whenever ρ<sub>int</sub> &lt; ρ<sub>screen</sub> — interventions appear artificially superior</div></div>
+</section>
+
+<!-- 03 SELECTION -->
+<section class="section">
+  <div class="sn">03 — The Trial-Design Lock</div>
+  <h2>The 90-Day Eligibility Criterion Is the Selection Mechanism</h2>
+  <p>Phase 3 cross-sectional incidence cohorts in contemporary PrEP trials routinely exclude individuals with prior HIV testing within a specified preceding interval. PURPOSE 1 and PURPOSE 2 use identical language: <em>HIV-1 status unknown at screening and no prior HIV-1 testing within the last 3 months</em>. The conventional justification is assay-calibration integrity — recency-biomarker interpretation may be disrupted by recent immune responses or seroconversion uncertainty.</p>
+  <p>The structural consequence is different. The Incidence Phase cohort is explicitly sampled on <em>testing engagement</em> — the cohort is constructed to exclude individuals whose testing interval is shorter than 90 days. This selection is not incidental. It is a deliberate feature of trial design, and it operates precisely on the behavioral axis that correlates most strongly with the competing-risk hazard γ.</p>
+  <div class="layer"><h4 style="color:#22c55e">Eligibility selection</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">Excludes frequent testers; retains the low-γ tail of the at-risk population</p><div class="barriers">Bimodal testing-behavior partition · 90-day inclusion threshold · Selection amplification factor φ ≈ 1.5× (theoretical lower bound, Supplement §S6)</div></div>
+  <div class="layer"><h4 style="color:#3b82f6">Realized cohort composition</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">Departs further toward low-γ tail than the design-phase protocol predicts</p><div class="barriers">Empirical PURPOSE 2 enrollment shift · Bimodal-partition lower bound conservative · True bias magnitudes in deployment populations exceed reported values</div></div>
+  <div class="layer"><h4 style="color:#ef4444">Calibration-to-deployment mismatch</h4><p style="color:var(--silver);font-size:.9rem;margin-bottom:.5rem">Validation-cohort Ω applied to a cohort experiencing γ &gt; 0</p><div class="barriers">Bias is structurally guaranteed, not merely permitted · Direction is systematic under retention schemes where higher-γ cohorts also experience lower retention — the empirically documented pattern in real-world LAI-PrEP deployment</div></div>
+</section>
+
+<!-- 04 GEOGRAPHY -->
+<section class="section">
+  <div class="sn">04 — Geographic Findings</div>
+  <h2>34 MSAs, AIDSVu 2023, Late-Diagnosis as Empirical Proxy</h2>
+  <p>We applied the framework to 34 high-burden US metropolitan statistical areas using publicly available AIDSVu 2023 surveillance data, with late-diagnosis percentage as the empirical proxy for testing-avoidance hazard. Site-level γ ranged across two orders of magnitude. Three severity tiers emerged in the empirical distribution, with a monotone scaling of the Kassanjee correction factor in late-diagnosis percentage.</p>
+  <div style="margin:2rem 0">
+    <div class="finding-bar"><div class="bar-label"><span>Higher-bias cluster (Hartford, New Haven, San Juan, Bridgeport)</span><span style="color:var(--cyan);font-weight:700">Net bias 3.1%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--cyan)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>Medium-bias cluster (Atlanta, Houston, New Orleans, Charleston)</span><span style="color:var(--yellow)">Net bias 0.8%</span></div><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--yellow)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>Lower-bias cluster (Atlanta, Kansas City, Milwaukee, El Paso)</span><span style="color:var(--green)">Net bias 0.1%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--green)"></div></div></div>
+  </div>
+  <p>The trial-site overlay matters. Hartford and New Haven are PURPOSE 2 sites; Atlanta and Milwaukee are PURPOSE 2 sites with substantially lower γ; Boston (PrEP4U / MGH) sits at the low extreme. PURPOSE 4 sites — the PWID-focused arm — cluster in the high-γ tail. The bias is therefore not uniform across the trial footprint: it is concentrated precisely in the populations whose protection from HIV the long-acting injectable program is meant to demonstrate.</p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">B<sub>IRR</sub></div><div class="label">∈ [0.969, 0.999] across the 34-MSA empirical range</div></div>
+    <div class="stat-card"><div class="num">±6%</div><div class="label">95% CI on B<sub>IRR</sub> at empirical midpoint (Supp §S1.4)</div></div>
+    <div class="stat-card"><div class="num">0.992</div><div class="label">Point estimate at representative midpoint — robustly distinguishable from unity</div></div>
+  </div>
+</section>
+
+<!-- 05 IMPLICATIONS -->
+<section class="section">
+  <div class="sn">05 — Implications</div>
+  <h2>The Estimator's Well-Posed Regime Has an Operational Envelope</h2>
+  <p>The Kassanjee/Gao cross-sectional incidence estimator produces systematically biased point estimates when applied to populations with elevated structural censoring, and the bias is structurally guaranteed — rather than merely possible — when trial-design eligibility criteria select the Incidence Phase cohort on the same testing-engagement axis that drives the competing-risk hazard. The bias is bounded within the empirical AIDSVu range and reverts directionally outside it, providing an operational-envelope characterization of the estimator's well-posed regime.</p>
+  <p>Correction does not require new data infrastructure or proprietary trial-level information. It requires explicit modeling of population-specific hazard using public surveillance data — late-diagnosis percentage, AIDSVu MSA tables, or analogous structural-hazard proxies. The framework presented here is one such correction, fully reproducible from public data, and generalizes to any RITA-based trial with analogous eligibility structure.</p>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:1.5rem">Variance propagation gives ~16% added relative uncertainty on λ̂₀ from γ-estimation uncertainty (σ<sub>γ</sub>/γ = 0.3) at typical cross-sectional sample sizes — non-trivial but typically not the dominant uncertainty term, which is driven by N<sub>rec</sub> · Sensitivity scenarios in Supplement §S2 demonstrate the directional claim holds robustly across the empirical AIDSVu range, with sign-flip occurring only at retention values (r &gt; 0.93) outside the realized PURPOSE 2 trial range.</p>
+</section>
+
+<!-- RESOURCES -->
+<section class="section" style="max-width:1100px">
+  <div class="sn">Resources</div>
+  <h2>Explore the Research</h2>
+
+  <div class="tabs" id="resource-tabs">
+    <button class="tab active" data-tab="slides">Slide Deck</button>
+    <button class="tab" data-tab="figures">Figures</button>
+    <button class="tab" data-tab="infographic">Infographic</button>
+    <button class="tab" data-tab="citation">Citation</button>
+  </div>
+
+  <!-- SLIDES TAB -->
+  <div class="tab-content active" id="tab-slides">
+    <div class="slide-viewer">
+      <div class="slide-stage"><img id="slide-img" src="/research/images/cdm_slide_01.jpg" alt="Slide 1"></div>
+      <div class="slide-nav">
+        <button onclick="changeSlide(-1)">← Prev</button>
+        <div style="text-align:center">
+          <div class="sc" id="slide-counter">1 / 15</div>
+          <div class="slide-dots" id="slide-dots"></div>
+        </div>
+        <button onclick="changeSlide(1)">Next →</button>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:.75rem"><a href="/research/HIV_Trial_Structural_Bias_Correction.pptx" download style="color:var(--cyan);font-size:.85rem;text-decoration:none">↓ Download PPTX</a></p>
+  </div>
+
+  <!-- FIGURES TAB -->
+  <div class="tab-content" id="tab-figures">
+    <div class="fig-block">
+      <h4>Figure 1 — Phase 1c-v2: Site-Level Kassanjee Survival-Bias Correction</h4>
+      <div class="infographic-wrap"><img src="/research/images/cdm_figure_1.png" alt="Figure 1: Site-level Kassanjee survival-bias correction across 34 AIDSVu MSAs with LEN-program trial footprint" loading="lazy"></div>
+      <p class="caption">(A) Site-level γ across 34 AIDSVu MSAs, overlaid with LEN-program trial footprint and Meyer/Kamitani severity parameterization. (B) Incidence deflation as a function of γ, with severity-scenario anchors. (C) Abstracted severity-sensitivity panel with no city attribution.</p>
+    </div>
+    <div class="fig-block">
+      <h4>Figure S1 — Supplementary detail: severity-tier projection</h4>
+      <div class="infographic-wrap"><img src="/research/images/cdm_fig_s1.png" alt="Supplementary Figure S1" loading="lazy"></div>
+    </div>
+    <div class="fig-block">
+      <h4>Figure S2 — Supplementary detail: sensitivity panel</h4>
+      <div class="infographic-wrap"><img src="/research/images/cdm_fig_s2.png" alt="Supplementary Figure S2" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- INFOGRAPHIC TAB -->
+  <div class="tab-content" id="tab-infographic">
+    <div class="infographic-wrap">
+      <img src="/research/images/cdm_infographic.jpg" alt="The Structural Blind Spot: Why HIV Prevention Trials Overstate Success" loading="lazy">
+    </div>
+  </div>
+
+  <!-- CITATION TAB -->
+  <div class="tab-content" id="tab-citation">
+    <div class="cite-box">
+      <div class="cl">Manuscript Citation</div>
+      <p class="ct" id="cite-text">Demidont AC. Calibration-to-Deployment Mismatch in HIV Prevention Trials: How Structural Censoring Biases Counterfactual Incidence Estimates. <em>Manuscript in revision</em>, April 25, 2026. ORCID: <a href="https://orcid.org/0000-0002-9216-8569" target="_blank">0000-0002-9216-8569</a>.</p>
+      <button class="copy-btn" onclick="copyCite()">Copy citation</button>
+    </div>
+    <div class="cite-box">
+      <div class="cl">BibTeX</div>
+      <p class="ct">@unpublished{Demidont2026cdm,<br>&nbsp;&nbsp;author = {Demidont, A.C.},<br>&nbsp;&nbsp;title = {Calibration-to-Deployment Mismatch in HIV Prevention Trials: How Structural Censoring Biases Counterfactual Incidence Estimates},<br>&nbsp;&nbsp;note = {Manuscript in revision},<br>&nbsp;&nbsp;year = {2026},<br>&nbsp;&nbsp;month = {April},<br>&nbsp;&nbsp;institution = {Nyx Dynamics LLC}<br>}</p>
+    </div>
+    <div class="cite-box">
+      <div class="cl">Files</div>
+      <p class="ct" style="font-family:'Inter',sans-serif"><a href="/research/calibration_deployment_letter_v6.pdf" target="_blank">Letter (v6, PDF)</a> · <a href="/research/calibration_deployment_supplement_v6.pdf" target="_blank">Supplement (v6, PDF)</a> · <a href="/research/HIV_Trial_Structural_Bias_Correction.pptx" download>Slide deck (PPTX)</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="logo">N Nyx Dynamics, LLC</div>
+  <div class="tagline">"Illuminating hidden insights within data"</div>
+  <div class="flinks">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:info@nyxdynamics.org">Contact</a>
+  </div>
+  <div class="cp">© 2026 Nyx Dynamics, LLC. All rights reserved.</div>
+</footer>
+
+<script>
+// TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// SLIDE VIEWER
+let currentSlide=1;const totalSlides=15;
+const dotsEl=document.getElementById('slide-dots');
+for(let i=1;i<=totalSlides;i++){const d=document.createElement('button');d.className='sdot'+(i===1?' active':'');d.onclick=()=>goSlide(i);dotsEl.appendChild(d);}
+function goSlide(n){currentSlide=n;document.getElementById('slide-img').src='/research/images/cdm_slide_'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-counter').textContent=n+' / '+totalSlides;document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===n-1));}
+function changeSlide(d){let n=currentSlide+d;if(n<1)n=totalSlides;if(n>totalSlides)n=1;goSlide(n);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')changeSlide(1);if(e.key==='ArrowLeft')changeSlide(-1);});
+
+// COPY CITATION
+function copyCite(){const t=document.getElementById('cite-text').innerText;navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.copy-btn');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy citation',2000);});}
+</script>
+</body>
+</html>
