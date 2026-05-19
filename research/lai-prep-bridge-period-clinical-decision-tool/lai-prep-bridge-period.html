@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAI-PrEP Bridge Period: Clinical Decision Support Tool | Nyx Dynamics Research</title>
+<meta name="description" content="Computational validation of a clinical decision support algorithm for LAI-PrEP bridge period navigation at UNAIDS PrEP target scale (21.2 million individuals). Published in Viruses 2026. Demidont AC.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#00D4FF;--bg:#0a0a0f;--card:#111318;--border:#1e2330;--text:#f8fafc;--silver:#cbd5e1;--muted:#94a3b8;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--purple:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cyan);text-decoration:none;font-weight:700}
+.nav-links{display:flex;gap:1.5rem}.nav-links a{color:var(--silver);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--cyan)}
+
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.4rem 1rem;border-radius:20px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.pub-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35);color:#22c55e;padding:.35rem .9rem;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:.04em;margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;max-width:860px;margin-bottom:1rem}.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero .sub{color:var(--silver);font-size:1.05rem;max-width:720px;margin-bottom:2rem}
+.hero .links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.hero .links a{padding:.6rem 1.5rem;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-p{background:var(--cyan);color:#000}.btn-p:hover{box-shadow:0 0 20px rgba(0,212,255,.4)}
+.btn-o{border:1px solid var(--border);color:var(--silver)}.btn-o:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+.sn{font-size:.75rem;color:var(--cyan);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem}
+.section p,.section li{color:var(--silver);font-size:.95rem}.section p+p{margin-top:1rem}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:2rem 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:700;color:var(--cyan)}.stat-card .label{font-size:.75rem;color:var(--muted);margin-top:.25rem}
+
+.cascade-step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem;display:flex;gap:1.25rem;align-items:flex-start}
+.cascade-step .step-num{background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.25);color:var(--cyan);border-radius:8px;padding:.4rem .75rem;font-size:.8rem;font-weight:700;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.cascade-step h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.cascade-step p{color:var(--muted);font-size:.85rem;margin:0}
+
+.pop-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}
+.pop-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.pop-card .pop-name{font-size:.8rem;font-weight:600;color:var(--silver);margin-bottom:.75rem}
+.pop-card .bar-row{margin-bottom:.5rem}
+.pop-card .bar-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:.2rem}
+.bar-track{height:7px;background:var(--border);border-radius:4px;overflow:hidden}.bar-fill{height:100%;border-radius:4px;transition:width .6s}
+
+.finding-bar{margin-bottom:1rem}.finding-bar .bar-label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.3rem}
+
+.formula{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;margin:2rem 0;font-size:1.05rem;font-family:'JetBrains Mono',monospace;color:var(--cyan)}
+.formula .note{font-family:'Inter',sans-serif;color:var(--muted);font-size:.8rem;margin-top:.5rem}
+
+/* TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.tab{padding:.5rem 1.2rem;border-radius:8px 8px 0 0;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;font-family:'Inter',sans-serif}
+.tab:hover{color:var(--silver)}.tab.active{background:var(--card);border-color:var(--border);border-bottom-color:var(--card);color:var(--cyan)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* INFOGRAPHIC */
+.infographic-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin:1rem 0}
+.infographic-wrap img{width:100%;display:block}
+
+/* MIND MAP */
+.mindmap-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin:1rem 0;background:#000}
+.mindmap-wrap img{width:100%;display:block}
+
+/* FLASHCARDS */
+.fc-controls{display:flex;gap:1rem;align-items:center;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+.fc-controls button{background:var(--card);border:1px solid var(--border);color:var(--silver);padding:.5rem 1.2rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-family:'Inter',sans-serif;transition:all .2s}
+.fc-controls button:hover{border-color:var(--cyan);color:var(--cyan)}
+.fc-counter{color:var(--muted);font-size:.85rem;min-width:80px;text-align:center}
+.fc-filter{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+.fbtn{padding:.3rem .8rem;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.fbtn:hover,.fbtn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08)}
+.flashcard{perspective:1000px;height:280px;cursor:pointer;margin:0 auto;max-width:700px}
+.fc-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-front{background:linear-gradient(135deg,#111827,#1a1f2e);border:1px solid var(--border)}
+.fc-front .ql{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-weight:600}
+.fc-front p{font-size:.92rem;color:var(--silver);line-height:1.6}
+.fc-back{background:linear-gradient(135deg,#0c1a2a,#112030);border:1px solid rgba(0,212,255,.3);transform:rotateY(180deg)}
+.fc-back .al{font-size:.7rem;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-weight:600}
+.fc-back p{font-size:.92rem;color:var(--text);line-height:1.6}
+.fc-tag{position:absolute;bottom:.75rem;right:1rem;font-size:.63rem;color:var(--muted);background:rgba(255,255,255,.05);padding:.15rem .5rem;border-radius:4px}
+
+/* SLIDES */
+.slide-viewer{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.slide-stage{position:relative;width:100%;padding-top:56.25%;overflow:hidden}
+.slide-stage img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#111}
+.slide-nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-top:1px solid var(--border);background:rgba(0,0,0,.3)}
+.slide-nav button{background:none;border:1px solid var(--border);color:var(--silver);padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.8rem;font-family:'Inter',sans-serif;transition:all .2s}
+.slide-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+.slide-nav .sc{color:var(--muted);font-size:.8rem}
+.slide-dots{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:none}
+.sdot.active{background:var(--cyan);box-shadow:0 0 8px rgba(0,212,255,.5)}
+
+/* CITATION */
+.cite-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:2rem 0}
+.cite-box .cl{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-weight:600}
+.cite-box .ct{font-size:.85rem;color:var(--silver);font-family:'JetBrains Mono',monospace;line-height:1.6;word-break:break-all}
+.cite-box a{color:var(--cyan)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:.3rem .8rem;border-radius:6px;cursor:pointer;font-size:.75rem;font-family:'Inter',sans-serif;margin-top:.75rem;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,255,.2)}
+
+.footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+.footer .logo{font-family:'Playfair Display',serif;color:var(--cyan);font-size:1.3rem;margin-bottom:.5rem}
+.footer .tagline{color:var(--muted);font-size:.8rem;font-style:italic;margin-bottom:1rem}
+.footer .flinks{display:flex;gap:1.5rem;justify-content:center;margin-bottom:1rem}
+.footer .flinks a{color:var(--silver);text-decoration:none;font-size:.8rem}.footer .flinks a:hover{color:var(--cyan)}
+.footer .cp{color:var(--muted);font-size:.7rem}
+
+@media(max-width:768px){.hero h1{font-size:1.8rem}.flashcard{height:320px}.nav-links{gap:.75rem}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">N Nyx Dynamics</a>
+  <div class="nav-links">
+    <a href="/#about">About</a><a href="/#services">Services</a><a href="/noctua">Noctua</a><a href="/research">Research</a><a href="/#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="pub-badge">✓ Published · Viruses (MDPI) · February 13, 2026</div>
+  <div class="badge"><span class="dot"></span> Interactive Research Summary</div>
+  <h1>The 47% Who Never Get the Injection <em>Have Always Been the Real Problem</em></h1>
+  <p class="sub">LAI-PrEP is >96% effective. Nearly half of prescribed patients never receive it. This project redefines where the PrEP cascade fails — and what to do about it.</p>
+  <div class="links">
+    <a href="https://doi.org/10.3390/v18020237" target="_blank" class="btn-p">Published Paper (DOI)</a>
+    <a href="https://doi.org/10.20944/preprints202512.2354.v1" target="_blank" class="btn-o">Companion Preprint</a>
+    <a href="https://github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub" target="_blank" class="btn-o">GitHub Repository</a>
+    <a href="/research" class="btn-o">← All Research</a>
+  </div>
+</header>
+
+<!-- 01 THE PARADOX -->
+<section class="section">
+  <div class="sn">01 — The Implementation Paradox</div>
+  <h2>A Drug That Works When You Can Get It</h2>
+  <p>Long-acting injectable cabotegravir (LAI-CAB) demonstrated 66–89% superior efficacy over daily oral TDF/FTC in landmark trials (HPTN 083, HPTN 084, PURPOSE-1, PURPOSE-2) across more than 15,000 participants. It eliminates the daily adherence burden that drives oral PrEP failure.</p>
+  <p>But unlike oral PrEP — which can be started the same day after a negative HIV test — LAI-PrEP cannot. Guidelines require confirmed HIV-negative status within 7 days before each injection. This creates a mandatory 2–8 week gap between prescription and first injection: the <em>bridge period</em>. And nearly half of patients fall into it.</p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">&gt;96%</div><div class="label">HIV prevention efficacy in clinical trials</div></div>
+    <div class="stat-card"><div class="num">47.1%</div><div class="label">Patients prescribed LAI-PrEP who never receive first injection</div></div>
+    <div class="stat-card"><div class="num">2–8 wk</div><div class="label">Bridge period vulnerability window</div></div>
+    <div class="stat-card"><div class="num">81–85%</div><div class="label">12-month persistence among those who initiate</div></div>
+  </div>
+  <p>This is the cascade paradox: LAI-PrEP solves the post-initiation adherence problem that kills oral PrEP, but introduces a new pre-initiation attrition cliff that is 2.4× higher than oral PrEP early discontinuation. The failure point has moved — and the clinical infrastructure hasn't caught up.</p>
+</section>
+
+<!-- 02 THE CASCADE -->
+<section class="section">
+  <div class="sn">02 — Reconceptualized Cascade</div>
+  <h2>Where LAI-PrEP Actually Fails</h2>
+  <p>Traditional PrEP cascade models measure failure at adherence. For LAI-PrEP, the primary bottleneck is pre-initiation. The bridge period compresses multiple structural barriers into a single high-risk window.</p>
+
+  <div style="margin:2rem 0">
+    <div class="cascade-step">
+      <span class="step-num">Step 1</span>
+      <div><h4>Prescription</h4><p>Provider prescribes LAI-PrEP. Clock starts. Patient has 2–8 weeks to navigate everything below.</p></div>
+    </div>
+    <div class="cascade-step">
+      <span class="step-num">Step 2</span>
+      <div><h4>HIV Testing &amp; Clearance</h4><p>Must confirm HIV-negative within 7 days before injection. Standard rapid tests can miss acute infection — RNA testing required in high-risk scenarios, adding 24–48 hours minimum.</p></div>
+    </div>
+    <div class="cascade-step">
+      <span class="step-num">Step 3</span>
+      <div><h4>Insurance Authorization</h4><p>Prior authorization requirements vary by payer and state. Delays of days to weeks are common. Uninsured patients face full out-of-pocket costs without navigation support.</p></div>
+    </div>
+    <div class="cascade-step">
+      <span class="step-num">Step 4</span>
+      <div><h4>Appointment Coordination</h4><p>Injection must be administered by a provider — unlike oral PrEP, which can be dispensed at a pharmacy. Scheduling, transportation, and clinic capacity all create friction.</p></div>
+    </div>
+    <div class="cascade-step" style="border-color:rgba(239,68,68,.4)">
+      <span class="step-num" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red)">Cliff</span>
+      <div><h4 style="color:var(--red)">Lost to Injection (47.1%)</h4><p>Patients facing 3+ structural barriers have &lt;15% chance of successful initiation. Each additional barrier compounds the attrition multiplicatively.</p></div>
+    </div>
+  </div>
+
+  <p>Patients who clear this gauntlet show persistence rates (81–85% at 12 months) far exceeding oral PrEP (~50%). The drug isn't the problem. The system between prescription and injection is.</p>
+</section>
+
+<!-- 03 EQUITY -->
+<section class="section">
+  <div class="sn">03 — Population-Specific Barriers</div>
+  <h2>Structural Barriers Drive a Profound Equity Crisis</h2>
+  <p>Bridge period attrition falls hardest on populations already underserved by the oral PrEP cascade. Baseline success rates reflect structural disadvantage — not individual behavior.</p>
+
+  <div class="pop-row">
+    <div class="pop-card">
+      <div class="pop-name">People Who Inject Drugs (PWID)</div>
+      <div class="bar-row"><div class="bar-label"><span>Baseline</span><span style="color:var(--red)">10.4%</span></div><div class="bar-track"><div class="bar-fill" style="width:10.4%;background:var(--red)"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>With interventions</span><span style="color:var(--green)">37.8%</span></div><div class="bar-track"><div class="bar-fill" style="width:37.8%;background:var(--green)"></div></div></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">+265% relative improvement. Criminalization, housing instability, and stigma compound. SSP integration is primary pathway.</p>
+    </div>
+    <div class="pop-card">
+      <div class="pop-name">Adolescents (16–24y)</div>
+      <div class="bar-row"><div class="bar-label"><span>Baseline</span><span style="color:var(--yellow)">16.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:16.3%;background:var(--yellow)"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>With interventions</span><span style="color:var(--green)">40.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:40.3%;background:var(--green)"></div></div></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">+147% relative improvement. Confidentiality concerns, insurance dependency, and limited appointment autonomy.</p>
+    </div>
+    <div class="pop-card">
+      <div class="pop-name">Men Who Have Sex with Men (MSM)</div>
+      <div class="bar-row"><div class="bar-label"><span>Baseline</span><span style="color:var(--cyan)">33.1%</span></div><div class="bar-track"><div class="bar-fill" style="width:33.1%;background:var(--cyan)"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>With interventions</span><span style="color:var(--green)">48.5%</span></div><div class="bar-track"><div class="bar-fill" style="width:48.5%;background:var(--green)"></div></div></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Highest baseline. Stigma and appointment coordination remain key barriers even in well-resourced settings.</p>
+    </div>
+    <div class="pop-card">
+      <div class="pop-name">Sub-Saharan Africa</div>
+      <div class="bar-row"><div class="bar-label"><span>Regional baseline</span><span style="color:var(--red)">21.7%</span></div><div class="bar-track"><div class="bar-fill" style="width:21.7%;background:var(--red)"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Europe / Central Asia</span><span style="color:var(--cyan)">29.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:29.3%;background:var(--cyan)"></div></div></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Serves 62% of global PrEP patients. 7.6 pp regional disparity despite serving the highest-burden populations.</p>
+    </div>
+  </div>
+
+  <p>Evidence-based interventions disproportionately benefit vulnerable populations — they narrow, not widen, health equity gaps at scale. Systematic support narrows rather than widens equity gaps.</p>
+</section>
+
+<!-- 04 THE TOOL -->
+<section class="section">
+  <div class="sn">04 — The Clinical Decision Support Tool</div>
+  <h2>An Engine of 21 Evidence-Based Interventions</h2>
+  <p>The tool operates across three complementary mechanisms synthesized from major LAI-PrEP trials and real-world implementation data. It functions as a clinician-guided support system — not an autonomous decision engine.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.7rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Mechanism 1</div>
+      <h4 style="margin-bottom:.4rem;font-size:.95rem">Eliminate the Bridge</h4>
+      <p style="color:var(--muted);font-size:.83rem">Same-day oral-to-injectable switching protocols. +35% absolute improvement. Requires point-of-care RNA testing capability.</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.7rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Mechanism 2</div>
+      <h4 style="margin-bottom:.4rem;font-size:.95rem">Compress the Bridge</h4>
+      <p style="color:var(--muted);font-size:.83rem">Accelerated RNA testing (24–48h turnaround) and point-of-care diagnostics. Reduces the mandatory wait to its biological minimum.</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.7rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Mechanism 3</div>
+      <h4 style="margin-bottom:.4rem;font-size:.95rem">Navigate the Bridge</h4>
+      <p style="color:var(--muted);font-size:.83rem">Dedicated patient navigation, peer support, and telemedicine. Bundled episode-based models. Addresses structural barriers that cannot be eliminated.</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.7rem;color:var(--yellow);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Smart Selection</div>
+      <h4 style="margin-bottom:.4rem;font-size:.95rem">Remove Barriers</h4>
+      <p style="color:var(--muted);font-size:.83rem">Mechanism diversity scoring prevents redundant recommendations. Population-specific risk stratification. 21-intervention library across 7 population categories.</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    Baseline success: 23.96% (95% CI: 23.94–23.98%)<br>
+    With interventions: 43.50% (95% CI: 43.48–43.52%)<br>
+    <span style="font-size:1.3rem">Δ = +19.54 pp absolute (+81.6% relative)</span>
+    <div class="note">At UNAIDS 21.2 million PrEP target scale · ±0.018 pp precision</div>
+  </div>
+</section>
+
+<!-- 05 VALIDATION -->
+<section class="section">
+  <div class="sn">05 — Computational Validation</div>
+  <h2>Policy-Grade Precision at UNAIDS Scale</h2>
+  <p>Progressive validation across four scales demonstrates convergence and increasing precision — exactly the pattern expected from a well-specified model. The final validation at 21.2 million patients matches the exact UNAIDS 2025 PrEP target, making predictions directly policy-relevant.</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="num" style="font-family:'JetBrains Mono',monospace;font-size:1.3rem">1K</div><div class="label">Functional validation · ±2.6 pp</div></div>
+    <div class="stat-card"><div class="num" style="font-family:'JetBrains Mono',monospace;font-size:1.3rem">1M</div><div class="label">Large-scale · ±0.09 pp</div></div>
+    <div class="stat-card"><div class="num" style="font-family:'JetBrains Mono',monospace;font-size:1.3rem">10M</div><div class="label">Ultra-large-scale · ±0.028 pp</div></div>
+    <div class="stat-card"><div class="num" style="font-family:'JetBrains Mono',monospace;font-size:1.3rem">21.2M</div><div class="label">UNAIDS target scale · ±0.018 pp</div></div>
+  </div>
+
+  <p>The ±0.018 pp margin at 21.2M scale is not a clinical estimate — it is <em>policy-grade statistical precision</em>, suitable for informing WHO and UNAIDS resource allocation decisions. Unit testing achieved 100% pass rate (18/18 edge cases) including maximum barriers, extremes of age, and resource-limited settings.</p>
+
+  <div style="margin:2rem 0">
+    <div class="finding-bar"><div class="bar-label"><span>4.1 million additional successful transitions at UNAIDS scale</span><span style="color:var(--cyan);font-weight:700">23.4% of gap closed</span></div><div class="bar-track"><div class="bar-fill" style="width:23.4%;background:var(--cyan)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>~100,000 HIV infections prevented annually (midpoint)</span><span style="color:var(--green);font-weight:700">5-year projection</span></div><div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--green)"></div></div></div>
+    <div class="finding-bar"><div class="bar-label"><span>USD $40 billion in averted lifetime treatment costs</span><span style="color:var(--yellow);font-weight:700">11:1 ROI</span></div><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--yellow)"></div></div></div>
+  </div>
+
+  <p style="color:var(--muted);font-size:.85rem">7 populations · 5 regions · 8 healthcare settings · 18/18 edge case pass rate · External validation against published real-world implementation cohorts · Largest computational validation of any HIV prevention tool to date (to our knowledge)</p>
+</section>
+
+<!-- RESOURCES -->
+<section class="section" style="max-width:1100px">
+  <div class="sn">Resources</div>
+  <h2>Explore the Research</h2>
+
+  <div class="tabs" id="resource-tabs">
+    <button class="tab active" data-tab="slides">Slide Deck (14)</button>
+    <button class="tab" data-tab="infographic">Infographic</button>
+    <button class="tab" data-tab="mindmap">Mind Map</button>
+    <button class="tab" data-tab="flashcards">Study Flashcards (48)</button>
+    <button class="tab" data-tab="citation">Citation</button>
+  </div>
+
+  <!-- SLIDES TAB -->
+  <div class="tab-content active" id="tab-slides">
+    <div class="slide-viewer">
+      <div class="slide-stage"><img id="slide-img" src="/research/lai-prep-slides/slide-01.jpg" alt="Slide 1"></div>
+      <div class="slide-nav">
+        <button onclick="changeSlide(-1)">← Prev</button>
+        <div style="text-align:center">
+          <div class="sc" id="slide-counter">1 / 14</div>
+          <div class="slide-dots" id="slide-dots"></div>
+        </div>
+        <button onclick="changeSlide(1)">Next →</button>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:.75rem"><a href="/research/Bridging_the_LAI-PrEP_Gap_v2.pptx" download style="color:var(--cyan);font-size:.85rem;text-decoration:none">↓ Download PPTX</a></p>
+  </div>
+
+  <!-- INFOGRAPHIC TAB -->
+  <div class="tab-content" id="tab-infographic">
+    <div class="infographic-wrap">
+      <img src="/research/images/lai-prep-infographic.jpg" alt="Bridging the Gap: Overcoming the LAI-PrEP Implementation Paradox" loading="lazy">
+    </div>
+    <p style="text-align:center;margin-top:.75rem"><a href="/research/images/lai-prep-infographic.jpg" download style="color:var(--cyan);font-size:.85rem;text-decoration:none">↓ Download Infographic</a></p>
+  </div>
+
+  <!-- MIND MAP TAB -->
+  <div class="tab-content" id="tab-mindmap">
+    <div class="mindmap-wrap">
+      <img src="/research/images/lai-prep-mindmap.png" alt="LAI-PrEP Cascade Paradigm Shift — NotebookLM Mind Map" loading="lazy">
+    </div>
+    <p style="text-align:center;margin-top:.75rem;color:var(--muted);font-size:.82rem">Generated with NotebookLM · 6 conceptual branches: Implementation Paradox, Bridge Period, Reconceptualized Cascade, Population-Specific Barriers, Evidence-Based Interventions, Global Impact Projections</p>
+    <p style="text-align:center;margin-top:.4rem"><a href="/research/images/lai-prep-mindmap.png" download style="color:var(--cyan);font-size:.85rem;text-decoration:none">↓ Download Mind Map</a></p>
+  </div>
+
+  <!-- FLASHCARDS TAB -->
+  <div class="tab-content" id="tab-flashcards">
+    <div class="fc-filter" id="fc-filter"></div>
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-inner" id="fc-inner">
+        <div class="fc-front"><div class="ql">Question</div><p id="fc-q"></p><div class="fc-tag" id="fc-cat"></div></div>
+        <div class="fc-back"><div class="al">Answer</div><p id="fc-a"></p><div class="fc-tag" id="fc-cat2"></div></div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button onclick="prevCard()">← Prev</button>
+      <div class="fc-counter" id="fc-counter"></div>
+      <button onclick="nextCard()">Next →</button>
+      <button onclick="shuffleCards()" style="margin-left:1rem">Shuffle</button>
+    </div>
+  </div>
+
+  <!-- CITATION TAB -->
+  <div class="tab-content" id="tab-citation">
+    <div class="cite-box">
+      <div class="cl">Published Citation</div>
+      <p class="ct" id="cite-text">Demidont AC. Computational Validation of a Clinical Decision Support Algorithm for LAI-PrEP Bridge Period Navigation at UNAIDS PrEP Target Scale (21.2 Million Individuals). <em>Viruses</em> 2026, 18, 237. doi: <a href="https://doi.org/10.3390/v18020237" target="_blank">10.3390/v18020237</a></p>
+      <button class="copy-btn" onclick="copyCite()">Copy citation</button>
+    </div>
+    <div class="cite-box">
+      <div class="cl">BibTeX</div>
+      <p class="ct">@article{Demidont2026laip,<br>&nbsp;&nbsp;author = {Demidont, A.C.},<br>&nbsp;&nbsp;title = {Computational Validation of a Clinical Decision Support Algorithm for LAI-PrEP Bridge Period Navigation at UNAIDS PrEP Target Scale (21.2 Million Individuals)},<br>&nbsp;&nbsp;journal = {Viruses},<br>&nbsp;&nbsp;year = {2026},<br>&nbsp;&nbsp;volume = {18},<br>&nbsp;&nbsp;number = {2},<br>&nbsp;&nbsp;pages = {237},<br>&nbsp;&nbsp;doi = {10.3390/v18020237}<br>}</p>
+    </div>
+    <div class="cite-box">
+      <div class="cl">Companion Preprint</div>
+      <p class="ct">Demidont AC. LAI-PrEP Bridge Period Navigation: Reconceptualized Cascade and Implementation Framework. <em>Preprints.org</em> 2025. doi: <a href="https://doi.org/10.20944/preprints202512.2354.v1" target="_blank">10.20944/preprints202512.2354.v1</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="logo">N Nyx Dynamics, LLC</div>
+  <div class="tagline">"Guiding AI to Shape a Better Future"</div>
+  <div class="flinks">
+    <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank">LinkedIn</a>
+    <a href="mailto:acdemidont@nyxdynamics.org">Contact</a>
+  </div>
+  <div class="cp">© 2026 Nyx Dynamics, LLC. All rights reserved.</div>
+</footer>
+
+<script>
+// TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// SLIDE VIEWER
+let currentSlide=1;const totalSlides=14;
+const dotsEl=document.getElementById('slide-dots');
+for(let i=1;i<=totalSlides;i++){const d=document.createElement('button');d.className='sdot'+(i===1?' active':'');d.onclick=()=>goSlide(i);dotsEl.appendChild(d);}
+function goSlide(n){currentSlide=n;document.getElementById('slide-img').src='/research/lai-prep-slides/slide-'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-counter').textContent=n+' / '+totalSlides;document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===n-1));}
+function changeSlide(d){let n=currentSlide+d;if(n<1)n=totalSlides;if(n>totalSlides)n=1;goSlide(n);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')changeSlide(1);if(e.key==='ArrowLeft')changeSlide(-1);});
+
+// FLASHCARDS
+const allCards=[
+  {"q":"What percentage of patients prescribed LAI-PrEP never receive their first injection?","a":"47.1% — the 'bridge period attrition cliff.'","cat":"Core Stats"},
+  {"q":"What is the LAI-PrEP bridge period?","a":"The mandatory 2–8 week window between prescription and first injection, during which patients must navigate HIV testing, insurance authorization, and appointment coordination.","cat":"Core Concepts"},
+  {"q":"Why can't LAI-PrEP be started the same day as oral PrEP?","a":"Current guidelines require confirmed HIV-negative status within 7 days before injection. Standard rapid tests can miss acute HIV infection, and RNA testing adds mandatory delay.","cat":"Core Concepts"},
+  {"q":"What resistance mutations have been observed when LAI-PrEP was given to patients with unrecognized HIV?","a":"INSTI resistance mutations with CAB-LA; N74D capsid mutation with lenacapavir — occurring in about half of cases with unrecognized HIV at baseline.","cat":"Clinical Rationale"},
+  {"q":"What is the 12-month persistence rate among patients who successfully initiate LAI-PrEP?","a":"81–85%, far exceeding the ~50% 12-month persistence seen with oral PrEP.","cat":"Core Stats"},
+  {"q":"What is the 'cascade paradox' in LAI-PrEP implementation?","a":"LAI-PrEP eliminates the post-initiation adherence failure that drives oral PrEP discontinuation, but introduces a new pre-initiation attrition cliff that is 2.4× higher than oral PrEP early drop-off.","cat":"Core Concepts"},
+  {"q":"What is the baseline bridge period success rate predicted by the model at UNAIDS 21.2M scale?","a":"23.96% (95% CI: 23.94–23.98%).","cat":"Validation"},
+  {"q":"What success rate does the model predict with evidence-based interventions at UNAIDS scale?","a":"43.50% (95% CI: 43.48–43.52%) — an absolute improvement of 19.54 percentage points.","cat":"Validation"},
+  {"q":"What is the relative improvement with evidence-based interventions?","a":"81.6% relative improvement over baseline.","cat":"Validation"},
+  {"q":"What precision did the model achieve at 21.2 million patient scale?","a":"±0.018 percentage points — described as policy-grade statistical precision.","cat":"Validation"},
+  {"q":"What are the three bridge period navigation mechanisms in the CDS tool?","a":"(1) Eliminate the bridge — same-day oral-to-injectable switching; (2) Compress the bridge — accelerated RNA diagnostics; (3) Navigate the bridge — patient navigation and structural support.","cat":"CDS Tool"},
+  {"q":"What is the absolute improvement associated with same-day oral-to-injectable switching?","a":"+35% absolute improvement in bridge period success.","cat":"CDS Tool"},
+  {"q":"What is the baseline bridge period success rate for PWID?","a":"10.36% (10.4%) — the lowest of any modeled population.","cat":"Health Equity"},
+  {"q":"What is the relative improvement for PWID with evidence-based interventions?","a":"+265% relative improvement, from ~10.4% to ~37.8%.","cat":"Health Equity"},
+  {"q":"What is the baseline success rate for adolescents (16–24y)?","a":"16.3%, rising to 40.3% with targeted interventions (+147% relative improvement).","cat":"Health Equity"},
+  {"q":"What is the population disparity gap between PWID and MSM at baseline?","a":"22.75 percentage points (10.36% vs 33.11%).","cat":"Health Equity"},
+  {"q":"What is the regional disparity between Sub-Saharan Africa and Europe/Central Asia?","a":"7.64 percentage points (21.69% vs 29.33%) — despite Sub-Saharan Africa serving 62% of global PrEP patients.","cat":"Health Equity"},
+  {"q":"How many additional successful LAI-PrEP transitions are projected at UNAIDS 21.2M scale?","a":"4.1 million additional successful transitions — closing 23.4% of the UNAIDS gap.","cat":"Global Impact"},
+  {"q":"How many HIV infections could be prevented annually by systematic bridge period management?","a":"~100,000 annually (midpoint estimate; range 80,000–100,000 based on 2–5% HIV incidence among indicated users).","cat":"Global Impact"},
+  {"q":"What is the estimated economic impact of 100,000 averted annual infections?","a":"~USD $40 billion in averted lifetime treatment costs, representing an 11:1 cumulative return on investment.","cat":"Global Impact"},
+  {"q":"What fraction of the UNAIDS PrEP gap could bridge period management close?","a":"23.4% (4.1M of the 17.4–17.7M patient gap between current global PrEP use and the 21.2M target).","cat":"Global Impact"},
+  {"q":"How many patients were included in the final UNAIDS-scale validation?","a":"21,200,000 simulated patients — matching the exact UNAIDS 2025 PrEP target.","cat":"Validation"},
+  {"q":"What was the unit testing pass rate for edge cases?","a":"100% (18/18 edge cases including maximum barriers, age extremes, and resource-limited settings).","cat":"Validation"},
+  {"q":"What is the progressive validation scale sequence used in this study?","a":"1,000 → 1,000,000 → 10,000,000 → 21,200,000 patients.","cat":"Validation"},
+  {"q":"What clinical trials provided the primary efficacy data for the model?","a":"HPTN 083 (4,566 MSM/TGW), HPTN 084 (3,224 cisgender women), PURPOSE-1 (5,338 cisgender women), PURPOSE-2 (2,183 diverse participants).","cat":"Evidence Base"},
+  {"q":"How many total participants were included across the four LAI-PrEP landmark trials?","a":"More than 15,000 participants.","cat":"Evidence Base"},
+  {"q":"What does the CDS tool's mechanism diversity scoring prevent?","a":"Redundant intervention recommendations — ensuring the 21-intervention library selects complementary, non-overlapping strategies.","cat":"CDS Tool"},
+  {"q":"What populations are covered by the 21-intervention evidence library?","a":"7 population categories including MSM, cisgender women, PWID, adolescents, transgender individuals, sex workers, and Sub-Saharan African populations.","cat":"CDS Tool"},
+  {"q":"What does the CDS tool do — is it autonomous?","a":"No. It functions as a clinician-guided decision support tool, designed to augment (not replace) clinical judgment.","cat":"CDS Tool"},
+  {"q":"What percentage of indicated individuals currently access PrEP services globally?","a":"Only 25% — reflecting longstanding inequities in the oral PrEP cascade that LAI-PrEP disparities compound.","cat":"Core Stats"},
+  {"q":"What oral PrEP attrition rate does bridge period attrition compare to?","a":"Bridge period attrition (47.1%) is ~2.4× higher than typical oral PrEP early discontinuation (~20%), a 27 percentage point difference.","cat":"Core Stats"},
+  {"q":"What is the current UNAIDS PrEP target vs. actual global coverage?","a":"Target: 21.2 million. Current: 3.5–3.8 million. Gap: 17.4–17.7 million (an 83% shortfall).","cat":"Global Impact"},
+  {"q":"What is the 'zero-burden' implementation approach described for the CDS tool?","a":"Initial deployment with no EHR integration required, allowing pilot validation at clinical sites without IT infrastructure changes.","cat":"CDS Tool"},
+  {"q":"What specific barriers create the bridge period for patients who inject drugs?","a":"Criminalization of drug use, housing instability, healthcare avoidance from stigma, and exclusion from standard clinical workflows. Syringe service program integration is the primary delivery pathway.","cat":"Health Equity"},
+  {"q":"What specific barriers affect adolescent bridge period navigation?","a":"Confidentiality concerns (parental notification), insurance dependency on parents, limited appointment autonomy, and restricted clinic access.","cat":"Health Equity"},
+  {"q":"Why does oral PrEP allow same-day initiation but LAI-PrEP does not?","a":"Oral PrEP can be started immediately after a negative rapid HIV test; LAI-PrEP carries resistance risk if given to someone with unrecognized acute HIV, requiring RNA-confirmed negative status.","cat":"Clinical Rationale"},
+  {"q":"What were the unrecognized HIV cases in HPTN 083 / PURPOSE trials?","a":"21 participants across trials had unrecognized HIV at baseline despite negative rapid testing; ~half who received LAI-PrEP developed resistance mutations.","cat":"Clinical Rationale"},
+  {"q":"What does 'bridge period compression' mean clinically?","a":"Reducing the mandatory testing-to-injection gap to its biological minimum through accelerated RNA testing (24–48h) and point-of-care diagnostics.","cat":"Clinical Rationale"},
+  {"q":"What convergence pattern is observed across the four validation scales?","a":"Increasing precision as scale grows (±2.6 pp → ±0.09 pp → ±0.028 pp → ±0.018 pp), confirming model stability and appropriateness for policy use.","cat":"Validation"},
+  {"q":"What does the Viruses 2026 paper conclude about where implementation responsibility lies?","a":"LAI-PrEP failure relocates responsibility from individual behavior (adherence) to health system design (bridge period infrastructure), requiring corresponding changes in measurement and workflow.","cat":"Core Concepts"},
+  {"q":"What is the study's stance on AI deployment in healthcare?","a":"Responsible AI deployment requires acknowledging both capabilities and limitations explicitly — computational models validate algorithmic feasibility but cannot establish real-world clinical impact without prospective validation.","cat":"Core Concepts"},
+  {"q":"What is the Nyx Dynamics open science commitment for this project?","a":"All code open-source on GitHub (Nyx-Dynamics/lai-prep-bridge-tool-pub), datasets archived at Zenodo (DOI: 10.5281/zenodo.17873201), and the tool is free for healthcare providers and researchers.","cat":"Open Science"},
+  {"q":"What is the journal and DOI for the published paper?","a":"Viruses (MDPI), 2026, Vol. 18, No. 2, Article 237. DOI: 10.3390/v18020237.","cat":"Open Science"},
+  {"q":"What is the companion preprint DOI?","a":"10.20944/preprints202512.2354.v1 (Preprints.org).","cat":"Open Science"},
+  {"q":"What conflict of interest disclosure applies to this work?","a":"Dr. Demidont was formerly employed by Gilead Sciences (ending October 2024); all holdings divested December 2024. No industry funding for this research.","cat":"Open Science"},
+  {"q":"What AI disclosure applies to this manuscript?","a":"Manuscripts developed with assistance from Anthropic Claude and other AI tools, per ICMJE-compliant disclosure. Author maintains full responsibility for all scientific content and conclusions.","cat":"Open Science"},
+  {"q":"What is the next step identified in the paper for translating this work to clinical impact?","a":"Rigorous prospective validation at pilot clinical sites, integrating the CDS tool into real-world LAI-PrEP workflows, with equity-focused implementation and continuous evidence monitoring.","cat":"Core Concepts"},
+  {"q":"What is the institutional affiliation for this research?","a":"Nyx Dynamics LLC, 268 Post Road, Suite 200, Fairfield, CT 06824 (independent researcher).","cat":"Open Science"}
+];
+
+let cards=[...allCards],cardIdx=0;
+const cats=[...new Set(allCards.map(c=>c.cat))];
+let activeCat='All';
+
+const filterEl=document.getElementById('fc-filter');
+['All',...cats].forEach(c=>{const b=document.createElement('button');b.className='fbtn'+(c==='All'?' active':'');b.textContent=c==='All'?'All ('+allCards.length+')':c;b.onclick=()=>{activeCat=c;cards=c==='All'?[...allCards]:allCards.filter(x=>x.cat===c);cardIdx=0;showCard();document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');};filterEl.appendChild(b);});
+
+function showCard(){if(!cards.length)return;const c=cards[cardIdx];document.getElementById('fc-q').textContent=c.q;document.getElementById('fc-a').textContent=c.a;document.getElementById('fc-cat').textContent=c.cat;document.getElementById('fc-cat2').textContent=c.cat;document.getElementById('fc-counter').textContent=(cardIdx+1)+' / '+cards.length;document.getElementById('flashcard').classList.remove('flipped');}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%cards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+cards.length)%cards.length;showCard();}
+function shuffleCards(){for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]];}cardIdx=0;showCard();}
+showCard();
+
+// COPY CITATION
+function copyCite(){const t=document.getElementById('cite-text').textContent;navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.copy-btn');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy citation',2000);});}
+</script>
+</body>
+</html>

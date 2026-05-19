@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manuscript | The Gatekeepers' Horizon: A Markov-Nekrasov Analysis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #06080a; color: #b8c4d0; font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: #fff; }
+    .prose h2 { margin-top: 3rem; border-bottom: 1px solid #1e2a36; padding-bottom: 0.5rem; color: #3cc4d6; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
+    .prose blockquote { border-left: 4px solid #e8513a; padding-left: 1.5rem; font-style: italic; color: #cbd5e1; margin: 2rem 0; }
+    .formula { font-family: 'JetBrains Mono', monospace; background: #131920; padding: 1rem; border-radius: 0.5rem; border: 1px solid #1e2a36; color: #d4a843; margin: 1.5rem 0; overflow-x: auto; }
+    .back-link { color: #3cc4d6; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+    .back-link:hover { color: #fff; }
+    .abstract { background: #131920; padding: 2rem; border-radius: 1rem; border: 1px solid #1e2a36; margin-bottom: 3rem; }
+  </style>
+</head>
+<body class="antialiased py-16 px-6">
+  <div class="max-w-3xl mx-auto">
+    <a href="./gatekeepers_project.html" class="back-link mb-16 inline-block">← Back to Project Infographic</a>
+
+    <header class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">The Gatekeepers Cannot Read the Gate</h1>
+      <p class="text-xl text-textmuted italic mb-6">A Markov-Nekrasov Analysis of Institutional Path Dependency and the Credential Gap in Medical Publishing</p>
+      <div class="text-sm border-t border-bordercol pt-4 grid grid-cols-2 gap-4">
+        <div>
+          <p><strong>A.C. Demidont, DO</strong></p>
+          <p>Nyx Dynamics, LLC</p>
+          <p>ac.demidont@nyxdynamics.com</p>
+        </div>
+        <div class="text-right">
+          <p>March 2026</p>
+          <p>Version 2.1 | Structural Audit</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="abstract">
+      <h2 class="mt-0 text-white font-bold mb-4 border-none p-0 text-lg uppercase tracking-widest">Abstract</h2>
+      <p class="mb-0 text-sm md:text-base">
+        <strong>Background:</strong> High-impact medical journals act as the primary gatekeepers for biomedical evidence. However, as the field shifts toward high-dimensional machine learning (ML), the structural capacity of these gatekeepers to evaluate such methodology is untested.
+        <strong>Methods:</strong> We audited the formal ML training of 14 Editors-in-Chief (EICs) at 9 leading US journals. We modeled the editorial triage process as a <em>Dependent Inference Chain</em>, applying the Nekrasov framework to determine if manuscript selection functions as an independent variable or an absorbing state of institutional path dependency.
+        <strong>Results:</strong> Zero of 14 EICs (0%) hold formal ML training. Our model demonstrates that triage behaves as a dependent Markov process, where the probability of acceptance is tied to clinical familiarity rather than methodological rigor, yielding a 78% predicted error rate for novel ML methods.
+      </p>
+    </div>
+
+    <div class="prose prose-invert max-w-none">
+      <h2>I. The Independent Variable Problem</h2>
+      <p>In classical scientific theory, peer review is envisioned as an independent validation of a manuscript’s internal logic. However, our analysis suggests that in the apex of medical publishing, manuscript selection functions as a <strong>Nekrasov/Markov experiment</strong>. Here, the "State" of a manuscript's acceptance is not independent; it is stochastically dependent on the "Prior State" of the gatekeeper's clinical worldview.</p>
+      <p>This creates a condition of <strong>Institutional Path Dependency</strong>. If an Editor-in-Chief lacks the computational literacy to verify the underlying math of a new methodology, they must default to heuristic-weighted triage—selecting work based on prestige, pattern recognition, or "clinical familiarity" rather than the independent verification of the new variable.</p>
+
+      <h2>II. Modeling the Inference Chain</h2>
+      <p>We decompose the triage process into three sequential conditional steps. According to the Nekrasov framework, the probability of reaching a correct scientific adjudication ($P_{\text{correct}}$) is bounded by the competence of the initial gatekeeper:</p>
+
+      <div class="formula">
+        P(Correct Triage) = P(Desk) &times; P(Reviewer Selection | Desk) &times; P(Adjudication | Reviewer)
+      </div>
+
+      <p>In our model, $P(\text{Desk})$ for a machine-learning-intensive paper is a function of the EIC’s formal training. Without this training, the triage chain becomes a <strong>Dependent Chain of Heuristics</strong>. The EIC cannot independently assess the "Gate"; they can only assess whether the Gate looks like the structures they have seen in the past.</p>
+
+      <h2>III. The Resulting Absorbing State</h2>
+      <p>Our audit of 14 Editors-in-Chief across 4 general medicine (NEJM, JAMA, Annals, Circulation) and 5 infectious disease journals (CID, EID, JID, OFID, CMR) revealed a complete structural void. Zero EICs (0%) held degrees in computer science or informatics, and zero had published first-author ML methodology.</p>
+      <p>This 0/14 result implies that for 100% of the apex US medical journals, the initial node in the inference chain is quantitatively "blind." This leads to an <strong>Absorbing State of Traditionalism</strong>, where novel methodologies are filtered out before they can be independently validated, as demonstrated by the journals' combined 0.115% capture rate of the 227,731 AI/ML papers indexed on PubMed since 2023.</p>
+
+      <h2>IV. Case Study: The Methodological Invisibility of PWID PEP</h2>
+      <p>The consequences of this path dependency are not merely academic; they impact population health. A recent analysis of HIV Post-Exposure Prophylaxis (PEP) for people who inject drugs (PWID) demonstrated that population-level efficacy is bounded below 10% due to the 72-hour pharmacological window being consumed by structural access delays.</p>
+
+      <blockquote>
+        "These findings have immediate clinical relevance for public health policy. Yet, they sit on a low-visibility preprint server because six editorial gatekeepers—lacking the capacity to evaluate the probability space of the underlying Markov model—triaged the work into silence based on clinical heuristics rather than mathematical validity."
+      </blockquote>
+
+      <p>This represents the <strong>Nekrasov failure</strong>: the gatekeepers treated the opinion of moving medicine forward as a dependent variable of their own clinical experience, rather than an independent inquiry into the physics of viral integration and access delays.</p>
+
+      <h2>V. Conclusion: Breaking the Chain</h2>
+      <p>To move beyond institutional path dependency, medical journals must establish <strong>Methodological Independence</strong>. This requires more than just "consulting" boards; it requires the appointment of AI/ML Deputy Editors with full, independent triage authority. The methods of 21st-century medicine have changed. The gatekeepers—locked in a dependent chain of 20th-century heuristics—have not.</p>
+
+      <div class="mt-20 pt-8 border-t border-bordercol text-xs text-textmuted">
+        <p>© 2026 Nyx Dynamics, LLC. Data extraction: 27 February 2026. Models and repository: github.com/Nyx-Dynamics/eic-ml-audit.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
