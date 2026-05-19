@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Research | Nyx Dynamics</title>
-  <meta name="description" content="Peer-reviewed computational research in HIV prevention implementation science, algorithmic equity, and neurometabolic signal processing. Nyx Dynamics, LLC.">
+  <title>Nyx Dynamics | AI Readiness in Healthcare</title>
+  <meta name="description" content="Healthcare AI consulting focused on ethical implementation, equity-driven strategies, and clinical validation.">
+  <meta property="og:title" content="Nyx Dynamics | Guiding AI to Shape a Better Future">
+  <meta property="og:description" content="Healthcare algorithm auditing and AI readiness consulting">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -21,522 +23,983 @@
       --muted: #94a3b8;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--black); color: var(--silver); line-height: 1.6; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--silver);
+      line-height: 1.6;
+    }
+    .font-serif { font-family: 'Playfair Display', serif; }
     a { color: var(--cyan); text-decoration: none; }
     a:hover { color: var(--cyan-bright); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--gray); }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #14B8A6); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--black); font-size: 18px; box-shadow: 0 0 15px rgba(0,212,255,0.3); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,15,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), #14B8A6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: var(--black); font-size: 18px;
+      box-shadow: 0 0 15px rgba(0,212,255,0.3);
+    }
     .logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 20px; }
     .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--cyan); }
     @media (max-width: 768px) { .nav-links { display: none; } }
 
-    /* HERO */
-    .hero { padding: 160px 0 80px; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(0,212,255,0.08) 0%, transparent 55%); pointer-events: none; }
-    .hero-content { position: relative; z-index: 1; max-width: 760px; }
-    .hero-tag { color: var(--cyan); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
-    .hero h1 { font-family: 'Playfair Display', serif; color: var(--white); font-size: clamp(32px, 5vw, 52px); line-height: 1.12; margin-bottom: 20px; }
-    .hero-lead { font-size: 17px; color: var(--silver); max-width: 640px; line-height: 1.75; margin-bottom: 32px; }
-    .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
-    .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cyan); font-weight: 700; line-height: 1; margin-bottom: 4px; }
-    .hero-stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(0,212,255,0.1) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-tag {
+      color: var(--cyan); font-size: 14px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: clamp(36px, 6vw, 60px); line-height: 1.1; margin-bottom: 24px;
+    }
+    .hero-lead { font-size: 20px; color: var(--silver); margin-bottom: 32px; max-width: 600px; }
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 14px 28px; border-radius: 8px;
+      font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--cyan); color: var(--black); border: none;
+    }
+    .btn-primary:hover {
+      background: var(--cyan-bright); box-shadow: 0 0 20px rgba(0,212,255,0.4);
+      color: var(--black);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+    .btn-secondary:hover { background: rgba(0,212,255,0.1); }
 
-    /* SECTION */
-    section { padding: 72px 0; }
-    .section-label { color: var(--cyan); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-    .section-title { font-family: 'Playfair Display', serif; color: var(--white); font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 12px; }
-    .section-sub { color: var(--muted); font-size: 15px; max-width: 600px; margin-bottom: 48px; }
-    .bg-alt { background: rgba(17,24,39,0.4); }
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 48px; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif; color: var(--white);
+      font-size: clamp(28px, 4vw, 40px); margin-bottom: 16px;
+    }
+    .section-header p { color: var(--muted); }
+    .bg-alt { background: rgba(17,24,39,0.5); }
 
-    /* PROJECT CARDS */
-    .projects-grid { display: flex; flex-direction: column; gap: 28px; }
+    /* Services Grid */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+    }
+    .service-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 12px; padding: 32px; transition: all 0.3s;
+    }
+    .service-card:hover {
+      border-color: rgba(0,212,255,0.3);
+      box-shadow: 0 0 30px rgba(0,212,255,0.08);
+    }
+    .service-card h3 { color: var(--white); font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+    .service-card p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+    .service-card ul { list-style: none; }
+    .service-card li {
+      font-size: 13px; color: var(--muted); padding-left: 16px;
+      position: relative; margin-bottom: 8px;
+    }
+    .service-card li::before {
+      content: '•'; color: var(--cyan); position: absolute; left: 0;
+    }
 
-    .project-card { background: rgba(17,24,39,0.6); border: 1px solid var(--gray); border-radius: 14px; padding: 36px; transition: border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; }
-    .project-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
-    .project-card.published::before  { background: var(--cyan); }
-    .project-card.inpress::before    { background: #818cf8; }
-    .project-card.review::before     { background: #f59e0b; }
-    .project-card.inprep::before     { background: #6b7280; }
-    .project-card:hover { border-color: rgba(0,212,255,0.35); box-shadow: 0 0 40px rgba(0,212,255,0.07); }
-    @media (max-width: 680px) { .project-card { grid-template-columns: 1fr; } }
+    /* Framework */
+    .framework-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+    }
+    .framework-item { display: flex; gap: 16px; }
+    .framework-num {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); font-weight: 700; font-size: 14px;
+    }
+    .framework-item h4 { color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .framework-item p { color: var(--muted); font-size: 13px; }
 
-    .project-main {}
-    .project-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    /* Quote */
+    .quote-section { padding: 60px 0; text-align: center; }
+    blockquote {
+      font-family: 'Playfair Display', serif; font-size: clamp(18px, 3vw, 24px);
+      color: var(--silver); font-style: italic; max-width: 800px; margin: 0 auto 16px;
+    }
+    .quote-attr { color: var(--cyan); font-size: 14px; }
 
-    .badge { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
-    .badge-published { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
-    .badge-inpress   { background: rgba(129,140,248,0.1); color: #a5b4fc; border: 1px solid rgba(129,140,248,0.3); }
-    .badge-review    { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-    .badge-preprint  { background: rgba(52,211,153,0.1); color: #6ee7b7; border: 1px solid rgba(52,211,153,0.25); }
-    .badge-inprep    { background: rgba(107,114,128,0.15); color: #9ca3af; border: 1px solid rgba(107,114,128,0.3); }
+    /* Industries */
+    .industries-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
+    }
+    .industry-tag {
+      background: rgba(17,24,39,0.3); border: 1px solid var(--gray);
+      border-radius: 8px; padding: 12px 16px; text-align: center;
+      font-size: 13px; color: var(--muted); transition: all 0.2s;
+    }
+    .industry-tag:hover { border-color: rgba(0,212,255,0.3); color: var(--silver); }
 
-    .project-journal { font-size: 13px; color: var(--muted); font-style: italic; }
-    .project-title { font-family: 'Playfair Display', serif; color: var(--white); font-size: 19px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
-    .project-desc { color: var(--silver); font-size: 14px; line-height: 1.75; margin-bottom: 20px; max-width: 680px; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-    .project-tag { background: rgba(55,65,81,0.5); color: var(--muted); font-size: 11px; padding: 4px 10px; border-radius: 4px; }
-    .project-links { display: flex; flex-wrap: wrap; gap: 10px; }
-    .project-links a { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 7px; transition: all 0.2s; }
-    .link-primary { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
-    .link-primary:hover { background: rgba(0,212,255,0.2); box-shadow: 0 0 16px rgba(0,212,255,0.15); color: var(--cyan); }
-    .link-secondary { background: transparent; color: var(--muted); border: 1px solid var(--gray); }
-    .link-secondary:hover { color: var(--silver); border-color: var(--silver); }
+    /* News */
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .news-card {
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 12px; padding: 24px; transition: all 0.3s;
+    }
+    .news-card.featured { border-color: rgba(0,212,255,0.2); }
+    .news-card:hover { border-color: rgba(0,212,255,0.3); }
+    .news-tag { font-size: 11px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; }
+    .news-date { font-size: 13px; color: var(--muted); margin: 4px 0 8px; }
+    .news-card h3 { color: var(--white); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .news-card p { color: var(--muted); font-size: 13px; }
 
-    .project-aside { display: flex; flex-direction: column; gap: 12px; min-width: 160px; }
-    .aside-stat { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.1); border-radius: 10px; padding: 14px 16px; text-align: center; }
-    .aside-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--cyan); font-weight: 700; line-height: 1; margin-bottom: 4px; }
-    .aside-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    /* Principles */
+    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+    .principle { text-align: center; }
+    .principle h3 { color: var(--white); font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+    .principle p { color: var(--muted); font-size: 14px; }
 
-    /* OPEN SCIENCE */
-    .open-science { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
-    .os-card { background: rgba(17,24,39,0.5); border: 1px solid var(--gray); border-radius: 12px; padding: 24px; transition: border-color 0.3s; }
-    .os-card:hover { border-color: rgba(0,212,255,0.3); }
-    .os-card h4 { color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-    .os-card p { color: var(--muted); font-size: 13px; line-height: 1.65; }
-    .os-card a { color: var(--cyan); }
+    /* Team */
+    .team-card {
+      max-width: 500px; margin: 0 auto; background: rgba(17,24,39,0.5);
+      border: 1px solid var(--gray); border-radius: 16px; padding: 40px; text-align: center;
+    }
+    .team-avatar {
+      width: 120px; height: 120px; margin: 0 auto 24px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(20,184,166,0.2));
+      border: 2px solid rgba(0,212,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 36px; color: var(--cyan);
+    }
+    .team-card h3 { color: var(--white); font-size: 20px; margin-bottom: 4px; }
+    .team-role { color: var(--cyan); font-size: 14px; margin-bottom: 16px; }
+    .team-bio { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .team-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .team-tag {
+      background: var(--gray); color: var(--muted); font-size: 11px;
+      padding: 4px 10px; border-radius: 4px;
+    }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--gray); padding: 48px 0; }
-    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    /* Leader Profile (expanded) */
+    .leader-profile {
+      max-width: 800px; margin: 0 auto;
+      background: rgba(17,24,39,0.5); border: 1px solid var(--gray);
+      border-radius: 16px; padding: 48px; text-align: center;
+    }
+    .leader-header {
+      display: flex; align-items: center; gap: 20px;
+      justify-content: center; margin-bottom: 36px;
+    }
+    @media (max-width: 480px) {
+      .leader-header { flex-direction: column; text-align: center; }
+      .leader-profile { padding: 28px 20px; }
+    }
+    .leader-story { text-align: left; }
+    .leader-chapter { margin-bottom: 28px; }
+    .leader-chapter h4 {
+      color: var(--cyan); font-size: 15px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .leader-chapter p { color: var(--silver); font-size: 15px; line-height: 1.7; }
+    .evidence-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;
+    }
+    @media (max-width: 600px) { .evidence-grid { grid-template-columns: 1fr; } }
+    .evidence-item {
+      background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 10px; padding: 16px;
+    }
+    .evidence-label {
+      display: inline-block; color: var(--cyan); font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;
+    }
+    .evidence-item p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+    /* Contact */
+    .contact-info { text-align: center; max-width: 500px; margin: 0 auto; }
+    .contact-info p { margin-bottom: 12px; }
+    .contact-label { color: var(--muted); }
+    .contact-links { display: flex; justify-content: center; gap: 16px; margin-top: 24px; }
+    .contact-link {
+      padding: 10px 20px; background: var(--gray); color: var(--silver);
+      border-radius: 8px; font-size: 14px; transition: all 0.2s;
+    }
+    .contact-link:hover { background: #4b5563; color: var(--white); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--gray); padding: 48px 0;
+    }
+    .footer-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
     .footer-brand { display: flex; align-items: center; gap: 12px; }
     .footer-brand span { color: var(--muted); font-size: 14px; }
-    .footer-copy { color: #374151; font-size: 12px; margin-top: 8px; }
+    .footer-tagline { color: #4b5563; font-style: italic; font-size: 14px; }
+    .footer-copy { color: #374151; font-size: 12px; margin-top: 16px; }
+
+    /* Origins — Cinematic */
+    .origins-cinema {
+      position: relative; width: 100%; height: 85vh; min-height: 520px;
+      overflow: hidden; cursor: pointer; background: #030308;
+    }
+    /* Image scene layers */
+    .origins-scene {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.4s ease;
+    }
+    .origins-scene.active { opacity: 1; }
+    .origins-scene-spark { background-image: url('assets/scene-spark.jpg'); }
+    .origins-scene-utopia { background-image: url('assets/scene-utopia.jpg'); }
+    .origins-scene-dystopia { background-image: url('assets/scene-dystopia.jpg'); }
+    .origins-scene-order { background-image: url('assets/scene-chaos-order.jpg'); }
+    .origins-scene-logo { background-image: url('assets/nyx-logo-cinematic.jpg'); }
+
+    /* Particle overlay canvas */
+    .origins-particles {
+      position: absolute; inset: 0; z-index: 2;
+      width: 100%; height: 100%; display: block;
+      pointer-events: none;
+    }
+
+    /* Subtitle overlay */
+    .origins-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      align-items: center; padding: 0 24px 80px; text-align: center;
+      pointer-events: none;
+    }
+    .origins-subtitle {
+      font-family: 'Playfair Display', serif; color: rgba(248,250,252,0.95);
+      font-size: clamp(16px, 2.8vw, 26px); font-style: italic;
+      max-width: 750px; line-height: 1.6;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.7);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      background: rgba(3,3,8,0.4); padding: 16px 28px; border-radius: 8px;
+    }
+    .origins-subtitle.visible { opacity: 1; transform: translateY(0); }
+
+    /* Play button */
+    .origins-play-wrap {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(3,3,8,0.6); transition: opacity 0.6s ease;
+    }
+    .origins-play-wrap.hidden { opacity: 0; pointer-events: none; }
+    .origins-play-btn {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px solid rgba(0,212,255,0.5);
+      background: rgba(0,212,255,0.06); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .origins-play-btn:hover {
+      background: rgba(0,212,255,0.12); border-color: var(--cyan);
+      box-shadow: 0 0 50px rgba(0,212,255,0.2);
+    }
+    .origins-play-icon {
+      width: 0; height: 0; border-style: solid;
+      border-width: 16px 0 16px 28px;
+      border-color: transparent transparent transparent var(--cyan);
+      margin-left: 6px;
+    }
+    .origins-play-label {
+      color: var(--muted); font-size: 13px; text-transform: uppercase;
+      letter-spacing: 2px; font-weight: 600; margin-top: 16px;
+    }
+    .origins-pause-hint {
+      position: absolute; top: 20px; right: 24px; z-index: 10;
+      color: var(--muted); font-size: 12px; opacity: 0; transition: opacity 0.3s;
+    }
+    .origins-cinema:hover .origins-pause-hint.visible { opacity: 1; }
+
+    /* Progress + dots */
+    .origins-progress {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: rgba(55,65,81,0.4); z-index: 10;
+    }
+    .origins-progress-fill {
+      height: 100%; background: var(--cyan); width: 0%;
+      transition: width 0.15s linear;
+    }
+    .origins-dots {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; gap: 10px;
+    }
+    .origins-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(55,65,81,0.6); border: 1px solid rgba(55,65,81,0.8);
+      transition: all 0.4s;
+    }
+    .origins-dot.active {
+      background: var(--cyan); border-color: var(--cyan);
+      box-shadow: 0 0 8px rgba(0,212,255,0.4);
+    }
+    .origins-dot.past {
+      background: rgba(0,212,255,0.25); border-color: rgba(0,212,255,0.35);
+    }
+    .origins-attribution {
+      text-align: center; padding: 32px 24px;
+    }
+    .origins-attribution blockquote {
+      font-size: clamp(16px, 2.5vw, 20px); margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <div class="logo">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">NYX DYNAMICS</span>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <div class="logo-icon">N</div>
+        <span class="logo-text">NYX DYNAMICS</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#origins">Origins</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="noctua.html">Noctua</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="#framework">Framework</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-    <ul class="nav-links">
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#services">Services</a></li>
-      <li><a href="/noctua.html">Noctua</a></li>
-      <li><a href="/research" class="active">Research</a></li>
-      <li><a href="/#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <p class="hero-tag">Nyx Dynamics &mdash; Research Portfolio</p>
-      <h1 class="font-serif">Computational Research<br>at the Intersection of<br>Medicine &amp; Algorithms</h1>
-      <p class="hero-lead">Peer-reviewed work spanning HIV prevention implementation science, algorithmic equity, mathematical modeling of infection dynamics, and neurometabolic signal processing. All code open-source. All data archived.</p>
-      <div class="hero-stats">
-        <div>
-          <div class="hero-stat-num">7</div>
-          <div class="hero-stat-label">Active Research Programs</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">2</div>
-          <div class="hero-stat-label">Viruses 2026 Publications</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">5+</div>
-          <div class="hero-stat-label">Active Submissions</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">1,000+</div>
-          <div class="hero-stat-label">Cumulative Zenodo Downloads</div>
+  <!-- Hero -->
+  <section class="hero" id="about">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-tag">AI Readiness in Healthcare</p>
+        <h1 class="font-serif">Healthcare AI Auditing &amp; Risk Consulting</h1>
+        <p class="hero-lead">How do you know your healthcare AI is working well for everyone? <strong style="color: var(--white);">99.8% of funded AI interventions fail to meet basic quality standards.</strong> We ensure yours isn't one of them.</p>
+        <div class="btn-group">
+          <a href="#contact" class="btn btn-primary">Get Started</a>
+          <a href="#framework" class="btn btn-secondary">Our Framework</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROJECTS -->
-<section class="bg-alt">
-  <div class="container">
-    <p class="section-label">Active Research</p>
-    <h2 class="section-title">Projects</h2>
-    <p class="section-sub">Each project includes a dedicated page with slide deck, mind map, and infographic.</p>
+  <!-- Origins -->
+  <section id="origins" style="padding: 0;">
+    <div class="origins-cinema" id="originsCinema">
+      <!-- Scene image layers (crossfade) -->
+      <div class="origins-scene origins-scene-spark active" data-scene="0"></div>
+      <div class="origins-scene origins-scene-utopia" data-scene="1"></div>
+      <div class="origins-scene origins-scene-dystopia" data-scene="2"></div>
+      <div class="origins-scene origins-scene-order" data-scene="3"></div>
+      <div class="origins-scene origins-scene-logo" data-scene="4"></div>
 
-    <div class="projects-grid">
+      <!-- Particle overlay -->
+      <canvas class="origins-particles" id="originsParticles"></canvas>
 
-      <!-- 1. LAI-PrEP Bridge Period -->
-      <div class="project-card published">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-published">Published</span>
-            <span class="badge badge-inpress">In Press</span>
-            <span class="project-journal">Viruses 2026 &mdash; Two Companion Papers</span>
-          </div>
-          <h3 class="project-title">LAI-PrEP Bridge Period: Clinical Decision Support Tool</h3>
-          <p class="project-desc">Long-acting injectable PrEP demonstrates &gt;96% HIV prevention efficacy, yet 47.1% of prescribed patients never receive their first injection. This project defines the 2&ndash;8 week &ldquo;bridge period&rdquo; as the critical implementation bottleneck, proposes a reconceptualized PrEP cascade, synthesizes a 21-intervention evidence library across 7 population categories, and delivers a computationally validated clinical decision support tool &mdash; validated across 21.2 million synthetic patients at UNAIDS global PrEP target scale with &plusmn;0.018 pp precision.</p>
-          <div class="project-tags">
-            <span class="project-tag">HIV Prevention</span>
-            <span class="project-tag">Implementation Science</span>
-            <span class="project-tag">Clinical Decision Support</span>
-            <span class="project-tag">Monte Carlo Validation</span>
-            <span class="project-tag">Health Equity</span>
-            <span class="project-tag">LAI-PrEP</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/lai-prep-bridge-period-clinical-decision-tool/" class="link-primary">Project Page</a>
-            <a href="https://doi.org/10.3390/v18020237" target="_blank" rel="noopener" class="link-secondary">Paper I (DOI)</a>
-            <a href="https://doi.org/10.20944/preprints202512.2354.v1" target="_blank" rel="noopener" class="link-secondary">Paper II (Preprint)</a>
-            <a href="https://doi.org/10.3390/v18030336" target="_blank" rel="noopener" class="link-secondary">Paper II (DOI)</a>
-            <a href="https://github.com/Nyx-Dynamics/lai-prep-bridge-tool-pub" target="_blank" rel="noopener" class="link-secondary">GitHub</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">21.2M</div>
-            <div class="aside-label">patients validated</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">47.1%</div>
-            <div class="aside-label">bridge period attrition</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">100K</div>
-            <div class="aside-label">infections preventable annually</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">136</div>
-            <div class="aside-label">Zenodo downloads</div>
-          </div>
-        </div>
+      <!-- Subtitle -->
+      <div class="origins-overlay">
+        <p class="origins-subtitle" id="originsSub"></p>
       </div>
 
-      <!-- 2. Algorithmic Discrimination -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-review">Under Review</span>
-            <span class="badge badge-preprint">medRxiv</span>
-            <span class="project-journal">PLOS Digital Health</span>
-          </div>
-          <h3 class="project-title">Synergistic Algorithmic Recourse &amp; Structural Discrimination in Healthcare AI</h3>
-          <p class="project-desc">A mathematical and computational framework for identifying and quantifying synergistic algorithmic discrimination &mdash; where individual algorithmic features are equitable in isolation but combine multiplicatively to produce discriminatory outcomes. Proposes a recourse framework for correcting compounding bias in clinical decision support systems, with direct application to PrEP eligibility, risk stratification, and treatment recommendation algorithms.</p>
-          <div class="project-tags">
-            <span class="project-tag">Algorithmic Bias</span>
-            <span class="project-tag">Health Equity</span>
-            <span class="project-tag">Clinical AI</span>
-            <span class="project-tag">Recourse Framework</span>
-            <span class="project-tag">Structural Discrimination</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/algorithmic-discrimination/" class="link-primary">Project Page</a>
-            <a href="https://doi.org/10.64898/2026.02.22.26346836" target="_blank" rel="noopener" class="link-secondary">medRxiv Preprint</a>
-            <a href="https://doi.org/10.5281/zenodo.18746745" target="_blank" rel="noopener" class="link-secondary">Zenodo DOI</a>
-            <a href="https://github.com/Nyx-Dynamics/algorithmic-bias-epidemiology-academic" target="_blank" rel="noopener" class="link-secondary">GitHub</a>
-          </div>
+      <!-- Play button -->
+      <div class="origins-play-wrap" id="originsPlayWrap">
+        <div class="origins-play-btn" id="originsPlayBtn" role="button" aria-label="Play our story" tabindex="0">
+          <div class="origins-play-icon"></div>
         </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">0.0018%</div>
-            <div class="aside-label">baseline resolution probability</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">87.6%</div>
-            <div class="aside-label">three-way interaction (of total effect)</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">&lt;0.02%</div>
-            <div class="aside-label">improvement from single-barrier removal</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">PLOS Digital Health</div>
-            <div class="aside-label">under review &mdash; medRxiv preprint (Feb 2026)</div>
-          </div>
-        </div>
+        <p class="origins-play-label">Our Origin Story</p>
       </div>
+      <div class="origins-pause-hint" id="originsPauseHint">Click to pause</div>
 
-<!-- 3. Noise Decorrelation / eLife -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-review">Under Review</span>
-            <span class="badge badge-preprint">bioRxiv</span>
-            <span class="project-journal">eLife &mdash; Tracking #2026-07722</span>
-          </div>
-          <h3 class="project-title">Noise Correlation Length Distinguishes Neurometabolic Protection from Vulnerability Across HIV Infection Phases</h3>
-          <p class="project-desc">A signal processing framework demonstrating that noise correlation length &mdash; a measure of spatial autocorrelation in metabolic fluctuation patterns &mdash; reliably distinguishes neuroprotective from neurovulnerable states across phases of HIV infection. Provides a computationally tractable biomarker framework for neurometabolic monitoring in people living with HIV, with implications for early detection of HIV-associated neurocognitive disorders. The current version incorporates the first publicly available open-source consolidated dataset of phase-specific HIV neuro-metabolic MRS data &mdash; 49 observations across 7 independent human cohorts spanning four decades of published literature (1985&ndash;2021) &mdash; released as an independent scientific contribution to the HAND neuroimaging field.</p>
-          <div class="project-tags">
-            <span class="project-tag">Signal Processing</span>
-            <span class="project-tag">Neurometabolic</span>
-            <span class="project-tag">HIV Neurology</span>
-            <span class="project-tag">Biomarker</span>
-            <span class="project-tag">HAND</span>
-            <span class="project-tag">Master MRS Dataset</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/noise-decorrelation/" class="link-primary">Project Page</a>
-            <a href="https://doi.org/10.64898/2026.02.10.703895" target="_blank" rel="noopener" class="link-secondary">bioRxiv Preprint</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">49</div>
-            <div class="aside-label">observations</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">7</div>
-            <div class="aside-label">independent cohorts</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">40 yr</div>
-            <div class="aside-label">literature span</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">eLife</div>
-            <div class="aside-label">under review &mdash; submitted March 2026</div>
-          </div>
-        </div>
+      <!-- Dots + progress -->
+      <div class="origins-dots">
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
+        <div class="origins-dot"></div>
       </div>
-
-      <!-- 4. PWID / Structural Barriers -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-review">Under Review</span>
-            <span class="project-journal">BMC Public Health</span>
-          </div>
-          <h3 class="project-title">Structural Barriers, Stochastic Avoidance, and Outbreak Risk in HIV Prevention for People Who Inject Drugs</h3>
-          <p class="project-desc">A population-specific analysis of the structural, legal, and healthcare system barriers preventing people who inject drugs (PWID) from initiating long-acting injectable PrEP. PWID represent the highest-risk and lowest-coverage population in HIV prevention, with only 2% currently using PrEP despite indicated need. This work quantifies the compounding effect of criminalization, housing instability, stigma, and healthcare avoidance on bridge period completion, and evaluates syringe service program integration as the primary delivery pathway. Featured preprint in Preprints.org&rsquo;s 10th anniversary edition (2026). Preprint downloads: 134 (Preprints.org, as of April 2026).</p>
-          <div class="project-tags">
-            <span class="project-tag">PWID</span>
-            <span class="project-tag">LAI-PrEP</span>
-            <span class="project-tag">Structural Barriers</span>
-            <span class="project-tag">Harm Reduction</span>
-            <span class="project-tag">Health Equity</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/pwid/" class="link-primary">Project Page</a>
-            <a href="https://doi.org/10.20944/preprints202601.0948.v1" target="_blank" rel="noopener" class="link-secondary">Preprint (DOI)</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">134</div>
-            <div class="aside-label">Preprint downloads</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">2%</div>
-            <div class="aside-label">PWID currently using PrEP despite need</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">+265%</div>
-            <div class="aside-label">improvement with targeted interventions</div>
-          </div>
-          <div class="aside-stat" style="background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.2);">
-            <div class="aside-label" style="color: #fbbf24;">Featured &mdash; Preprints.org 10th Anniversary Edition (2026)</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">BMC Public Health</div>
-            <div class="aside-label">under review &mdash; 10+ reviewers</div>
-          </div>
-</div>
-      </div>
-
-      <!-- 5. Calibration-to-Deployment Mismatch (Kassanjee Bias) -->
-      <div class="project-card inprep">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-inprep">In Revision</span>
-            <span class="project-journal">Target: TBD &mdash; previously PLOS ONE (PONE-D-26-08047)</span>
-          </div>
-          <h3 class="project-title">Calibration-to-Deployment Mismatch in HIV Prevention Trials: How Structural Censoring Biases Counterfactual Incidence Estimates</h3>
-          <p class="project-desc">A formal derivation showing that the Kassanjee/Gao cross-sectional incidence estimator &mdash; the analytic backbone of counterfactual-controlled PrEP efficacy trials including PURPOSE 1 (NCT04994509) and PURPOSE 2 (NCT04925752) &mdash; produces systematically biased point estimates when applied to populations with structural censoring (overdose mortality, incarceration, displacement, carceral healthcare disruption). The paper derives the survival-biased effective MDRI &Omega;*(&gamma;) and a joint IRR bias factor incorporating both screening-cohort and intervention-arm observation probabilities, then identifies the standard 90-day no-prior-testing eligibility criterion as a selection mechanism operating on the same testing-engagement axis that drives the competing-risk hazard. Applied to 34 high-burden US MSAs using AIDSVu 2023 surveillance data with late-diagnosis percentage as the empirical structural-hazard proxy: Kassanjee denominators inflated 8.7&ndash;27.3% with monotone scaling, B<sub>IRR</sub> &isin; [0.969, 0.999], reported IRRs attenuated up to 3.1% in the highest-severity empirical cohort &mdash; making interventions appear artificially superior in the populations trials ostensibly aim to serve.</p>
-          <div class="project-tags">
-            <span class="project-tag">Kassanjee/Gao Estimator</span>
-            <span class="project-tag">RITA / LAg-EIA</span>
-            <span class="project-tag">Counterfactual bHIV</span>
-            <span class="project-tag">PURPOSE 1 / 2</span>
-            <span class="project-tag">Structural Censoring</span>
-            <span class="project-tag">Competing Risks</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/calibration-deployment-mismatch/" class="link-primary">Project Page</a>
-            <a href="/research/calibration_deployment_letter_v6.pdf" target="_blank" class="link-secondary">Letter (PDF)</a>
-            <a href="/research/calibration_deployment_supplement_v6.pdf" target="_blank" class="link-secondary">Supplement (PDF)</a>
-            <a href="https://github.com/Nyx-Dynamics" target="_blank" class="link-secondary">GitHub</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">34</div>
-            <div class="aside-label">AIDSVu MSAs analyzed</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">27.3%</div>
-            <div class="aside-label">denominator inflation, high-barrier cities</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">3.1%</div>
-            <div class="aside-label">IRR attenuation, highest-severity empirical cohort</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6. Prevention Theorem -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-review">Desk Review</span>
-            <span class="badge badge-preprint">Preprint</span>
-            <span class="project-journal">Science Advances</span>
-          </div>
-          <h3 class="project-title">The Prevention Theorem: Time-Dependent Constraints on Post-Exposure Prophylaxis for HIV</h3>
-          <p class="project-desc">A formal mathematical framework establishing that HIV post-exposure prophylaxis efficacy is governed by a finite, quantifiable prevention window determined by viral replication kinetics and the irreversibility of systemic infection establishment. Derives closed-form theorems for optimal PrEP timing under stochastic exposure conditions, with direct implications for same-day PrEP initiation protocols, bridge period design, and the pharmacokinetic rationale for conservative LAI-PrEP initiation requirements.</p>
-          <div class="project-tags">
-            <span class="project-tag">Mathematical Modeling</span>
-            <span class="project-tag">HIV PEP/PrEP</span>
-            <span class="project-tag">Infection Dynamics</span>
-            <span class="project-tag">Viral Kinetics</span>
-            <span class="project-tag">Prevention Science</span>
-          </div>
-          <div class="project-links">
-            <a href="/research/prevention-theorem/" class="link-primary">Project Page</a>
-            <a href="https://doi.org/10.20944/preprints202601.1090.v1" target="_blank" rel="noopener" class="link-secondary">Preprint (DOI)</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">Science Advances</div>
-            <div class="aside-label">desk review (3 weeks) &mdash; transferred from Science</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6. Quantum Biology / Fibonacci Microtubules -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-preprint">Preprint</span>
-            <span class="badge badge-preprint">bioRxiv</span>
-            <span class="badge badge-inprep">In Development</span>
-          </div>
-          <h3 class="project-title">Quantum Coherence Preservation in Fibonacci-Structured Microtubules During HIV-Induced Neuroinflammation</h3>
-          <p class="project-desc">HIV-associated neurocognitive disorder (HAND) presents a cognitive paradox: patients maintain cognitive function during acute infection despite severe neuroinflammatory cytokine responses. Computational modeling demonstrates that quantum coherence is preserved substantially longer within microtubules arranged in Fibonacci geometries compared to regular structures, with strong correlations to neuroimaging biomarkers (r = 0.74&ndash;0.82, p &lt; 0.001). The framework proposes a geometric-quantum mechanism for the HAND cognitive paradox. Full journal submission is held pending completion of an extension addressing the standard physics objection to quantum-biological coherence at physiological temperatures.</p>
-          <div class="project-tags">
-            <span class="project-tag">Quantum Biology</span>
-            <span class="project-tag">HAND</span>
-            <span class="project-tag">Microtubules</span>
-            <span class="project-tag">HIV Neurology</span>
-            <span class="project-tag">Computational Modeling</span>
-          </div>
-          <div class="project-links">
-            <a href="https://doi.org/10.1101/2025.06.08.658222" target="_blank" rel="noopener" class="link-primary">bioRxiv Preprint</a>
-            <a href="https://doi.org/10.5281/zenodo.15601418" target="_blank" rel="noopener" class="link-secondary">Zenodo DOI</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">487</div>
-            <div class="aside-label">Zenodo downloads</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">&phi;</div>
-            <div class="aside-label">golden ratio optimization</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">bioRxiv</div>
-            <div class="aside-label">preprint &mdash; extension in development</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 7. Editorial Gatekeeping -->
-      <div class="project-card review">
-        <div class="project-main">
-          <div class="project-meta">
-            <span class="badge badge-review">Under Review</span>
-            <span class="project-journal">BMJ</span>
-          </div>
-          <h3 class="project-title">Quantitative Competence and Editorial Gatekeeping at Major US Medical Journals</h3>
-          <p class="project-desc">A cross-sectional audit of 9 major US medical journals finds that 0 of 14 editors-in-chief hold formal ML/AI training, first-author ML publications, or quantitative doctoral degrees. These journals collectively publish 0.115% of global PubMed-indexed ML/AI biomedical output (263 of 227,731 papers, 2023&ndash;2025). Predictive models estimate triage error rates of 45&ndash;78% for quantitatively intensive manuscripts submitted to these venues.</p>
-          <div class="project-tags">
-            <span class="project-tag">Meta-Research</span>
-            <span class="project-tag">Editorial Competence</span>
-            <span class="project-tag">Medical ML</span>
-            <span class="project-tag">Peer Review</span>
-            <span class="project-tag">Scientific Publishing</span>
-          </div>
-          <div class="project-links">
-            <a href="https://doi.org/10.5281/zenodo.18826439" target="_blank" rel="noopener" class="link-primary">Zenodo DOI</a>
-            <a href="https://github.com/Nyx-Dynamics/eic-ml-audit" target="_blank" rel="noopener" class="link-secondary">GitHub</a>
-          </div>
-        </div>
-        <div class="project-aside">
-          <div class="aside-stat">
-            <div class="aside-num">0 / 14</div>
-            <div class="aside-label">EICs with ML training</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">0.115%</div>
-            <div class="aside-label">of global ML/AI biomedical output</div>
-          </div>
-          <div class="aside-stat">
-            <div class="aside-num">BMJ</div>
-            <div class="aside-label">submitted March 2026</div>
-          </div>
-</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- OPEN SCIENCE -->
-<section>
-  <div class="container">
-    <p class="section-label">Open Science</p>
-    <h2 class="section-title">Principles &amp; Access</h2>
-    <p class="section-sub">All research code is open-source. All datasets are publicly archived. All tools are free for healthcare providers and researchers.</p>
-    <div class="open-science">
-      <div class="os-card">
-        <h4>Code &mdash; GitHub</h4>
-        <p>All computational tools and analysis code available at <a href="https://github.com/Nyx-Dynamics" target="_blank" rel="noopener">github.com/Nyx-Dynamics</a>. GPG-signed commits. Pharma-Restricted Open Healthcare License.</p>
-      </div>
-      <div class="os-card">
-        <h4>Data &mdash; Zenodo</h4>
-<p>Datasets and validation results archived at <a href="https://doi.org/10.5281/zenodo.19363153" target="_blank" rel="noopener">Zenodo DOI: 10.5281/zenodo.19363153</a> with permanent DOI assignment.</p>
-      </div>
-      <div class="os-card">
-        <h4>Peer Review &mdash; PLOS ONE</h4>
-        <p>11 reviews completed (April 2025&ndash;present) spanning clinical ML for cardiovascular risk, infectious disease forecasting, multi-omics cardiology, NLP for vulnerable populations, and sports medicine ML. Median turnaround under 10 days. Two R1 revision rounds &mdash; handling editors route revisions back to the same reviewer (trust signal).</p>
-      </div>
-      <div class="os-card">
-        <h4>Conflict of Interest</h4>
-        <p>Dr. Demidont was formerly employed by Gilead Sciences (ending October 2024); all holdings divested December 2024. No industry funding. Disclosed per ICMJE guidelines in all publications.</p>
-      </div>
-      <div class="os-card">
-        <h4>AI Disclosure</h4>
-        <p>Manuscripts developed with assistance from Anthropic Claude and other AI tools per ICMJE-compliant disclosure. Author maintains full responsibility for all scientific content and conclusions.</p>
+      <div class="origins-progress">
+        <div class="origins-progress-fill" id="originsProgressFill"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="logo-icon" style="width:32px;height:32px;font-size:14px;">N</div>
-        <span>Nyx Dynamics, LLC</span>
-      </div>
-      <p style="font-style:italic; color:#4b5563; font-size:14px;">"Guiding AI to Shape a Better Future"</p>
-      <p class="footer-copy">&copy; 2026 Nyx Dynamics, LLC &mdash; Fairfield, CT &mdash; acdemidont@nyxdynamics.org</p>
+    <div class="origins-attribution">
+      <blockquote>"A reinvention born from profound challenge and growth &mdash; a reclaiming of voice, skills, and purpose."</blockquote>
+      <p class="quote-attr">&mdash; A.C. Demidont, Founder</p>
     </div>
-  </div>
-</footer>
+  </section>
 
+  <!-- Leadership -->
+  <section id="leadership">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Leadership</h2>
+        <p>From bedside to algorithms &mdash; a clinician&rsquo;s evolution into computation</p>
+      </div>
+
+      <div class="leader-profile">
+        <div class="leader-header">
+          <div class="team-avatar">AD</div>
+          <div>
+            <h3 style="color: var(--white); font-size: 22px; margin-bottom: 4px;">A.C. Demidont, DO</h3>
+            <p class="team-role">Founder &amp; CEO</p>
+          </div>
+        </div>
+
+        <div class="leader-story">
+          <div class="leader-chapter">
+            <h4>The Clinical Foundation</h4>
+            <p>For over two decades, Dr. Demidont practiced as a board-certified infectious diseases physician, witnessing firsthand how underserved populations are left behind by inequitable systems. As Chief Medical Officer at Anchor Health Initiative and Principal Medical Scientist at Gilead Sciences, he dedicated his clinical and academic career to building equitable healthcare &mdash; pushing boundaries and disrupting systems that failed the patients who needed them most.</p>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>The Computational Turn</h4>
+            <p>In 2018, a colleague introduced Dr. Demidont to the power of data science and machine learning. The realization was immediate: these tools could amplify everything he had spent decades fighting for &mdash; equity, access, and evidence-based care. What began as curiosity became a systematic transformation into a computationalist: someone who builds, validates, and deploys computational tools to solve real-world problems.</p>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>Evidence of a Computationalist</h4>
+            <p>The transition from clinician to computationalist is demonstrated not by credentials alone, but by building and shipping:</p>
+            <div class="evidence-grid">
+              <div class="evidence-item">
+                <span class="evidence-label">Built</span>
+                <p><strong style="color: var(--white);">Noctua</strong> &mdash; a full-stack NLP application for automated Vancouver citation auditing, from PDF/DOCX parsing to two-column gutter detection, deployed in production on Railway with Stripe billing integration. All research code is open-source on <a href="https://github.com/Nyx-Dynamics" target="_blank">GitHub</a>.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Published</span>
+                <p><strong style="color: var(--white);">7 active research programs</strong> spanning HIV prevention implementation science, quantum biology of HIV neuropathogenesis, Bayesian neurometabolic modeling, mathematical prevention theory, algorithmic bias epidemiology, structural barriers in PWID HIV prevention, and editorial gatekeeping in medical machine learning. <strong style="color: var(--white);">2 peer-reviewed publications</strong> in <em>Viruses</em> (MDPI, 2026) &mdash; the LAI-PrEP Bridge Period Decision Support Tool computational validation paper at UNAIDS 21.2M-patient scale (<a href="https://doi.org/10.3390/v18020237" target="_blank" rel="noopener">DOI</a>) and the companion review on the PrEP cascade paradigm shift (<a href="https://doi.org/10.3390/v18030336" target="_blank" rel="noopener">DOI</a>). <strong style="color: var(--white);">2 papers in active peer review</strong>: <em>Finite Prevention Windows for HIV Post-Exposure Prophylaxis</em> at <em>Science Advances</em> and <em>Structural Barriers in PWID HIV Prevention</em> at <em>BMC Public Health</em>. <strong style="color: var(--white);">1 preprint on medRxiv</strong>: <em>Synergistic Barriers to Algorithmic Recourse in Healthcare and Administrative Systems</em> (<a href="https://doi.org/10.64898/2026.02.22.26346836" target="_blank" rel="noopener">DOI</a>), currently in editorial review at <em>PLOS Digital Health</em>. <strong style="color: var(--white);">2 preprints on bioRxiv</strong>: <em>Noise Correlation Length Distinguishes Neurometabolic Protection from Vulnerability Across HIV Infection Phases</em> (<a href="https://doi.org/10.64898/2026.02.10.703895" target="_blank" rel="noopener">DOI</a>), being completed for resubmission; and <em>Quantum Coherence Preservation in Fibonacci-Structured Microtubules During HIV-Induced Neuroinflammation</em> (<a href="https://doi.org/10.1101/2025.06.08.658222" target="_blank" rel="noopener">DOI</a>), undergoing overhaul to rigorously address the Tegmark decoherence extension. Open-source archive on <a href="https://zenodo.org" target="_blank" rel="noopener">Zenodo</a> with 19 deposits and 1,000+ cumulative downloads. Full portfolio at <a href="/research">/research</a>.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Trained</span>
+                <p><strong style="color: var(--white);">MIT Sloan</strong> Executive Education in AI for Healthcare; completion of the <strong style="color: var(--white);">MITx</strong> Computational Thinking with Python series (<strong style="color: var(--white);">6.00.1x</strong> &amp; <strong style="color: var(--white);">6.00.2x</strong>); and graduate-level coursework from the <strong style="color: var(--white);">MITx</strong> Statistics and Data Science MicroMasters &mdash; <strong style="color: var(--white);">6.431x</strong> Probability&mdash;The Science of Uncertainty and Data and <strong style="color: var(--white);">IDS.S24x</strong> Learning Time Series with Interventions &mdash; formal training in the computational methods now central to his work.</p>
+              </div>
+              <div class="evidence-item">
+                <span class="evidence-label">Founded</span>
+                <p><strong style="color: var(--white);">Nyx Dynamics</strong> &mdash; an AI consulting company that bridges clinical expertise with computational tools, serving healthcare organizations navigating algorithm deployment and equity validation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="leader-chapter">
+            <h4>Why It Matters</h4>
+            <p>The convergence of deep clinical experience with computational capability is rare. Most AI companies lack clinical context; most clinicians lack the ability to build and validate algorithms. Dr. Demidont operates at the intersection &mdash; a physician who writes the code, a data scientist who understands the patient.</p>
+          </div>
+        </div>
+
+        <div class="team-tags" style="margin-top: 28px;">
+          <span class="team-tag">MIT Sloan AI</span>
+          <span class="team-tag">MITx Data Science</span>
+          <span class="team-tag">AAHIVS</span>
+          <span class="team-tag">Full-Stack Developer</span>
+          <span class="team-tag">NLP / ML</span>
+          <span class="team-tag">Infectious Diseases</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Principles</h2>
+      </div>
+      <div class="principles-grid">
+        <div class="principle">
+          <h3>Context Matters</h3>
+          <p>An algorithm isn't good or bad per se – it is just a tool. Who is using it, and for which patients? We go beyond accuracy metrics.</p>
+        </div>
+        <div class="principle">
+          <h3>The Readiness Paradox</h3>
+          <p>Rigorous validation exposes uncertainty rather than eliminating it. Computationally ready ≠ clinically proven.</p>
+        </div>
+        <div class="principle">
+          <h3>Ethics Cannot Be Automated</h3>
+          <p>There cannot be a universal checklist – clinical context is too important. Human judgment will always be essential.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Services</h2>
+        <p>Comprehensive support for healthcare AI implementation</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Healthcare Algorithm Audit</h3>
+          <p>Comprehensive assessment of risks associated with clinical AI use cases.</p>
+          <ul>
+            <li>Uses our AI Readiness Framework</li>
+            <li>Identifies fairness, equity, and validity issues</li>
+            <li>Delivers risk mitigation recommendations</li>
+            <li>Outputs: Algorithm Audit Report</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>Equity Testing &amp; Validation</h3>
+          <p>Analysis to measure bias and disparities in healthcare algorithms.</p>
+          <ul>
+            <li>Validation across demographic subgroups</li>
+            <li>Tests for disparate impact</li>
+            <li>HIPAA-compliant analysis</li>
+            <li>Outputs: Equity Audit Report</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>AI Governance &amp; Risk Management</h3>
+          <p>Build infrastructure for responsible AI use.</p>
+          <ul>
+            <li>Organization-level risk approach</li>
+            <li>Governance policy review</li>
+            <li>AI vendor procurement assistance</li>
+            <li>Outputs: Risk documentation</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>Clinical AI Monitoring</h3>
+          <p>Real-time monitoring systems for deployed AI.</p>
+          <ul>
+            <li>Identify key clinical and equity metrics</li>
+            <li>Calibrate thresholds and protocols</li>
+            <li>Integrate with analytics platforms</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>HTI-1 &amp; Regulatory Compliance</h3>
+          <p>Support for healthcare AI regulations.</p>
+          <ul>
+            <li>Use-case-specific fairness metrics</li>
+            <li>External validation research</li>
+            <li>Compliance report preparation</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <h3>Education &amp; Training</h3>
+          <p>Critical thinking about AI systems.</p>
+          <ul>
+            <li>Workshops for clinical teams</li>
+            <li>Bespoke compliance training</li>
+            <li>Medical data annotation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Industries &amp; Focus Areas</h2>
+        <p>We partner with health systems, digital health companies, payers, and research institutions.</p>
+      </div>
+      <div class="industries-grid">
+        <div class="industry-tag">Clinical Decision Support</div>
+        <div class="industry-tag">Risk Stratification</div>
+        <div class="industry-tag">Diagnostic AI</div>
+        <div class="industry-tag">Treatment Recommendations</div>
+        <div class="industry-tag">HIV Prevention &amp; Care</div>
+        <div class="industry-tag">Population Health</div>
+        <div class="industry-tag">Health Equity</div>
+        <div class="industry-tag">Mental Health</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Framework -->
+  <section id="framework">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">AI Readiness Framework</h2>
+        <p style="color: var(--cyan);">When is a healthcare algorithm ready for deployment?</p>
+      </div>
+      <div class="framework-grid">
+        <div class="framework-item">
+          <div class="framework-num">1</div>
+          <div>
+            <h4>Data Availability</h4>
+            <p>Is sufficient high-quality data available?</p>
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-num">2</div>
+          <div>
+            <h4>External Validity</h4>
+            <p>Does precision create false confidence?</p>
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-num">3</div>
+          <div>
+            <h4>Explainability</h4>
+            <p>Can clinicians trust the parameters?</p>
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-num">4</div>
+          <div>
+            <h4>Interpretability</h4>
+            <p>Does transparency enable oversight?</p>
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-num">5</div>
+          <div>
+            <h4>Equity</h4>
+            <p>Do averages mask disparities?</p>
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-num">6</div>
+          <div>
+            <h4>Readiness</h4>
+            <p>Should implementation proceed?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote-section">
+    <div class="container">
+      <blockquote>"An algorithm that appears to have all answers is dangerous. One that names its limitations invites trust."</blockquote>
+      <p class="quote-attr">— The Readiness Paradox</p>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Products</h2>
+        <p>Tools built by Nyx Dynamics for healthcare and biomedical research</p>
+      </div>
+      <div style="max-width: 600px; margin: 0 auto;">
+        <a href="noctua.html" style="text-decoration: none;">
+          <div class="service-card" style="cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+              <span style="font-size: 32px;">&#x1F989;</span>
+              <div>
+                <h3 style="margin-bottom: 0;">Noctua</h3>
+                <span style="color: var(--cyan); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Vancouver Citation Auditor</span>
+              </div>
+            </div>
+            <p>Upload your .docx manuscript and get an instant structural audit of numbered (Vancouver) citations &mdash; order-of-appearance, missing/uncited references, gaps, duplicates, and missing identifiers.</p>
+            <ul>
+              <li>6 diagnostic checks with severity-tagged findings</li>
+              <li>Actionable renumber map for out-of-order citations</li>
+              <li>Supports bracketed, parenthetical, superscript, and Lancet bare numbers</li>
+              <li>Free tier: 3 audits/month &middot; Researcher: $15/mo unlimited</li>
+            </ul>
+            <div style="margin-top: 16px;">
+              <span class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">Learn more</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">In the News</h2>
+      </div>
+      <div class="news-grid">
+
+        <!-- Science Advances submission — pinned featured card -->
+        <div class="news-card featured" style="border-color:rgba(0,212,255,0.35);background:rgba(0,212,255,0.04);grid-column:1/-1;">
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
+            <span class="news-tag" style="color:var(--cyan);">🧬 Research Submission</span>
+            <span style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);padding:0.2rem 0.7rem;border-radius:12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;display:inline-block;"></span>
+              In Peer Review
+            </span>
+          </div>
+          <p class="news-date">May 6, 2026 &middot; Manuscript ID: aeh5879</p>
+          <h3 style="font-size:18px;line-height:1.4;">In peer review at <em>Science Advances</em>: Finite Prevention Windows for HIV Post-Exposure Prophylaxis</h3>
+          <p style="margin-top:0.5rem;">Irreversible proviral integration defines a finite, route-specific window during which PEP can succeed. For parenteral (injection) exposure, this window compresses ~3&times; versus mucosal exposure — to 16–28 hours. Structural access delays for PWID systematically eliminate it, bounding population-level PEP efficacy below 10%. A structural failure, not a pharmacological one.</p>
+          <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <a href="/research/prevention-theorem" class="btn btn-primary" style="padding:8px 18px;font-size:13px;">Research Page</a>
+            <a href="https://doi.org/10.20944/preprints202601.1090.v2" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">Preprint (v2)</a>
+            <a href="https://github.com/Nyx-Dynamics/Prevention-Theorem" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">GitHub</a>
+            <a href="https://doi.org/10.5281/zenodo.20044747" target="_blank" class="btn btn-secondary" style="padding:8px 18px;font-size:13px;">Zenodo (v2)</a>
+          </div>
+        </div>
+
+        <div class="news-card featured">
+          <span class="news-tag">Research</span>
+          <p class="news-date">Jan 2026</p>
+          <h3>LAI-PrEP Bridge Period Algorithm Accepted in <em>Viruses</em></h3>
+          <p>Computational validation of a clinical decision support algorithm for LAI-PrEP bridge period navigation, validated at UNAIDS global target scale.</p>
+        </div>
+        <div class="news-card featured">
+          <span class="news-tag">Featured</span>
+          <p class="news-date">Jan 2025</p>
+          <h3>MIT Sloan AI in Healthcare Certification</h3>
+          <p>Nyx Dynamics founder completes MIT Sloan Executive Education program on AI implementation in clinical settings.</p>
+        </div>
+        <div class="news-card">
+          <p class="news-date">Dec 2024</p>
+          <h3>Healthcare AI Readiness Framework Published</h3>
+          <p>Our six-question framework for evaluating clinical AI readiness now available for healthcare organizations.</p>
+        </div>
+        <div class="news-card">
+          <p class="news-date">Oct 2024</p>
+          <h3>HIV Prevention Algorithm Validation</h3>
+          <p>Completed equity audit of PrEP eligibility algorithms, identifying disparities in underserved populations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="bg-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="font-serif">Contact</h2>
+        <p>Ready to ensure your healthcare AI works equitably for all patients?</p>
+      </div>
+      <div class="contact-info">
+        <p><span class="contact-label">Email:</span> <a href="/cdn-cgi/l/email-protection#e78e898188a7899e9f839e89868a8e8494c9889580"><span class="__cf_email__" data-cfemail="224b4c444d624c5b5a465b4c434f4b41510c4d5045">[email&#160;protected]</span></a></p>
+        <p><span class="contact-label">Phone:</span> 267.534.9203</p>
+        <p><span class="contact-label">Fax:</span> 203.872.1117</p>
+        <p><span class="contact-label">Locations:</span><br>Philadelphia, PA<br>Fairfield, CT</p>
+        <div class="contact-links">
+          <a href="https://github.com/Nyx-Dynamics" target="_blank" class="contact-link">GitHub</a>
+          <a href="https://www.linkedin.com/company/nyx-dynamics-llc/" target="_blank" class="contact-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-icon" style="width:32px;height:32px;font-size:14px;">N</div>
+          <span>Nyx Dynamics, LLC</span>
+        </div>
+        <p class="footer-tagline">"Illuminating hidden insights within data"</p>
+        <p class="footer-copy">© 2026 Nyx Dynamics, LLC. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Origins Cinematic Script -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  (function() {
+    var audio = new Audio('assets/nyx-origins-voiceover.mp3');
+    var cinema = document.getElementById('originsCinema');
+    var sub = document.getElementById('originsSub');
+    var playWrap = document.getElementById('originsPlayWrap');
+    var playBtn = document.getElementById('originsPlayBtn');
+    var pauseHint = document.getElementById('originsPauseHint');
+    var progressFill = document.getElementById('originsProgressFill');
+    var scenes = cinema.querySelectorAll('.origins-scene');
+    var dots = cinema.querySelectorAll('.origins-dot');
+    var pCanvas = document.getElementById('originsParticles');
+    var pc = pCanvas.getContext('2d');
+
+    var isPlaying = false, currentScene = 0;
+    var W = 0, H = 0, dpr = 1;
+    var particles = [];
+
+    // 5 scenes: [cueTime, subtitle]
+    var cues = [
+      [0,    "\u201CIn moments of stillness, where others see endings, we see beginnings. A single spark ignites.\u201D"],
+      [8.5,  "\u201CTechnology holds infinite potential \u2014 it can heal, connect, and inspire progress.\u201D"],
+      [16.8, "\u201CBut left unbridled, it can divide, harm, and erode trust. The choice is ours.\u201D"],
+      [22.5, "\u201CAt Nyx Dynamics, we embrace this moment. With every innovation we amplify possibility, dismantle inequity, and empower humanity.\u201D"],
+      [34.6, "\u201CThe future of AI isn\u2019t written yet. Together, let\u2019s shape it to serve humanity\u2019s greatest potential.\u201D"]
+    ];
+
+    // Scene-specific particle colors
+    var sceneColors = [
+      [0, 212, 255],    // spark: cyan
+      [20, 184, 166],   // utopia: teal
+      [180, 30, 30],    // dystopia: red
+      [0, 180, 220],    // order: cyan-teal
+      [0, 212, 255]     // logo: cyan
+    ];
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      var r = cinema.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return;
+      W = r.width; H = r.height;
+      pCanvas.width = Math.round(W * dpr);
+      pCanvas.height = Math.round(H * dpr);
+      pc.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+
+    // --- Particles ---
+    function initParticles() {
+      particles = [];
+      for (var i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2.5 + 0.5, a: Math.random() * 0.4 + 0.05,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function drawParticles(now) {
+      if (W < 1) return;
+      pc.clearRect(0, 0, W, H);
+
+      var col = sceneColors[currentScene] || sceneColors[0];
+      var speed = isPlaying ? 1 : 0.3;
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += (p.vx + Math.sin(now * 0.0008 + p.phase) * 0.15) * speed;
+        p.y += (p.vy + Math.cos(now * 0.0008 + p.phase) * 0.1) * speed;
+        if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+
+        // Glow
+        var ga = p.a * 0.15 * speed;
+        pc.beginPath();
+        pc.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        pc.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + ga + ')';
+        pc.fill();
+
+        // Core
+        pc.beginPath();
+        pc.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pc.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (p.a * speed) + ')';
+        pc.fill();
+      }
+
+      // Sparse connections
+      if (isPlaying) {
+        pc.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.03)';
+        pc.lineWidth = 0.5;
+        for (var i = 0; i < particles.length; i++) {
+          for (var j = i + 1; j < particles.length; j++) {
+            var dx = particles[i].x - particles[j].x;
+            var dy = particles[i].y - particles[j].y;
+            if (Math.abs(dx) < 150 && Math.abs(dy) < 150) {
+              pc.beginPath();
+              pc.moveTo(particles[i].x, particles[i].y);
+              pc.lineTo(particles[j].x, particles[j].y);
+              pc.stroke();
+            }
+          }
+        }
+      }
+
+      requestAnimationFrame(drawParticles);
+    }
+
+    // --- Scene transitions (CSS crossfade) ---
+    function setScene(idx) {
+      if (idx === currentScene) return;
+      currentScene = idx;
+
+      // Crossfade images
+      for (var i = 0; i < scenes.length; i++) {
+        scenes[i].classList.toggle('active', i === idx);
+      }
+
+      // Update dots
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active', 'past');
+        if (i === idx) dots[i].classList.add('active');
+        else if (i < idx) dots[i].classList.add('past');
+      }
+
+      // Fade subtitle
+      sub.classList.remove('visible');
+      setTimeout(function() {
+        sub.textContent = cues[idx][1];
+        sub.classList.add('visible');
+      }, 500);
+    }
+
+    // --- Play/Pause ---
+    function play() {
+      audio.play();
+      isPlaying = true;
+      playWrap.classList.add('hidden');
+      pauseHint.classList.add('visible');
+    }
+    function pause() {
+      audio.pause();
+      isPlaying = false;
+      pauseHint.classList.remove('visible');
+    }
+
+    playBtn.addEventListener('click', function(e) { e.stopPropagation(); play(); });
+    playBtn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+    });
+    cinema.addEventListener('click', function() {
+      if (!isPlaying && playWrap.classList.contains('hidden')) play();
+      else if (isPlaying) pause();
+    });
+
+    // --- Audio sync ---
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration) return;
+      progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      var idx = -1;
+      for (var i = cues.length - 1; i >= 0; i--) {
+        if (audio.currentTime >= cues[i][0]) { idx = i; break; }
+      }
+      if (idx >= 0) setScene(idx);
+    });
+
+    audio.addEventListener('ended', function() {
+      isPlaying = false;
+      pauseHint.classList.remove('visible');
+      setTimeout(function() {
+        playWrap.classList.remove('hidden');
+        sub.classList.remove('visible');
+        progressFill.style.width = '0%';
+        currentScene = 0;
+        for (var i = 0; i < scenes.length; i++) scenes[i].classList.toggle('active', i === 0);
+      }, 1000);
+    });
+
+    resize();
+    initParticles();
+    requestAnimationFrame(drawParticles);
+  })();
+  </script>
 </body>
 </html>
+   
