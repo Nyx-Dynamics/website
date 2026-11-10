@@ -1,2 +1,8 @@
 # Noctua is a separate commercial product on its own domain.
 /noctua.html    https://www.nyxnoctua.com    301!
+
+# Calibration-to-deployment work is in preparation and no longer listed.
+# Forced (301!) because the page still exists in the repo and would
+# otherwise win over the redirect.
+/research/calibration-deployment-mismatch     /research    301!
+/research/calibration-deployment-mismatch/*   /research    301!
